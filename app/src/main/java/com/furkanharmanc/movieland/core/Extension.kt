@@ -1,10 +1,9 @@
-package com.example.movieland.core
+package com.furkanharmanc.movieland.core
 
-import com.example.movieland.data.remote.dto.detail.DetailResponse
-import com.example.movieland.data.remote.dto.detail.ProductionCompany
-import com.example.movieland.data.remote.dto.popular.MovieItem
-import com.example.movieland.domain.model.DetailMovie
-import com.example.movieland.domain.model.PopularMovie
+import com.furkanharmanc.movieland.data.remote.dto.detail.DetailResponse
+import com.furkanharmanc.movieland.data.remote.dto.popular.MovieItem
+import com.furkanharmanc.movieland.domain.model.DetailMovie
+import com.furkanharmanc.movieland.domain.model.PopularMovie
 
 object Extension {
     private fun imagePath(path: String?): String {
