@@ -1,4 +1,4 @@
-package com.example.movieland.core
+package com.furkanharmanc.movieland.core
 
 sealed class DataStatus<out T> {
     data class Success<out T>(val data: T) : DataStatus<T>()

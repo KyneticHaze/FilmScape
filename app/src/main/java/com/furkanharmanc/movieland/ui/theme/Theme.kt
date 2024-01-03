@@ -1,4 +1,4 @@
-package com.example.movieland.ui.theme
+package com.furkanharmanc.movieland.ui.theme
 
 import android.app.Activity
 import android.os.Build
@@ -100,7 +100,7 @@ fun MovieLandTheme(
     if (!view.isInEditMode) {
         SideEffect {
             val window = (view.context as Activity).window
-            window.statusBarColor = colorScheme.primary.toArgb()
+            window.statusBarColor = colorScheme.primaryContainer.toArgb()
             WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = darkTheme
         }
     }

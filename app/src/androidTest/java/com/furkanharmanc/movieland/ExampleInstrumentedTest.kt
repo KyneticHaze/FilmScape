@@ -1,4 +1,4 @@
-package com.example.movieland
+package com.furkanharmanc.movieland
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

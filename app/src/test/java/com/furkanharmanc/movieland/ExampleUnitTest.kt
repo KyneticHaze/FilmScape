@@ -1,4 +1,4 @@
-package com.example.movieland
+package com.furkanharmanc.movieland
 
 import org.junit.Test
 

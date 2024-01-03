@@ -1,8 +1,8 @@
-package com.example.movieland.di
+package com.furkanharmanc.movieland.di
 
-import com.example.movieland.data.repository.MovieRepositoryImpl
-import com.example.movieland.data.service.ApiService
-import com.example.movieland.domain.repository.MovieRepository
+import com.furkanharmanc.movieland.data.repository.MovieRepositoryImpl
+import com.furkanharmanc.movieland.data.service.ApiService
+import com.furkanharmanc.movieland.domain.repository.MovieRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

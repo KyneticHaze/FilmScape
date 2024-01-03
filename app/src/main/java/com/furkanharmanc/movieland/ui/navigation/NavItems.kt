@@ -1,7 +1,7 @@
-package com.example.movieland.ui.navigation
+package com.furkanharmanc.movieland.ui.navigation
 
-import com.example.movieland.R
-import com.example.movieland.core.Routes
+import com.furkanharmanc.movieland.R
+import com.furkanharmanc.movieland.core.Routes
 
 sealed class NavItems(
     val title : String,

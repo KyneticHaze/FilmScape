@@ -1,4 +1,4 @@
-package com.example.movieland.core
+package com.furkanharmanc.movieland.core
 
 object Constants {
 
