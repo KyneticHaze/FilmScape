@@ -1,4 +1,4 @@
-package com.furkanharmanc.movieland.core
+package com.example.movieland.core
 
 sealed class Routes(val route : String) {
     data object Home : Routes("home_screen")

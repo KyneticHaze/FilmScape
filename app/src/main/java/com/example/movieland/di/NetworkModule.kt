@@ -1,7 +1,7 @@
-package com.furkanharmanc.movieland.di
+package com.example.movieland.di
 
-import com.furkanharmanc.movieland.core.Constants
-import com.furkanharmanc.movieland.data.service.ApiService
+import com.example.movieland.core.Constants
+import com.example.movieland.data.service.ApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

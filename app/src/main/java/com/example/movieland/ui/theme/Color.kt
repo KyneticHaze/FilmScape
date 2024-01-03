@@ -1,4 +1,4 @@
-package com.furkanharmanc.movieland.ui.theme
+package com.example.movieland.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

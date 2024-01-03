@@ -1,9 +1,9 @@
-package com.furkanharmanc.movieland.ui
+package com.example.movieland.ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import com.furkanharmanc.movieland.ui.theme.MovieLandTheme
+import com.example.movieland.ui.theme.MovieLandTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
