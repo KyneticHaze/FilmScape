@@ -1,6 +1,6 @@
 package com.example.movieland.di
 
-import com.example.movieland.core.Constants
+import com.example.movieland.core.ApiTools
 import com.example.movieland.data.service.ApiService
 import dagger.Module
 import dagger.Provides
@@ -24,7 +24,7 @@ object NetworkModule {
         client: OkHttpClient
     ) : ApiService {
         return Retrofit.Builder()
-            .baseUrl(Constants.BASE_URL)
+            .baseUrl(ApiTools.BASE_URL)
             .client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
