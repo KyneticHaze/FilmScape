@@ -1,13 +1,51 @@
 package com.example.movieland.data.repository
 
+import com.example.movieland.data.remote.dto.credit.CreditResponse
 import com.example.movieland.data.remote.dto.detail.DetailResponse
-import com.example.movieland.data.remote.dto.popular.MoviesResponse
+import com.example.movieland.data.remote.dto.commonDto.MovieResponse
+import com.example.movieland.data.remote.dto.playing_upComing.PlayUpComingResponse
+import com.example.movieland.data.remote.dto.person.PersonResponse
 import com.example.movieland.data.service.ApiService
 import com.example.movieland.domain.repository.MovieRepository
 
 class MovieRepositoryImpl(
     private val service: ApiService
 ) : MovieRepository {
-    override suspend fun getPopularMovies(token: String): MoviesResponse = service.getPopularMovies(token)
-    override suspend fun getMovieDetail(movieId: Int, token: String): DetailResponse = service.getMovieDetail(movieId, token)
+    override suspend fun getPopularMovies(
+        lang: String, page: Int, token: String
+    ): MovieResponse = service.getPopularMovies(lang, page, token)
+
+    override suspend fun getTopRatedMovies(
+        lang: String, page: Int, token: String
+    ): MovieResponse = service.getTopRatedMovies(lang, page, token)
+
+    override suspend fun getSimilarMovies(
+        movieId: Int,
+        lang: String,
+        page: Int,
+        token: String
+    ): MovieResponse = service.getSimilarMovies(movieId, lang, page, token)
+
+    override suspend fun getUpComingMovies(
+        lang: String,
+        page: Int,
+        token: String
+    ): PlayUpComingResponse =
+        service.getUpcomingMovies(lang, page, token)
+
+    override suspend fun getNowPlayingMovies(
+        lang: String,
+        page: Int,
+        token: String
+    ): PlayUpComingResponse =
+        service.getNowPlayingMovies(lang, page, token)
+
+    override suspend fun getMovieDetail(movieId: Int, token: String): DetailResponse =
+        service.getMovieDetail(movieId, token)
+
+    override suspend fun getMovieCredits(movieId: Int, token: String): CreditResponse =
+        service.getMovieCredits(movieId, token)
+
+    override suspend fun getPersonPopular(lang: String, page: Int, token: String): PersonResponse =
+        service.getPersonPopular(lang, page, token)
 }
