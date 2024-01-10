@@ -8,7 +8,7 @@ import com.example.movieland.data.remote.dto.detail.other.ProductionCountry
 import com.example.movieland.data.remote.dto.detail.other.SpokenLanguage
 import com.google.gson.annotations.SerializedName
 
-data class DetailResponse(
+data class DetailDTO(
     @SerializedName("adult")
     val adult: Boolean?,
     @SerializedName("backdrop_path")
@@ -18,7 +18,7 @@ data class DetailResponse(
     @SerializedName("budget")
     val budget: Int?,
     @SerializedName("genres")
-    val genres: List<Genre?>?,
+    val genres: List<Genre>?,
     @SerializedName("homepage")
     val homepage: String?,
     @SerializedName("id")
