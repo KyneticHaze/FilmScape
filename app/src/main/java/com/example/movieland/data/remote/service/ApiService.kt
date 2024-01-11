@@ -1,8 +1,9 @@
-package com.example.movieland.data.service
+package com.example.movieland.data.remote.service
 
 import com.example.movieland.data.remote.dto.credit.CreditResponse
-import com.example.movieland.data.remote.dto.detail.DetailResponse
+import com.example.movieland.data.remote.dto.detail.DetailDTO
 import com.example.movieland.data.remote.dto.commonDto.MovieResponse
+import com.example.movieland.data.remote.dto.image.ImageResponse
 import com.example.movieland.data.remote.dto.playing_upComing.PlayUpComingResponse
 import com.example.movieland.data.remote.dto.person.PersonResponse
 import retrofit2.http.GET
@@ -51,7 +52,21 @@ interface ApiService {
     suspend fun getMovieDetail(
         @Path("movie_id") movieId: Int,
         @Header("Authorization") token: String
-    ): DetailResponse
+    ): DetailDTO
+
+    @GET("search/movie")
+    suspend fun getSearchMovie(
+        @Query("query") query: String,
+        @Query("page") page: Int,
+        @Header("Authorization") token: String
+    ) : MovieResponse
+
+    @GET("movie/{movie_id}/images")
+    suspend fun getMovieImage(
+        @Path("movie_id") movieId: Int,
+        @Query("page") page: Int,
+        @Header("Authorization") token: String
+    ) : ImageResponse
 
     @GET("movie/{movie_id}/credits")
     suspend fun getMovieCredits(
