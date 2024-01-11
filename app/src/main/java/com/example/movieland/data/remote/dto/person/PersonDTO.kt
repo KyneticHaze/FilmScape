@@ -11,7 +11,7 @@ data class PersonDTO(
     @SerializedName("id")
     val id: Int?,
     @SerializedName("known_for")
-    val knownFor: List<KnownFor?>?,
+    val knownFor: List<KnownFor>?,
     @SerializedName("known_for_department")
     val knownForDepartment: String?,
     @SerializedName("name")
