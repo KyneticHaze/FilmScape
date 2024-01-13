@@ -1,7 +1,7 @@
 package com.example.movieland.di
 
 import com.example.movieland.core.ApiTools
-import com.example.movieland.data.service.ApiService
+import com.example.movieland.data.remote.service.ApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
