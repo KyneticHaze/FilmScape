@@ -1,4 +1,4 @@
-package com.example.movieland.domain.usecase
+package com.example.movieland.domain.usecase.main
 
 import com.example.movieland.core.DataStatus
 import com.example.movieland.data.remote.dto.commonDto.MovieResponse
@@ -9,7 +9,7 @@ import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
 
-class PopularUseCase @Inject constructor(
+class TopRatedUseCase @Inject constructor(
     private val movieRepository: MovieRepository
 ) {
     operator fun invoke(
@@ -18,7 +18,7 @@ class PopularUseCase @Inject constructor(
         token : String
     ) : Flow<DataStatus<MovieResponse>> = flow {
         try {
-            emit(DataStatus.Success(movieRepository.getPopularMovies(lang, page, token)))
+            emit(DataStatus.Success(movieRepository.getTopRatedMovies(lang, page, token)))
         } catch (e: HttpException) {
             emit(DataStatus.Error("Http Error found! : ${e.localizedMessage}"))
         } catch (e: IOException) {

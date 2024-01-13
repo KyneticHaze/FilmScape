@@ -1,7 +1,7 @@
-package com.example.movieland.domain.usecase
+package com.example.movieland.domain.usecase.main
 
 import com.example.movieland.core.DataStatus
-import com.example.movieland.data.remote.dto.commonDto.MovieDTO
+import com.example.movieland.data.remote.dto.playing_upComing.PlayUpComingResponse
 import com.example.movieland.domain.repository.MovieRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -9,19 +9,16 @@ import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
 
-class MovieSimilarUseCase @Inject constructor(
+class UpComingUseCase @Inject constructor(
     private val movieRepository: MovieRepository
 ) {
     operator fun invoke(
-        movieId : Int,
-        lang : String,
+        lang: String,
         page : Int,
         token : String
-    ) : Flow<DataStatus<List<MovieDTO>>> = flow {
+    ) : Flow<DataStatus<PlayUpComingResponse>> = flow {
         try {
-            movieRepository.getSimilarMovies(movieId, lang, page, token).movies?.let {
-                emit(DataStatus.Success(it))
-            }
+            emit(DataStatus.Success(movieRepository.getUpComingMovies(lang, page, token)))
         } catch (e: HttpException) {
             emit(DataStatus.Error("Http Error found! : ${e.localizedMessage}"))
         } catch (e: IOException) {
