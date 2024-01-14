@@ -21,16 +21,16 @@ import kotlinx.coroutines.delay
 fun SplashScreen(
     navController : NavController
 ) {
-    val composition by rememberLottieComposition(spec = LottieCompositionSpec.RawRes(R.raw.splash_movie))
+    val composition by rememberLottieComposition(spec = LottieCompositionSpec.RawRes(R.raw.splash))
     val progress by animateLottieCompositionAsState(composition = composition)
 
     LaunchedEffect(key1 = progress) {
-        delay(1000L)
+        delay(300L)
         navController.navigate(Screens.Intro.screen)
     }
 
     Surface(
-        color = MaterialTheme.colorScheme.primaryContainer,
+        color = MaterialTheme.colorScheme.background,
         modifier = Modifier.fillMaxSize(1f)
     ) {
         LottieAnimation(
