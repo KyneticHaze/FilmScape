@@ -8,5 +8,9 @@ sealed class Screens(val screen : String) {
     data object Main : Screens("main_screen")
     data object Detail : Screens("detail_screen")
     data object Upcoming : Screens("upcoming_screen")
-    data object Rated : Screens("rated_screen")
+    data object TopRated : Screens("top_rated_screen")
+    data object Playing  : Screens("playing_screen")
+    data object Popular : Screens("popular_screen")
+    data object Profile : Screens("profile_screen")
+    data object Search : Screens("search_screen")
 }
