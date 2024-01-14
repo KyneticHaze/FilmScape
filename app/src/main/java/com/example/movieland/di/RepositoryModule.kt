@@ -8,7 +8,6 @@ import com.example.movieland.domain.usecase.detail.DetailUseCase
 import com.example.movieland.domain.usecase.detail.MovieCreditsUseCase
 import com.example.movieland.domain.usecase.detail.MovieImageUseCase
 import com.example.movieland.domain.usecase.detail.MovieSimilarUseCase
-import com.example.movieland.domain.usecase.main.GenresUseCase
 import com.example.movieland.domain.usecase.main.MainUseCase
 import com.example.movieland.domain.usecase.main.NowPlayingUseCase
 import com.example.movieland.domain.usecase.main.PopularUseCase
@@ -43,8 +42,7 @@ object RepositoryModule {
             upComingUseCase = UpComingUseCase(repository),
             popularUseCase = PopularUseCase(repository),
             topRatedUseCase = TopRatedUseCase(repository),
-            searchMovieUseCase = SearchMovieUseCase(repository),
-            genresUseCase = GenresUseCase(repository)
+            searchMovieUseCase = SearchMovieUseCase(repository)
         )
     }
     @Provides
