@@ -1,7 +1,5 @@
 package com.example.movieland.data.remote.service
 
-import com.example.movieland.core.ApiTools
-import com.example.movieland.data.remote.dto.genre.GenreResponse
 import com.example.movieland.data.remote.dto.credit.CreditResponse
 import com.example.movieland.data.remote.dto.detail.DetailDTO
 import com.example.movieland.data.remote.dto.commonDto.MovieResponse
@@ -10,7 +8,6 @@ import com.example.movieland.data.remote.dto.playing_upComing.PlayUpComingRespon
 import com.example.movieland.data.remote.dto.person.PersonResponse
 import retrofit2.http.GET
 import retrofit2.http.Header
-import retrofit2.http.Headers
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -70,11 +67,6 @@ interface ApiService {
         @Query("page") page: Int,
         @Header("Authorization") token: String
     ) : ImageResponse
-
-    @GET("genre/movie/list")
-    fun getMovieGenres(
-        @Header("Authorization") token: String
-    ) : GenreResponse
 
     @GET("movie/{movie_id}/credits")
     suspend fun getMovieCredits(
