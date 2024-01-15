@@ -9,6 +9,5 @@ data class MainUseCase(
     val upComingUseCase: UpComingUseCase,
     val popularUseCase: PopularUseCase,
     val topRatedUseCase: TopRatedUseCase,
-    val searchMovieUseCase: SearchMovieUseCase,
-    val genresUseCase: GenresUseCase
+    val searchMovieUseCase: SearchMovieUseCase
 )
