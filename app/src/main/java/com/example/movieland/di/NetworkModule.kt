@@ -1,7 +1,8 @@
 package com.example.movieland.di
 
-import com.example.movieland.core.ApiTools
-import com.example.movieland.data.remote.service.ApiService
+import com.example.movieland.data.remote.api.DetailApi
+import com.example.movieland.data.remote.api.GenreApi
+import com.example.movieland.data.remote.api.MediaApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,15 +21,8 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideApiService(
-        client: OkHttpClient
-    ) : ApiService {
-        return Retrofit.Builder()
-            .baseUrl(ApiTools.BASE_URL)
-            .client(client)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(ApiService::class.java)
+    fun provideInterceptor(): Interceptor {
+        return HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
     }
 
     @Provides
@@ -44,7 +38,40 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideInterceptor(): Interceptor {
-        return HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+    fun provideMediaApi(
+        client: OkHttpClient
+    ) : MediaApi {
+        return Retrofit.Builder()
+            .baseUrl(MediaApi.BASE_URL)
+            .client(client)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(MediaApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideDetailApi(
+        client: OkHttpClient
+    ) : DetailApi {
+        return Retrofit.Builder()
+            .baseUrl(MediaApi.BASE_URL)
+            .client(client)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(DetailApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGenreApi(
+        client: OkHttpClient
+    ) : GenreApi {
+        return Retrofit.Builder()
+            .baseUrl(MediaApi.BASE_URL)
+            .client(client)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(GenreApi::class.java)
     }
 }
