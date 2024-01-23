@@ -1,9 +1,9 @@
-package com.example.movieland.data.remote.dto.commonDto
+package com.example.movieland.data.remote.dto.movie
 
 
 import com.google.gson.annotations.SerializedName
 
-data class MovieDTO(
+data class MediaDTO(
     @SerializedName("adult")
     val adult: Boolean?,
     @SerializedName("backdrop_path")

@@ -1,13 +1,13 @@
-package com.example.movieland.data.remote.dto.commonDto
+package com.example.movieland.data.remote.dto.movie
 
 
 import com.google.gson.annotations.SerializedName
 
-data class MovieResponse(
+data class MediaResponse(
     @SerializedName("page")
     val page: Int?,
     @SerializedName("results")
-    val movies: List<MovieDTO>?,
+    val medias: List<MediaDTO>?,
     @SerializedName("total_pages")
     val totalPages: Int?,
     @SerializedName("total_results")
