@@ -54,6 +54,13 @@ android {
     }
 }
 
+val roomVersion = "2.6.1"
+val retrofitVersion = "2.9.0"
+val interceptorVersion = "4.12.0"
+val navVersion = "2.7.6"
+val coilVersion = "2.5.0"
+val lottieVersion = "6.3.0"
+
 dependencies {
 
     // Dagger Hilt
@@ -61,23 +68,28 @@ dependencies {
     ksp("com.google.dagger:hilt-android-compiler:2.49")
 
     // Retrofit
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
+    implementation("com.squareup.retrofit2:converter-gson:$retrofitVersion")
+
+    // Room
+    implementation("androidx.room:room-ktx:$roomVersion")
+    ksp("androidx.room:room-compiler:$roomVersion")
+    implementation("androidx.room:room-paging:$roomVersion")
 
     // Interceptor
-    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:$interceptorVersion")
 
     // Hilt Compose
     implementation("androidx.hilt:hilt-navigation-compose:1.1.0")
 
     // Navigation
-    implementation("androidx.navigation:navigation-compose:2.7.6")
+    implementation("androidx.navigation:navigation-compose:$navVersion")
 
     // Coil
-    implementation("io.coil-kt:coil-compose:2.5.0")
+    implementation("io.coil-kt:coil-compose:$coilVersion")
 
     // Lottie
-    implementation("com.airbnb.android:lottie-compose:6.3.0")
+    implementation("com.airbnb.android:lottie-compose:$lottieVersion")
 
 
     implementation("androidx.core:core-ktx:1.12.0")
