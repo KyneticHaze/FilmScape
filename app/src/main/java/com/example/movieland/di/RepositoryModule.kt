@@ -1,5 +1,6 @@
 package com.example.movieland.di
 
+import com.example.movieland.data.local.MediaDB
 import com.example.movieland.data.repository.MediaRepositoryImpl
 import com.example.movieland.data.remote.api.MediaApi
 import com.example.movieland.domain.repository.MediaRepository
@@ -16,8 +17,9 @@ object RepositoryModule {
     @Provides
     @Singleton
     fun provideRepository(
-        api: MediaApi
+        api: MediaApi,
+        db: MediaDB
     ): MediaRepository {
-        return MediaRepositoryImpl(api)
+        return MediaRepositoryImpl(api, db.mediaDao())
     }
 }
