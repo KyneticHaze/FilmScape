@@ -11,7 +11,7 @@ data class MainUIState(
     val popularTvSeriesPage: Int = 1,
     val topRatedTvSeriesPage: Int = 1,
 
-    val trendingAllPage: Int = 1,
+    val trendingAllMediaPage: Int = 1,
 
     val error: String = "",
     val isRefresh: Boolean = false,
@@ -24,5 +24,5 @@ data class MainUIState(
     val popularTvSeriesList : List<Media> = emptyList(),
     val topRatedTvSeriesList : List<Media> = emptyList(),
 
-    val trendingMediaList : List<Media> = emptyList(),
+    val trendingAllMediaList : List<Media> = emptyList(),
 )
