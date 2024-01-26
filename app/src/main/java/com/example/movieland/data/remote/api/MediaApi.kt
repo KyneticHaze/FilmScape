@@ -33,6 +33,6 @@ interface MediaApi {
      companion object {
          const val BASE_URL = "https://api.themoviedb.org/3/"
          const val IMAGE_URL = "https://image.tmdb.org/t/p/w500"
-         const val API_KEY = BuildConfig.api_key
+         const val API_KEY = BuildConfig.API_KEY
      }
 }
