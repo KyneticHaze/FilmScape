@@ -15,3 +15,4 @@
 local.properties
 app/google-services.json
 app/src/main/java/com/example/movieland/core/ApiTools.kt
+gradle.properties
