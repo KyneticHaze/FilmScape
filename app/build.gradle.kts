@@ -16,7 +16,7 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
-        buildConfigField("String", "api_key", "api_key")
+        buildConfigField("String", "API_KEY", "api_key")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -91,6 +91,8 @@ dependencies {
     // Lottie
     implementation("com.airbnb.android:lottie-compose:$lottieVersion")
 
+
+    implementation("androidx.compose.material:material-android:1.6.0")
 
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
