@@ -21,9 +21,4 @@ data class MediaEntity(
     val video: Boolean,
     val voteAverage: Double,
     val voteCount: Int,
-    var runtime: Int,
-    var status: String,
-    var tagline: String,
-    var mediaType: String,
-    var category: String
 )

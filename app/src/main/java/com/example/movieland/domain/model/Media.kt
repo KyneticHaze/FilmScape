@@ -17,11 +17,6 @@ data class Media(
     val releaseDate: String,
     val title: String,
     val voteAverage: Double,
+    val video: Boolean,
     val voteCount: Int,
-    val runtime: Int?,
-    val video: Boolean?,
-    val status: String?,
-    val tagline: String?,
-    val mediaType: String,
-    val category: String
 ) : Parcelable
