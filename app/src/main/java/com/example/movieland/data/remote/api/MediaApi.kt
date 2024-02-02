@@ -1,7 +1,7 @@
 package com.example.movieland.data.remote.api
 
-import com.example.movieland.BuildConfig
-import com.example.movieland.data.remote.dto.movie.MediaResponse
+import com.example.movieland.core.ApiTools
+import com.example.movieland.data.remote.dto.media.MediaResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -33,6 +33,6 @@ interface MediaApi {
      companion object {
          const val BASE_URL = "https://api.themoviedb.org/3/"
          const val IMAGE_URL = "https://image.tmdb.org/t/p/w500"
-         const val API_KEY = BuildConfig.API_KEY
+         const val API_KEY = ApiTools.API_KEY
      }
 }
