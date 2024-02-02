@@ -16,7 +16,6 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
-        buildConfigField("String", "API_KEY", "api_key")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -59,13 +58,13 @@ val retrofitVersion = "2.9.0"
 val interceptorVersion = "4.12.0"
 val navVersion = "2.7.6"
 val coilVersion = "2.5.0"
-val lottieVersion = "6.3.0"
+val hiltVersion = "2.50"
 
 dependencies {
 
     // Dagger Hilt
-    implementation("com.google.dagger:hilt-android:2.50")
-    ksp("com.google.dagger:hilt-android-compiler:2.49")
+    implementation("com.google.dagger:hilt-android:$hiltVersion")
+    ksp("com.google.dagger:hilt-android-compiler:$hiltVersion")
 
     // Retrofit
     implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
@@ -87,10 +86,6 @@ dependencies {
 
     // Coil
     implementation("io.coil-kt:coil-compose:$coilVersion")
-
-    // Lottie
-    implementation("com.airbnb.android:lottie-compose:$lottieVersion")
-
 
     implementation("androidx.compose.material:material-android:1.6.0")
 
