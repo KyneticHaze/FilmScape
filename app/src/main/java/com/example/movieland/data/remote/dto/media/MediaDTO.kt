@@ -1,4 +1,4 @@
-package com.example.movieland.data.remote.dto.movie
+package com.example.movieland.data.remote.dto.media
 
 
 import com.google.gson.annotations.SerializedName
@@ -31,5 +31,5 @@ data class MediaDTO(
     @SerializedName("vote_average")
     val voteAverage: Double?,
     @SerializedName("vote_count")
-    val voteCount: Int?
+    val voteCount: Int?,
 )
