@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">MovieLand</string>
+    <string name="trending_now">Trending Now</string>
+    <string name="tv_series">Tv Series</string>
+    <string name="movies">Movies</string>
+    <string name="top_rated">Top Rated</string>
 </resources>
