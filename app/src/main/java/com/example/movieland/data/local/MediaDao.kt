@@ -21,17 +21,4 @@ interface MediaDao {
     @Query("SELECT * FROM mediaentity WHERE id = :id")
     suspend fun getMediaById(id: Int): MediaEntity
 
-    @Query("SELECT * FROM mediaentity WHERE mediaType = :mediaType AND category = :category")
-    suspend fun getMediasByTypeAndCategory(
-        mediaType: String, category: String
-    ): List<MediaEntity>
-
-    @Query("DELETE FROM mediaentity WHERE mediaType = :mediaType AND category = :category")
-    suspend fun deleteMediaByTypeAndCategory(mediaType: String, category: String)
-
-    @Query("SELECT * FROM mediaentity WHERE category = :category")
-    suspend fun getTrendingMedias(category: String): List<MediaEntity>
-
-    @Query("DELETE FROM mediaentity WHERE category = :category")
-    suspend fun deleteTrendingMedia(category: String)
 }
