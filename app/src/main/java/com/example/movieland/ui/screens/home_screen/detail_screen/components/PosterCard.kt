@@ -13,15 +13,19 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImagePainter
 import coil.compose.SubcomposeAsyncImage
 import coil.compose.SubcomposeAsyncImageContent
+import com.example.movieland.core.Constants
+import com.example.movieland.data.remote.api.MediaApi
 import com.example.movieland.data.remote.dto.image.Poster
-import com.example.movieland.ui.screens.app_start_screen.intro.ErrorImage
-import com.example.movieland.ui.screens.app_start_screen.intro.LoadingImage
-import com.example.movieland.ui.screens.home_screen.util.imagePath
 
 @Composable
 fun PosterCard(
-    modifier: Modifier = Modifier, poster: Poster
+    modifier: Modifier = Modifier,
+    poster: Poster
 ) {
+
+
+    val posterUrl = "${MediaApi.IMAGE_URL}${poster.filePath}" ?: Constants.unavailable
+
     Card(
         elevation = CardDefaults.cardElevation(
             defaultElevation = 10.dp
@@ -31,18 +35,12 @@ fun PosterCard(
             .clip(MaterialTheme.shapes.medium)
     ) {
         SubcomposeAsyncImage(
-            model = imagePath(poster.filePath.orEmpty()),
+            model = posterUrl,
             contentDescription = "Poster",
             contentScale = ContentScale.Crop,
             modifier = Modifier
                 .fillMaxHeight()
                 .clip(MaterialTheme.shapes.medium)
-        ) {
-            when (this.painter.state) {
-                is AsyncImagePainter.State.Loading -> LoadingImage()
-                is AsyncImagePainter.State.Error -> ErrorImage()
-                else -> SubcomposeAsyncImageContent()
-            }
-        }
+        )
     }
 }
