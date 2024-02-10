@@ -7,7 +7,6 @@ import kotlinx.coroutines.flow.Flow
 interface MediaRepository {
 
     // Room functions
-
     suspend fun getMedia(
         id: Int,
         type: String,
