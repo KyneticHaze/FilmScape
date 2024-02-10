@@ -6,7 +6,10 @@ object Constants {
 
     const val MOVIE = "movie"
     const val TV = "tv"
-    const val TRENDING_TIME = "day"
+
+    const val DAY = "day"
+    const val WEEK = "week"
+
     const val ALL = "all"
 
     const val NOW_PLAYING = "now_playing"
