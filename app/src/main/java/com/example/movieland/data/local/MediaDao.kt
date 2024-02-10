@@ -6,9 +6,11 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 
+/**
+ * @author Furkan Harmancı
+ */
 @Dao
 interface MediaDao {
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertMedias(medias: List<MediaEntity>)
 
@@ -20,5 +22,4 @@ interface MediaDao {
 
     @Query("SELECT * FROM mediaentity WHERE id = :id")
     suspend fun getMediaById(id: Int): MediaEntity
-
 }
