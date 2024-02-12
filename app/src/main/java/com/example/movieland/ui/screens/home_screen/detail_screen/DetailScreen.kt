@@ -18,6 +18,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Share
@@ -45,6 +46,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.movieland.R
+import com.example.movieland.core.ApiTools
 import com.example.movieland.core.Routes
 import com.example.movieland.ui.screens.home_screen.detail_screen.components.PosterList
 import com.example.movieland.ui.screens.home_screen.detail_screen.components.SimilarMovieList
@@ -64,7 +66,7 @@ fun DetailScreen(
     val scope = rememberCoroutineScope()
     val sheetState = rememberBottomSheetScaffoldState()
     var refreshing by remember { mutableStateOf(false) }
-    val imageUrl = "${MediaApi.IMAGE_URL}${media.backdropPath}"
+    val imageUrl = "${ApiTools.IMAGE_URL}${media.backdropPath}"
 
     fun refresh() = scope.launch {
         refreshing = true
@@ -127,7 +129,7 @@ fun DetailScreen(
                 }
             },
             navigateBack = {
-                navController.navigate(Routes.Main.route) {
+                navController.navigate(Routes.Home.route) {
                     popUpTo(Routes.Detail.route) {
                         inclusive = true
                     }
@@ -174,7 +176,7 @@ fun DetailSection(
                     )
                 ) {
                     Icon(
-                        imageVector = Icons.Filled.List, contentDescription = "Tool"
+                        imageVector = Icons.AutoMirrored.Filled.List, contentDescription = "Tool"
                     )
                 }
                 IconButton(
