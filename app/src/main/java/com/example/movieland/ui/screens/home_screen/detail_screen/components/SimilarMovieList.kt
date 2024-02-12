@@ -3,7 +3,6 @@ package com.example.movieland.ui.screens.home_screen.detail_screen.components
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -11,14 +10,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.example.movieland.data.remote.dto.commonDto.MovieDTO
-import com.example.movieland.ui.screens.home_screen.components.MovieCard
+import androidx.navigation.NavController
+import com.example.movieland.core.Routes
+import com.example.movieland.domain.model.Media
+import com.example.movieland.ui.screens.home_screen.main_screen.components.MediaCard
 
 @Composable
 fun SimilarMovieList(
-    movies: List<MovieDTO>,
+    medias: List<Media>,
     title: String,
-    onNavigateMovieTopic: (Int) -> Unit = {}
+    navController: NavController
 ) {
     Text(
         text = title,
@@ -32,10 +33,17 @@ fun SimilarMovieList(
         horizontalArrangement = Arrangement.spacedBy(24.dp),
         modifier = Modifier.padding(10.dp)
     ) {
-        items(movies) { movie ->
-            MovieCard(movie = movie) {
-                onNavigateMovieTopic(it)
-            }
+        items(medias.size) {
+            val indexedMedia = medias[it]
+
+            MediaCard(
+                media = indexedMedia,
+                navigateUp = {
+                    navController.navigate(
+                        "${Routes.Detail.route}?id=${indexedMedia.id}&type=${indexedMedia.mediaType}&category=${indexedMedia.category}"
+                    )
+                }
+            )
         }
     }
 }
