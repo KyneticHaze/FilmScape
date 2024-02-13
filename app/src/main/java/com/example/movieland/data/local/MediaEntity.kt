@@ -3,6 +3,9 @@ package com.example.movieland.data.local
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
+/**
+ * Media tablosu
+ */
 @Entity
 data class MediaEntity(
     @PrimaryKey val id: Int,
