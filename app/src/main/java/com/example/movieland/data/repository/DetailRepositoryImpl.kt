@@ -16,7 +16,6 @@ class DetailRepositoryImpl(
     private val dao: MediaDao
 ) : DetailRepository {
     override suspend fun getMediaDetail(
-        type: String,
         isRefresh: Boolean,
         mediaId: Int,
         apiKey: String
@@ -53,7 +52,6 @@ class DetailRepositoryImpl(
     }
 
     override suspend fun getSimilarMedias(
-        type: String,
         mediaId: Int,
         page: Int,
         apiKey: String
@@ -62,7 +60,7 @@ class DetailRepositoryImpl(
 
             emit(Resource.Loading(true))
 
-            val remoteSimilarMedias = detailApi.getSimilarMedias(type, mediaId, page, apiKey).medias
+            val remoteSimilarMedias = detailApi.getSimilarMedias(mediaId, page, apiKey).medias
 
             if (remoteSimilarMedias == null) {
                 emit(
