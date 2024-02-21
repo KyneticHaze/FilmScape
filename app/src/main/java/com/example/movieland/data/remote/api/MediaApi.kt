@@ -7,7 +7,7 @@ import retrofit2.http.Query
 
 interface MediaApi {
     @GET("{type}/{category}")
-    suspend fun getAnythings(
+    suspend fun getMedias(
         @Path("type") type: String,
         @Path("category") category: String,
         @Query("page") page: Int,
@@ -15,7 +15,7 @@ interface MediaApi {
     ): MediaResponse
 
     @GET("trending/{type}/{time_window}")
-    suspend fun getTrendingAnything(
+    suspend fun getTrendingMedias(
         @Path("type") type: String,
         @Path("time_window") time: String,
         @Query("page") page: Int,
@@ -23,7 +23,7 @@ interface MediaApi {
     ) : MediaResponse
 
     @GET("search/multi")
-    suspend fun getSearchAnything(
+    suspend fun search(
         @Query("query") query: String,
         @Query("page") page: Int,
         @Query("api_key") apiKey: String
