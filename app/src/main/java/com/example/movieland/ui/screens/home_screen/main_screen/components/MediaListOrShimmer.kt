@@ -5,11 +5,9 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -22,16 +20,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 import com.example.movieland.R
 import com.example.movieland.core.Constants
 import com.example.movieland.core.Routes
-import com.example.movieland.core.shimmerEffect
-import com.example.movieland.domain.model.Media
+import com.example.movieland.ui.util.shimmerEffect
 import com.example.movieland.ui.screens.home_screen.main_screen.MainUIState
 import com.example.movieland.ui.theme.Dimens
 import com.example.movieland.ui.theme.customFont
-import com.example.movieland.ui.theme.fonts
 
 @Composable
 fun MediaListOrShimmer(
@@ -123,14 +118,14 @@ fun MediaSection(
 
     val mediaList = when (type) {
         Constants.TRENDING_SCREEN -> {
-            mainUIState.trendingAllMediaList.take(10)
+            mainUIState.trendingAllMediaListModel.take(10)
         }
 
         Constants.TV_SCREEN -> {
             mainUIState.popularTvSeriesList.take(10)
         }
 
-        else -> mainUIState.nowPlayingMediaList.take(10)
+        else -> mainUIState.nowPlayingMediaListModel.take(10)
     }
 
     Row(

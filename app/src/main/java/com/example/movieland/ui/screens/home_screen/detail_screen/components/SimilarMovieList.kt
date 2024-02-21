@@ -17,7 +17,7 @@ import com.example.movieland.ui.screens.home_screen.main_screen.components.Media
 
 @Composable
 fun SimilarMovieList(
-    medias: List<Media>,
+    media: List<Media>,
     title: String,
     navController: NavController
 ) {
@@ -33,14 +33,14 @@ fun SimilarMovieList(
         horizontalArrangement = Arrangement.spacedBy(24.dp),
         modifier = Modifier.padding(10.dp)
     ) {
-        items(medias.size) {
-            val indexedMedia = medias[it]
+        items(media.size) {
+            val indexedMedia = media[it]
 
             MediaCard(
                 media = indexedMedia,
                 navigateUp = {
                     navController.navigate(
-                        "${Routes.Detail.route}?id=${indexedMedia.id}&type=${indexedMedia.mediaType}&category=${indexedMedia.category}"
+                        "${Routes.Detail.route}?id=${indexedMedia.id}"
                     )
                 }
             )

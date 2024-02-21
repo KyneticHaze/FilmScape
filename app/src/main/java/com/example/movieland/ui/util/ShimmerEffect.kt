@@ -1,4 +1,4 @@
-package com.example.movieland.core
+package com.example.movieland.ui.util
 
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable

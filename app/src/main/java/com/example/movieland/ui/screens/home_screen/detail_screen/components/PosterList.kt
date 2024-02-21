@@ -11,7 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.example.movieland.data.remote.dto.image.Poster
+import com.example.movieland.data.remote.dto.images.Poster
 
 @Composable
 fun PosterList(

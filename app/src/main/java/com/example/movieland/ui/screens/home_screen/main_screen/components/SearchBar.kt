@@ -1,4 +1,4 @@
-package com.example.movieland.ui.screens.home_screen.components
+package com.example.movieland.ui.screens.home_screen.main_screen.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth

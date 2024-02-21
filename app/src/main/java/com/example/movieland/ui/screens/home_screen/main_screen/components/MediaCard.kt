@@ -21,17 +21,14 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import coil.compose.AsyncImagePainter
 import coil.compose.SubcomposeAsyncImage
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import coil.size.Size
-import com.example.movieland.core.Routes
-import com.example.movieland.data.remote.api.MediaApi.Companion.IMAGE_URL
+import com.example.movieland.core.ApiTools.IMAGE_URL
 import com.example.movieland.domain.model.Media
 import com.example.movieland.ui.theme.Dimens
-import okhttp3.Route
 
 @Composable
 fun MediaCard(

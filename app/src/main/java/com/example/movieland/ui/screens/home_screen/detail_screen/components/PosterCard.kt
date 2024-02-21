@@ -10,12 +10,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImagePainter
 import coil.compose.SubcomposeAsyncImage
-import coil.compose.SubcomposeAsyncImageContent
+import com.example.movieland.core.ApiTools
 import com.example.movieland.core.Constants
-import com.example.movieland.data.remote.api.MediaApi
-import com.example.movieland.data.remote.dto.image.Poster
+import com.example.movieland.data.remote.dto.images.Poster
 
 @Composable
 fun PosterCard(
@@ -24,7 +22,7 @@ fun PosterCard(
 ) {
 
 
-    val posterUrl = "${MediaApi.IMAGE_URL}${poster.filePath}" ?: Constants.unavailable
+    val posterUrl = "${ApiTools.IMAGE_URL}}${poster.filePath}" ?: Constants.unavailable
 
     Card(
         elevation = CardDefaults.cardElevation(
