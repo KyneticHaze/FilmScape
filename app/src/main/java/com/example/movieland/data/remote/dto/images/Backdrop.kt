@@ -1,9 +1,9 @@
-package com.example.movieland.data.remote.dto.image
+package com.example.movieland.data.remote.dto.images
 
 
 import com.google.gson.annotations.SerializedName
 
-data class Poster(
+data class Backdrop(
     @SerializedName("aspect_ratio")
     val aspectRatio: Double?,
     @SerializedName("file_path")

@@ -22,8 +22,6 @@ data class MediaDTO(
     val popularity: Double?,
     @SerializedName("poster_path")
     val posterPath: String?,
-    @SerializedName("release_date")
-    val releaseDate: String?,
     @SerializedName("title")
     val title: String?,
     @SerializedName("video")
@@ -32,4 +30,10 @@ data class MediaDTO(
     val voteAverage: Double?,
     @SerializedName("vote_count")
     val voteCount: Int?,
+    @SerializedName("release_date")
+    val movieDate: String?,
+
+    // Tv dto farkları
+    @SerializedName("first_air_date")
+    val tvDate: String?,
 )

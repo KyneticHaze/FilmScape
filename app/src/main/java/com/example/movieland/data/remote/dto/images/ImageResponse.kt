@@ -1,4 +1,4 @@
-package com.example.movieland.data.remote.dto.image
+package com.example.movieland.data.remote.dto.images
 
 
 import com.google.gson.annotations.SerializedName
