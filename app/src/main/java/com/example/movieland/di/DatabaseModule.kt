@@ -1,11 +1,9 @@
 package com.example.movieland.di
 
-import android.app.Application
 import android.content.Context
 import androidx.room.Room
 import com.example.movieland.core.Constants.MEDIA_DB
 import com.example.movieland.data.local.MediaDB
-import com.example.movieland.data.local.MediaDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,7 +17,9 @@ object DatabaseModule {
 
     @Provides
     @Singleton
-    fun provideMediaDatabase(@ApplicationContext context: Context): MediaDB {
+    fun provideMediaDatabase(
+        @ApplicationContext context: Context
+    ): MediaDB {
         return Room.databaseBuilder(
             context,
             MediaDB::class.java,
