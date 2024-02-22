@@ -1,5 +1,6 @@
 package com.example.movieland.di
 
+import com.example.movieland.core.ApiTools
 import com.example.movieland.data.remote.api.DetailApi
 import com.example.movieland.data.remote.api.GenreApi
 import com.example.movieland.data.remote.api.MediaApi
@@ -40,38 +41,35 @@ object NetworkModule {
     @Singleton
     fun provideMediaApi(
         client: OkHttpClient
-    ) : MediaApi {
+    ) : Retrofit {
         return Retrofit.Builder()
-            .baseUrl(MediaApi.BASE_URL)
+            .baseUrl(ApiTools.BASE_URL)
             .client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create(MediaApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideMediaApi(
+        retrofit: Retrofit
+    ) : MediaApi {
+        return retrofit.create(MediaApi::class.java)
     }
 
     @Provides
     @Singleton
     fun provideDetailApi(
-        client: OkHttpClient
+        retrofit: Retrofit
     ) : DetailApi {
-        return Retrofit.Builder()
-            .baseUrl(MediaApi.BASE_URL)
-            .client(client)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(DetailApi::class.java)
+        return retrofit.create(DetailApi::class.java)
     }
 
     @Provides
     @Singleton
     fun provideGenreApi(
-        client: OkHttpClient
+        retrofit: Retrofit
     ) : GenreApi {
-        return Retrofit.Builder()
-            .baseUrl(MediaApi.BASE_URL)
-            .client(client)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(GenreApi::class.java)
+        return retrofit.create(GenreApi::class.java)
     }
 }
