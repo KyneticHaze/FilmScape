@@ -1,4 +1,4 @@
-package com.furkanhrmnc.filmscape.ui.screens.home_screen.main_screen.components
+package com.furkanhrmnc.filmscape.ui.util
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -23,9 +23,9 @@ import androidx.compose.ui.unit.sp
 import com.furkanhrmnc.filmscape.R
 import com.furkanhrmnc.filmscape.core.Constants
 import com.furkanhrmnc.filmscape.core.Routes
-import com.furkanhrmnc.filmscape.ui.util.shimmerEffect
-import com.furkanhrmnc.filmscape.ui.screens.home_screen.main_screen.MainUIState
+import com.furkanhrmnc.filmscape.ui.screens.main_screen.MainUIState
 import com.furkanhrmnc.filmscape.ui.theme.customFont
+import com.furkanhrmnc.filmscape.ui.util.sharedComponents.MediaCard
 
 @Composable
 fun MediaListOrShimmer(

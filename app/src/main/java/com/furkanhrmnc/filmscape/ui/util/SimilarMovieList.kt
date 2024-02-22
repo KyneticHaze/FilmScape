@@ -1,9 +1,8 @@
-package com.furkanhrmnc.filmscape.ui.screens.home_screen.detail_screen.components
+package com.furkanhrmnc.filmscape.ui.util
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -11,12 +10,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.furkanhrmnc.filmscape.data.remote.dto.images.Poster
+import androidx.navigation.NavController
+import com.furkanhrmnc.filmscape.core.Routes
+import com.furkanhrmnc.filmscape.domain.model.Media
+import com.furkanhrmnc.filmscape.ui.util.sharedComponents.MediaCard
 
 @Composable
-fun PosterList(
-    posters: List<Poster>,
-    title: String
+fun SimilarMovieList(
+    media: List<Media>,
+    title: String,
+    navController: NavController
 ) {
     Text(
         text = title,
@@ -28,11 +31,19 @@ fun PosterList(
     LazyRow(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(24.dp),
-        modifier = Modifier
-            .padding(10.dp)
+        modifier = Modifier.padding(10.dp)
     ) {
-        items(posters) { poster ->
-            PosterCard(poster = poster)
+        items(media.size) {
+            val indexedMedia = media[it]
+
+            MediaCard(
+                media = indexedMedia,
+                navigateUp = {
+                    navController.navigate(
+                        "${Routes.Detail.route}?id=${indexedMedia.id}"
+                    )
+                }
+            )
         }
     }
 }

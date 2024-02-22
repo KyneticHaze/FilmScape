@@ -1,4 +1,4 @@
-package com.furkanhrmnc.filmscape.ui.screens.home_screen.detail_screen
+package com.furkanhrmnc.filmscape.ui.screens.detail_screen
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -47,8 +47,8 @@ import coil.compose.AsyncImage
 import com.furkanhrmnc.filmscape.R
 import com.furkanhrmnc.filmscape.core.ApiTools
 import com.furkanhrmnc.filmscape.core.Routes
-import com.furkanhrmnc.filmscape.ui.screens.home_screen.detail_screen.components.PosterList
-import com.furkanhrmnc.filmscape.ui.screens.home_screen.detail_screen.components.SimilarMovieList
+import com.furkanhrmnc.filmscape.ui.util.PosterList
+import com.furkanhrmnc.filmscape.ui.util.SimilarMovieList
 import com.furkanhrmnc.filmscape.domain.model.Media
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch

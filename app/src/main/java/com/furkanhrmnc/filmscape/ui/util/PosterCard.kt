@@ -1,4 +1,4 @@
-package com.furkanhrmnc.filmscape.ui.screens.home_screen.detail_screen.components
+package com.furkanhrmnc.filmscape.ui.util
 
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.size

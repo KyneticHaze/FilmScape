@@ -1,4 +1,4 @@
-package com.furkanhrmnc.filmscape.ui.screens.home_screen.main_screen.components
+package com.furkanhrmnc.filmscape.ui.util
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement

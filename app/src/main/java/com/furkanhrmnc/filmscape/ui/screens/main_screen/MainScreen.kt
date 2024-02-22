@@ -1,4 +1,4 @@
-package com.furkanhrmnc.filmscape.ui.screens.home_screen.main_screen
+package com.furkanhrmnc.filmscape.ui.screens.main_screen
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -9,8 +9,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.furkanhrmnc.filmscape.core.Constants
-import com.furkanhrmnc.filmscape.ui.screens.home_screen.main_screen.components.MediaListOrShimmer
-import com.furkanhrmnc.filmscape.ui.screens.home_screen.main_screen.components.MovieTopBar
+import com.furkanhrmnc.filmscape.ui.util.MediaListOrShimmer
+import com.furkanhrmnc.filmscape.ui.util.MovieTopBar
 
 @Composable
 fun MainScreen(

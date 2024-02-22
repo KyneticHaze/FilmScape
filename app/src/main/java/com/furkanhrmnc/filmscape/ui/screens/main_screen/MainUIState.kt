@@ -1,4 +1,4 @@
-package com.furkanhrmnc.filmscape.ui.screens.home_screen.main_screen
+package com.furkanhrmnc.filmscape.ui.screens.main_screen
 
 import com.furkanhrmnc.filmscape.domain.model.Media
 
