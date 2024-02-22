@@ -1,4 +1,4 @@
-package com.furkanhrmnc.filmscape.ui.screens.main_screen
+package com.furkanhrmnc.filmscape.ui.screens.main
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding

@@ -1,4 +1,4 @@
-package com.furkanhrmnc.filmscape.ui.screens.detail_screen
+package com.furkanhrmnc.filmscape.ui.screens.detail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

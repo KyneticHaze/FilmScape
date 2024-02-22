@@ -1,4 +1,4 @@
-package com.furkanhrmnc.filmscape.ui.screens.detail_screen
+package com.furkanhrmnc.filmscape.ui.screens.detail
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement

@@ -16,12 +16,12 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.furkanhrmnc.filmscape.core.Routes
-import com.furkanhrmnc.filmscape.ui.screens.detail_screen.DetailEvents
-import com.furkanhrmnc.filmscape.ui.screens.detail_screen.DetailScreen
-import com.furkanhrmnc.filmscape.ui.screens.detail_screen.DetailViewModel
-import com.furkanhrmnc.filmscape.ui.screens.main_screen.MainScreen
-import com.furkanhrmnc.filmscape.ui.screens.main_screen.MainUIState
-import com.furkanhrmnc.filmscape.ui.screens.main_screen.MainUiEvent
+import com.furkanhrmnc.filmscape.ui.screens.detail.DetailEvents
+import com.furkanhrmnc.filmscape.ui.screens.detail.DetailScreen
+import com.furkanhrmnc.filmscape.ui.screens.detail.DetailViewModel
+import com.furkanhrmnc.filmscape.ui.screens.main.MainScreen
+import com.furkanhrmnc.filmscape.ui.screens.main.MainUIState
+import com.furkanhrmnc.filmscape.ui.screens.main.MainUiEvent
 import com.furkanhrmnc.filmscape.ui.util.SomethingWentWrong
 
 @Composable

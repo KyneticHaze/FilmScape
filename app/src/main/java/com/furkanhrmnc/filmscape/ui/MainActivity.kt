@@ -6,7 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.runtime.collectAsState
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.furkanhrmnc.filmscape.ui.navigation.MovieNavigation
-import com.furkanhrmnc.filmscape.ui.screens.main_screen.MainViewModel
+import com.furkanhrmnc.filmscape.ui.screens.main.MainViewModel
 import com.furkanhrmnc.filmscape.ui.theme.FilmScapeTheme
 import dagger.hilt.android.AndroidEntryPoint
 
