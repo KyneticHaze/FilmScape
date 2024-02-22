@@ -1,5 +1,6 @@
 <resources>
-    <string name="app_name">MovieLand</string>
+    <string name="app_name">FilmScape</string>
+
     <string name="trending_now">Trending Now</string>
     <string name="tv_series">Tv Series</string>
     <string name="movies">Movies</string>
