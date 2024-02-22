@@ -17,12 +17,12 @@ data class MainUIState(
     val isRefresh: Boolean = false,
     val isLoading: Boolean = false,
 
-    val popularMediaList : List<Media> = emptyList(),
-    val topRatedMediaList : List<Media> = emptyList(),
-    val nowPlayingMediaList : List<Media> = emptyList(),
+    val popularMediaListModel : List<Media> = emptyList(),
+    val topRatedMediaListModel : List<Media> = emptyList(),
+    val nowPlayingMediaListModel : List<Media> = emptyList(),
 
     val popularTvSeriesList : List<Media> = emptyList(),
     val topRatedTvSeriesList : List<Media> = emptyList(),
 
-    val trendingAllMediaList : List<Media> = emptyList(),
+    val trendingAllMediaListModel : List<Media> = emptyList(),
 )

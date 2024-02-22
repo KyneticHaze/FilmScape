@@ -20,7 +20,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.FavoriteBorder
-import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
@@ -50,7 +49,6 @@ import com.example.movieland.core.ApiTools
 import com.example.movieland.core.Routes
 import com.example.movieland.ui.screens.home_screen.detail_screen.components.PosterList
 import com.example.movieland.ui.screens.home_screen.detail_screen.components.SimilarMovieList
-import com.example.movieland.data.remote.api.MediaApi
 import com.example.movieland.domain.model.Media
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -248,7 +246,7 @@ fun DetailSection(
                 maxLines = 5
             )
             PosterList(posters = detailUiState.posterList, title = "Movie Photos")
-            SimilarMovieList(medias = detailUiState.similarMediaList, title = "Similar Movies", navController = navController)
+            SimilarMovieList(media = detailUiState.similarMediaListModel, title = "Similar Movies", navController = navController)
         }
     }
 }

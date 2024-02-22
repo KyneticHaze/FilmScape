@@ -4,11 +4,10 @@ import com.example.movieland.core.Resource
 import com.example.movieland.data.local.MediaDao
 import com.example.movieland.data.mappers.toMedia
 import com.example.movieland.data.remote.api.DetailApi
-import com.example.movieland.data.remote.dto.image.Poster
+import com.example.movieland.data.remote.dto.images.Poster
 import com.example.movieland.domain.model.Media
 import com.example.movieland.domain.repository.DetailRepository
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.cancel
 import kotlinx.coroutines.flow.flow
 
 class DetailRepositoryImpl(
@@ -37,9 +36,8 @@ class DetailRepositoryImpl(
                 return@flow
             }
 
-            val remoteDetails = detailApi.getMediaDetails(type, mediaId, apiKey)
+            val remoteDetails = detailApi.getMovieDetail(mediaId, apiKey)
 
-            dao.updateMedia(mediaEntity)
 
             emit(
                 Resource.Success(

@@ -4,8 +4,10 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 
 /**
+ *
+ * Media Veritabanı
+ *
  * @author Furkan Harmancı
- * Media veritabanı
  */
 @Database(
     entities = [MediaEntity::class],

@@ -1,7 +1,7 @@
 package com.example.movieland.domain.repository
 
 import com.example.movieland.core.Resource
-import com.example.movieland.data.remote.dto.image.Poster
+import com.example.movieland.data.remote.dto.images.Poster
 import com.example.movieland.domain.model.Media
 import kotlinx.coroutines.flow.Flow
 

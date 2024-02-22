@@ -7,11 +7,7 @@ import kotlinx.coroutines.flow.Flow
 interface MediaRepository {
 
     // Room functions
-    suspend fun getMedia(
-        id: Int,
-        type: String,
-        category: String
-    ): Media
+    suspend fun getMedia(id: Int): Media
 
     suspend fun insertMedia(media: Media)
 
@@ -19,7 +15,7 @@ interface MediaRepository {
 
 
     // Retrofit functions
-    suspend fun getAnythings(
+    suspend fun getMedias(
         fetchFromRemote: Boolean,
         isRefresh: Boolean,
         type: String,
@@ -28,7 +24,7 @@ interface MediaRepository {
         apiKey: String
     ): Flow<Resource<List<Media>>>
 
-    suspend fun getTrendingAnything(
+    suspend fun getTrendingMedias(
         fetchFromRemote: Boolean,
         isRefresh: Boolean,
         type: String,
@@ -37,7 +33,7 @@ interface MediaRepository {
         apiKey: String
     ): Flow<Resource<List<Media>>>
 
-    suspend fun getSearchAnything(
+    suspend fun search(
         fetchFromRemote: Boolean,
         query: String,
         page: Int,

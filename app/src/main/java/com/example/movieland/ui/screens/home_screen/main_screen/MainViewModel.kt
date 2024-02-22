@@ -1,119 +1,496 @@
 package com.example.movieland.ui.screens.home_screen.main_screen
 
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.movieland.core.ApiTools
-import com.example.movieland.core.DataStatus
-import com.example.movieland.domain.usecase.main.MainUseCase
-import com.example.movieland.ui.screens.app_start_screen.intro.MovieState
+import com.example.movieland.core.ApiTools.API_KEY
+import com.example.movieland.core.Constants
+import com.example.movieland.core.Constants.ALL
+import com.example.movieland.core.Constants.DAY
+import com.example.movieland.core.Constants.MOVIE
+import com.example.movieland.core.Constants.NOW_PLAYING
+import com.example.movieland.core.Constants.POPULAR
+import com.example.movieland.core.Constants.TOP_RATED
+import com.example.movieland.core.Constants.TV
+import com.example.movieland.core.Resource
+import com.example.movieland.domain.repository.MediaRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val mainUseCase: MainUseCase
+    private val mediaRepository: MediaRepository
 ) : ViewModel() {
 
-    private val _nowPlayingState = mutableStateOf(MovieState())
-    val nowPlayingState: State<MovieState>
-        get() = _nowPlayingState
-
-    private val _upcomingState = mutableStateOf(MovieState())
-    val upcomingState: State<MovieState>
-        get() = _upcomingState
-
-    private val _popularState = mutableStateOf(MovieState())
-    val popularState: State<MovieState>
-        get() = _popularState
-
-    private val _topRatedState = mutableStateOf(MovieState())
-    val topRatedState: State<MovieState>
-        get() = _topRatedState
+    private val _mainUiState = MutableStateFlow(MainUIState())
+    val mainUiState: StateFlow<MainUIState>
+        get() = _mainUiState.asStateFlow()
 
     init {
-        loadNowPlayingMovies(page = 1)
-        loadUpComingMovies(page = 1)
-        loadPopularMovies(page = 1)
-        loadTopRatedMovies(page = 1)
+        load()
     }
 
-    private fun loadNowPlayingMovies(
-        language: String = "en_US",
-        page: Int = 1,
-        token: String = ApiTools.BEARER_TOKEN
-    ) {
-        mainUseCase.nowPlayingUseCase(language, page, token).onEach {
-            when (it) {
-                is DataStatus.Loading -> _nowPlayingState.value =
-                    _nowPlayingState.value.copy(isLoading = true)
+    private fun load(fetchFromRemote: Boolean = false) {
+        loadPopularMovies(fetchFromRemote)
+        loadTopRatedMovies(fetchFromRemote)
+        loadNowPlayingMovies(fetchFromRemote)
 
-                is DataStatus.Success -> _nowPlayingState.value =
-                    _nowPlayingState.value.copy(movies = it.data.movies ?: emptyList())
+        loadPopularTvSeries(fetchFromRemote)
+        loadTopRatedTvSeries(fetchFromRemote)
 
-                is DataStatus.Error -> _nowPlayingState.value =
-                    _nowPlayingState.value.copy(error = it.errorMessage)
-            }
-        }.launchIn(viewModelScope)
+        loadTrendingAll(fetchFromRemote)
     }
 
-    private fun loadUpComingMovies(
-        lang: String = "en_US",
-        page: Int = 1,
-        token: String = ApiTools.BEARER_TOKEN
-    ) {
-        mainUseCase.upComingUseCase(lang, page, token).onEach {
-            when (it) {
-                is DataStatus.Loading -> _upcomingState.value =
-                    _upcomingState.value.copy(isLoading = true)
+    fun onEvent(event: MainUiEvent) {
+        when (event) {
+            is MainUiEvent.Refresh -> {
+                _mainUiState.update {
+                    it.copy(isLoading = true)
+                }
+                when (event.type) {
+                    Constants.HOME_SCREEN -> {
+                        loadTrendingAll(
+                            fetchFromRemote = true,
+                            isRefresh = true
+                        )
+                        loadTopRatedMovies(
+                            fetchFromRemote = true,
+                            isRefresh = true
+                        )
+                        loadNowPlayingMovies(
+                            fetchFromRemote = true,
+                            isRefresh = true
+                        )
+                        loadTopRatedTvSeries(
+                            fetchFromRemote = true,
+                            isRefresh = true
+                        )
+                    }
 
-                is DataStatus.Success -> _upcomingState.value =
-                    _upcomingState.value.copy(movies = it.data.movies ?: emptyList())
+                    Constants.TRENDING_SCREEN -> {
+                        loadTrendingAll(
+                            fetchFromRemote = true,
+                            isRefresh = true
+                        )
+                    }
 
-                is DataStatus.Error -> _upcomingState.value =
-                    _upcomingState.value.copy(error = it.errorMessage)
+                    Constants.POPULAR_SCREEN -> {
+                        loadPopularMovies(
+                            fetchFromRemote = true,
+                            isRefresh = true
+                        )
+                        loadPopularTvSeries(
+                            fetchFromRemote = true,
+                            isRefresh = true
+                        )
+                    }
+
+                    Constants.TOP_RATED_SCREEN -> {
+                        loadTopRatedMovies(
+                            fetchFromRemote = true,
+                            isRefresh = true
+                        )
+                        loadTopRatedTvSeries(
+                            fetchFromRemote = true,
+                            isRefresh = true
+                        )
+                    }
+
+                    Constants.MOVIE_SCREEN -> {
+                        loadPopularMovies(
+                            fetchFromRemote = true,
+                            isRefresh = true
+                        )
+                        loadTopRatedMovies(
+                            fetchFromRemote = true,
+                            isRefresh = true
+                        )
+                        loadNowPlayingMovies(
+                            fetchFromRemote = true,
+                            isRefresh = true
+                        )
+                    }
+
+                    Constants.TV_SCREEN -> {
+                        loadPopularTvSeries(
+                            fetchFromRemote = true,
+                            isRefresh = true
+                        )
+                        loadTopRatedTvSeries(
+                            fetchFromRemote = true,
+                            isRefresh = true
+                        )
+                    }
+                }
             }
-        }.launchIn(viewModelScope)
+
+            is MainUiEvent.Paginate -> {
+                when (event.type) {
+
+                    Constants.TRENDING_SCREEN -> {
+                        loadTrendingAll(true)
+                    }
+
+                    Constants.POPULAR_SCREEN -> {
+                        loadPopularMovies(true)
+                    }
+
+                    Constants.TOP_RATED_SCREEN -> {
+                        loadTopRatedMovies(true)
+                        loadTopRatedTvSeries(true)
+                    }
+
+                    Constants.MOVIE_SCREEN -> {
+                        loadPopularMovies(true)
+                        loadTopRatedMovies(true)
+                        loadNowPlayingMovies(true)
+                    }
+
+                    Constants.TV_SCREEN -> {
+                        loadPopularTvSeries(true)
+                        loadTopRatedTvSeries(true)
+                    }
+                }
+            }
+        }
     }
 
     private fun loadPopularMovies(
-        lang: String = "en_US",
-        page: Int = 1,
-        token: String = ApiTools.BEARER_TOKEN
+        fetchFromRemote: Boolean = false,
+        isRefresh: Boolean = false
     ) {
-        mainUseCase.popularUseCase(lang, page, token).onEach {
-            when (it) {
-                is DataStatus.Loading -> _popularState.value =
-                    _popularState.value.copy(isLoading = true)
+        viewModelScope.launch {
+            mediaRepository.getMedias(
+                fetchFromRemote,
+                isRefresh,
+                MOVIE,
+                POPULAR,
+                mainUiState.value.popularMoviesPage,
+                API_KEY
+            ).collect { resource ->
+                when (resource) {
+                    is Resource.Success -> {
+                        resource.data.let { medias ->
+                            // verileri değişen bir listeye koy
+                            val shuffledMedias = medias.toMutableList()
+                            // shuffle -> listedeki ögeleri rastgele karıştırma methodu
+                            shuffledMedias.shuffle()
 
-                is DataStatus.Success -> _popularState.value =
-                    _popularState.value.copy(movies = it.data.movies ?: emptyList())
+                            if (isRefresh) {
+                                // yenilendiğinde
+                                _mainUiState.update {
+                                    it.copy(
+                                        // karıştırılmış değişken listeyi liste şeklinde gir
+                                        popularMediaListModel = shuffledMedias.toList(),
+                                        popularMoviesPage = 1
+                                    )
+                                }
+                            } else {
+                                _mainUiState.update {
+                                    it.copy(
+                                        // Yenilenmez ise öncekine eklenir
+                                        popularMediaListModel = shuffledMedias.toList() + mainUiState.value.popularMediaListModel,
+                                        popularMoviesPage = mainUiState.value.popularMoviesPage + 1
+                                    )
+                                }
+                            }
+                        }
+                    }
 
-                is DataStatus.Error -> _popularState.value =
-                    _popularState.value.copy(error = it.errorMessage)
+                    is Resource.Error -> _mainUiState.update {
+                        it.copy(
+                            error = resource.errorMessage
+                        )
+                    }
+
+                    is Resource.Loading -> {
+                        _mainUiState.update {
+                            it.copy(
+                                isLoading = resource.isLoading
+                            )
+                        }
+                    }
+                }
             }
-        }.launchIn(viewModelScope)
+        }
     }
 
     private fun loadTopRatedMovies(
-        lang: String = "en_US",
-        page: Int = 1,
-        token: String = ApiTools.BEARER_TOKEN
+        fetchFromRemote: Boolean = false,
+        isRefresh: Boolean = false
     ) {
-        mainUseCase.topRatedUseCase(lang, page, token).onEach {
-            when (it) {
-                is DataStatus.Loading -> _topRatedState.value =
-                    _topRatedState.value.copy(isLoading = true)
+        viewModelScope.launch {
+            mediaRepository.getMedias(
+                fetchFromRemote,
+                isRefresh,
+                MOVIE,
+                TOP_RATED,
+                mainUiState.value.topRatedMoviesPage,
+                API_KEY
+            ).collect { resource ->
+                when (resource) {
+                    is Resource.Success -> {
+                        resource.data.let { medias ->
+                            val shuffledMedias = medias.toMutableList()
+                            shuffledMedias.shuffle()
 
-                is DataStatus.Success -> _topRatedState.value =
-                    _topRatedState.value.copy(movies = it.data.movies ?: emptyList())
+                            if (isRefresh) {
+                                _mainUiState.update {
+                                    it.copy(
+                                        topRatedMediaListModel = shuffledMedias.toList(),
+                                        topRatedMoviesPage = 1
+                                    )
+                                }
+                            } else {
+                                _mainUiState.update {
+                                    it.copy(
+                                        topRatedMediaListModel = shuffledMedias.toList() + mainUiState.value.topRatedMediaListModel,
+                                        topRatedMoviesPage = mainUiState.value.topRatedTvSeriesPage + 1
+                                    )
+                                }
+                            }
+                        }
+                    }
 
-                is DataStatus.Error -> _topRatedState.value =
-                    _topRatedState.value.copy(error = it.errorMessage)
+                    is Resource.Error -> _mainUiState.update {
+                        it.copy(
+                            error = resource.errorMessage
+                        )
+                    }
+
+                    is Resource.Loading -> _mainUiState.update {
+                        it.copy(
+                            isLoading = resource.isLoading
+                        )
+                    }
+                }
             }
-        }.launchIn(viewModelScope)
+        }
+    }
+
+    private fun loadNowPlayingMovies(
+        fetchFromRemote: Boolean = false,
+        isRefresh: Boolean = false
+    ) {
+        viewModelScope.launch {
+            mediaRepository.getMedias(
+                fetchFromRemote,
+                isRefresh,
+                MOVIE,
+                NOW_PLAYING,
+                _mainUiState.value.nowPlayingMoviesPage,
+                API_KEY
+            ).collect { resource ->
+                when (resource) {
+                    is Resource.Success -> {
+                        resource.data.let { medias ->
+                            val shuffledMedias = medias.toMutableList()
+                            shuffledMedias.shuffle()
+
+                            if (isRefresh) {
+                                _mainUiState.update {
+                                    it.copy(
+                                        nowPlayingMediaListModel = shuffledMedias.toList(),
+                                        nowPlayingMoviesPage = 1
+                                    )
+                                }
+                            } else {
+                                _mainUiState.update {
+                                    it.copy(
+                                        nowPlayingMediaListModel = shuffledMedias.toList() + _mainUiState.value.nowPlayingMediaListModel,
+                                        nowPlayingMoviesPage = _mainUiState.value.nowPlayingMoviesPage + 1
+                                    )
+                                }
+                            }
+                        }
+                    }
+
+                    is Resource.Error -> {
+                        _mainUiState.update {
+                            it.copy(
+                                error = resource.errorMessage
+                            )
+                        }
+                    }
+
+                    is Resource.Loading -> {
+                        _mainUiState.update {
+                            it.copy(isLoading = resource.isLoading)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun loadPopularTvSeries(
+        fetchFromRemote: Boolean = false,
+        isRefresh: Boolean = false
+    ) {
+        viewModelScope.launch {
+            mediaRepository.getMedias(
+                fetchFromRemote,
+                isRefresh,
+                TV,
+                POPULAR,
+                mainUiState.value.popularTvSeriesPage,
+                API_KEY
+            ).collect { resource ->
+                when (resource) {
+                    is Resource.Success -> {
+                        resource.data.let { medias ->
+                            val shuffledMedias = medias.toMutableList()
+                            shuffledMedias.shuffle()
+
+                            if (isRefresh) {
+                                _mainUiState.update {
+                                    it.copy(
+                                        popularTvSeriesList = shuffledMedias.toList(),
+                                        popularTvSeriesPage = 1
+                                    )
+                                }
+                            } else {
+                                _mainUiState.update {
+                                    it.copy(
+                                        popularTvSeriesList = shuffledMedias.toList() + mainUiState.value.popularTvSeriesList,
+                                        popularTvSeriesPage = mainUiState.value.popularTvSeriesPage + 1
+                                    )
+                                }
+                            }
+                        }
+                    }
+
+                    is Resource.Error -> {
+                        _mainUiState.update {
+                            it.copy(
+                                error = resource.errorMessage
+                            )
+                        }
+                    }
+
+                    is Resource.Loading -> {
+                        _mainUiState.update {
+                            it.copy(
+                                isLoading = resource.isLoading
+                            )
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun loadTopRatedTvSeries(
+        fetchFromRemote: Boolean = false,
+        isRefresh: Boolean = false
+    ) {
+        viewModelScope.launch {
+            mediaRepository.getMedias(
+                fetchFromRemote,
+                isRefresh,
+                TV,
+                TOP_RATED,
+                mainUiState.value.topRatedTvSeriesPage,
+                API_KEY
+            ).collect { resource ->
+                when (resource) {
+                    is Resource.Success -> {
+                        resource.data.let { medias ->
+                            val shuffledMedias = medias.toMutableList()
+                            shuffledMedias.shuffle()
+
+                            if (isRefresh) {
+                                _mainUiState.update {
+                                    it.copy(
+                                        topRatedTvSeriesList = shuffledMedias.toList(),
+                                        topRatedTvSeriesPage = 1
+                                    )
+                                }
+                            } else {
+                                _mainUiState.update {
+                                    it.copy(
+                                        topRatedTvSeriesList = shuffledMedias.toList() + mainUiState.value.topRatedTvSeriesList,
+                                        topRatedTvSeriesPage = mainUiState.value.topRatedTvSeriesPage + 1
+                                    )
+                                }
+                            }
+                        }
+                    }
+
+                    is Resource.Error -> {
+                        _mainUiState.update {
+                            it.copy(
+                                error = resource.errorMessage
+                            )
+                        }
+                    }
+
+                    is Resource.Loading -> {
+                        _mainUiState.update {
+                            it.copy(
+                                isLoading = resource.isLoading
+                            )
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun loadTrendingAll(
+        fetchFromRemote: Boolean = false,
+        isRefresh: Boolean = false
+    ) {
+        viewModelScope.launch {
+            mediaRepository.getTrendingMedias(
+                fetchFromRemote,
+                isRefresh,
+                ALL,
+                DAY,
+                mainUiState.value.trendingAllMediaPage,
+                API_KEY
+            ).collect { resource ->
+                when (resource) {
+                    is Resource.Success -> {
+                        resource.data.let { medias ->
+                            val shuffledMedias = medias.toMutableList()
+                            shuffledMedias.shuffle()
+
+                            if (isRefresh) {
+                                _mainUiState.update {
+                                    it.copy(
+                                        trendingAllMediaListModel = shuffledMedias.toList(),
+                                        trendingAllMediaPage = 1
+                                    )
+                                }
+                            } else {
+                                _mainUiState.update {
+                                    it.copy(
+                                        trendingAllMediaListModel = shuffledMedias.toList() + mainUiState.value.trendingAllMediaListModel,
+                                        trendingAllMediaPage = mainUiState.value.trendingAllMediaPage + 1
+                                    )
+                                }
+                            }
+                        }
+                    }
+
+                    is Resource.Error -> {
+                        _mainUiState.update {
+                            it.copy(error = resource.errorMessage)
+                        }
+                    }
+
+                    is Resource.Loading -> {
+                        _mainUiState.update {
+                            it.copy(isLoading = resource.isLoading)
+                        }
+                    }
+                }
+            }
+        }
     }
 }
