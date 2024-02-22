@@ -1,4 +1,4 @@
-package com.furkanhrmnc.filmscape.ui.util.sharedComponents
+package com.furkanhrmnc.filmscape.ui.util
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -26,6 +26,7 @@ import coil.compose.SubcomposeAsyncImage
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import coil.size.Size
+import com.furkanhrmnc.filmscape.R
 import com.furkanhrmnc.filmscape.common.ApiTools.IMAGE_URL
 import com.furkanhrmnc.filmscape.domain.model.Media
 
@@ -41,6 +42,8 @@ fun MediaCard(
 
     val imagePainter = rememberAsyncImagePainter(
         model = ImageRequest.Builder(context)
+            .crossfade(1000)
+            .placeholder(R.drawable.ic_launcher_background)
             .data(imageUrl)
             .size(Size.ORIGINAL)
             .build()

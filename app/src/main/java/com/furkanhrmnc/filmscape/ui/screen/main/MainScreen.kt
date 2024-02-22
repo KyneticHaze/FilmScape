@@ -1,7 +1,8 @@
-package com.furkanhrmnc.filmscape.ui.screens.main
+package com.furkanhrmnc.filmscape.ui.screen.main
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
@@ -18,6 +19,7 @@ fun MainScreen(
 ) {
 
     Scaffold(
+        modifier = Modifier.safeDrawingPadding(),
         containerColor = MaterialTheme.colorScheme.background,
         topBar = { MovieTopBar() }
     ) { scaffoldPadding ->

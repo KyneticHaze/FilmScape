@@ -1,4 +1,4 @@
-package com.furkanhrmnc.filmscape.ui.screens.detail
+package com.furkanhrmnc.filmscape.ui.screen.detail
 
 sealed class DetailEvents {
     data object Refresh: DetailEvents()

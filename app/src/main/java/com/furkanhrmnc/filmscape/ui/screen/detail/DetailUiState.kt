@@ -1,4 +1,4 @@
-package com.furkanhrmnc.filmscape.ui.screens.detail
+package com.furkanhrmnc.filmscape.ui.screen.detail
 
 import com.furkanhrmnc.filmscape.data.remote.dto.images.Poster
 import com.furkanhrmnc.filmscape.domain.model.Media
