@@ -23,7 +23,8 @@ object RepositoryModule {
         api: MediaApi,
         db: MediaDB
     ): MediaRepository {
-        return MediaRepositoryImpl(api, db.mediaDao())
+        val dao = db.mediaDao()
+        return MediaRepositoryImpl(api,dao)
     }
 
     @Provides
@@ -32,6 +33,7 @@ object RepositoryModule {
         api: DetailApi,
         db: MediaDB
     ): DetailRepository {
-        return DetailRepositoryImpl(api, db.mediaDao())
+        val dao = db.mediaDao()
+        return DetailRepositoryImpl(api, dao)
     }
 }
