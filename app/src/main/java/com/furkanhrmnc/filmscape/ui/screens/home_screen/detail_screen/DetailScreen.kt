@@ -44,6 +44,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
+import com.furkanhrmnc.filmscape.R
 import com.furkanhrmnc.filmscape.core.ApiTools
 import com.furkanhrmnc.filmscape.core.Routes
 import com.furkanhrmnc.filmscape.ui.screens.home_screen.detail_screen.components.PosterList
@@ -51,6 +52,7 @@ import com.furkanhrmnc.filmscape.ui.screens.home_screen.detail_screen.components
 import com.furkanhrmnc.filmscape.domain.model.Media
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
 @Composable

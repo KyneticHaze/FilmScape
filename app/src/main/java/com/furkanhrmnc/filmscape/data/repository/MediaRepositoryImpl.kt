@@ -17,7 +17,7 @@ class MediaRepositoryImpl(
     private val dao: MediaDao
 ) : MediaRepository {
 
-    override suspend fun getMedia(id: Int, type: String, category: String): Media =
+    override suspend fun getMedia(id: Int): Media =
         dao.getMediaById(id).toMedia()
 
     override suspend fun insertMedia(media: Media) {
@@ -25,14 +25,7 @@ class MediaRepositoryImpl(
         dao.insertMedia(mediaEntity)
     }
 
-    override suspend fun updateMedia(media: Media) {
-        val mediaEntity = media.toMediaEntity()
-        dao.updateMedia(mediaEntity)
-    }
-
     override suspend fun getMedias(
-        fetchFromRemote: Boolean,
-        isRefresh: Boolean,
         type: String,
         category: String,
         page: Int,
@@ -67,8 +60,6 @@ class MediaRepositoryImpl(
     }
 
     override suspend fun getTrendingMedias(
-        fetchFromRemote: Boolean,
-        isRefresh: Boolean,
         type: String,
         time: String,
         page: Int,
@@ -100,7 +91,6 @@ class MediaRepositoryImpl(
     }
 
     override suspend fun search(
-        fetchFromRemote: Boolean,
         query: String,
         page: Int,
         apiKey: String

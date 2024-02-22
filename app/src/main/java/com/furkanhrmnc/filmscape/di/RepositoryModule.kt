@@ -1,6 +1,6 @@
 package com.furkanhrmnc.filmscape.di
 
-import com.furkanhrmnc.filmscape.data.local.MediaDB
+import com.furkanhrmnc.filmscape.data.local.MediaDao
 import com.furkanhrmnc.filmscape.data.remote.api.DetailApi
 import com.furkanhrmnc.filmscape.data.repository.MediaRepositoryImpl
 import com.furkanhrmnc.filmscape.data.remote.api.MediaApi
@@ -21,9 +21,8 @@ object RepositoryModule {
     @Singleton
     fun provideMediaRepository(
         api: MediaApi,
-        db: MediaDB
+        dao: MediaDao
     ): MediaRepository {
-        val dao = db.mediaDao()
         return MediaRepositoryImpl(api,dao)
     }
 
@@ -31,9 +30,8 @@ object RepositoryModule {
     @Singleton
     fun provideDetailRepository(
         api: DetailApi,
-        db: MediaDB
+        dao: MediaDao
     ): DetailRepository {
-        val dao = db.mediaDao()
         return DetailRepositoryImpl(api, dao)
     }
 }

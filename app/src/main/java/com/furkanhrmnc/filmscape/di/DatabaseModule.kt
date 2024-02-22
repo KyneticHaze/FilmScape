@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.furkanhrmnc.filmscape.core.Constants.MEDIA_DB
 import com.furkanhrmnc.filmscape.data.local.MediaDB
+import com.furkanhrmnc.filmscape.data.local.MediaDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -25,5 +26,13 @@ object DatabaseModule {
             MediaDB::class.java,
             MEDIA_DB
         ).build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideDao(
+        db: MediaDB
+    ): MediaDao {
+        return db.mediaDao()
     }
 }

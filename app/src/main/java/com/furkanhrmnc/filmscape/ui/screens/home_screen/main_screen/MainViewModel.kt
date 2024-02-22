@@ -58,11 +58,9 @@ class MainViewModel @Inject constructor(
                             isRefresh = true
                         )
                         loadTopRatedMovies(
-                            fetchFromRemote = true,
                             isRefresh = true
                         )
                         loadNowPlayingMovies(
-                            fetchFromRemote = true,
                             isRefresh = true
                         )
                         loadTopRatedTvSeries(
@@ -91,7 +89,6 @@ class MainViewModel @Inject constructor(
 
                     Constants.TOP_RATED_SCREEN -> {
                         loadTopRatedMovies(
-                            fetchFromRemote = true,
                             isRefresh = true
                         )
                         loadTopRatedTvSeries(
@@ -106,11 +103,9 @@ class MainViewModel @Inject constructor(
                             isRefresh = true
                         )
                         loadTopRatedMovies(
-                            fetchFromRemote = true,
                             isRefresh = true
                         )
                         loadNowPlayingMovies(
-                            fetchFromRemote = true,
                             isRefresh = true
                         )
                     }
@@ -165,8 +160,6 @@ class MainViewModel @Inject constructor(
     ) {
         viewModelScope.launch {
             mediaRepository.getMedias(
-                fetchFromRemote,
-                isRefresh,
                 MOVIE,
                 POPULAR,
                 mainUiState.value.popularMoviesPage,
@@ -220,13 +213,10 @@ class MainViewModel @Inject constructor(
     }
 
     private fun loadTopRatedMovies(
-        fetchFromRemote: Boolean = false,
         isRefresh: Boolean = false
     ) {
         viewModelScope.launch {
             mediaRepository.getMedias(
-                fetchFromRemote,
-                isRefresh,
                 MOVIE,
                 TOP_RATED,
                 mainUiState.value.topRatedMoviesPage,
@@ -273,13 +263,10 @@ class MainViewModel @Inject constructor(
     }
 
     private fun loadNowPlayingMovies(
-        fetchFromRemote: Boolean = false,
         isRefresh: Boolean = false
     ) {
         viewModelScope.launch {
             mediaRepository.getMedias(
-                fetchFromRemote,
-                isRefresh,
                 MOVIE,
                 NOW_PLAYING,
                 _mainUiState.value.nowPlayingMoviesPage,
@@ -333,8 +320,6 @@ class MainViewModel @Inject constructor(
     ) {
         viewModelScope.launch {
             mediaRepository.getMedias(
-                fetchFromRemote,
-                isRefresh,
                 TV,
                 POPULAR,
                 mainUiState.value.popularTvSeriesPage,
@@ -390,8 +375,6 @@ class MainViewModel @Inject constructor(
     ) {
         viewModelScope.launch {
             mediaRepository.getMedias(
-                fetchFromRemote,
-                isRefresh,
                 TV,
                 TOP_RATED,
                 mainUiState.value.topRatedTvSeriesPage,
@@ -447,8 +430,6 @@ class MainViewModel @Inject constructor(
     ) {
         viewModelScope.launch {
             mediaRepository.getTrendingMedias(
-                fetchFromRemote,
-                isRefresh,
                 ALL,
                 DAY,
                 mainUiState.value.trendingAllMediaPage,

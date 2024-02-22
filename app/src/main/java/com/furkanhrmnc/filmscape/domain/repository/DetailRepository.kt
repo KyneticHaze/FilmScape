@@ -8,12 +8,13 @@ import kotlinx.coroutines.flow.Flow
 interface DetailRepository {
 
     suspend fun getMediaDetail(
-        isRefresh: Boolean,
+        type: String,
         mediaId: Int,
         apiKey: String
     ): Flow<Resource<Media>>
 
     suspend fun getSimilarMedias(
+        type: String,
         mediaId: Int,
         page: Int,
         apiKey: String

@@ -15,7 +15,7 @@ class DetailRepositoryImpl(
     private val dao: MediaDao
 ) : DetailRepository {
     override suspend fun getMediaDetail(
-        isRefresh: Boolean,
+        type: String,
         mediaId: Int,
         apiKey: String
     ): Flow<Resource<Media>> {
@@ -26,17 +26,7 @@ class DetailRepositoryImpl(
             // Veritabanına kayıtlı olan objeyi alma
             val mediaEntity = dao.getMediaById(mediaId)
 
-            if (!isRefresh) {
-                emit(
-                    Resource.Success(
-                        data = mediaEntity.toMedia()
-                    )
-                )
-                emit(Resource.Loading(false))
-                return@flow
-            }
-
-            val remoteDetails = detailApi.getMovieDetail(mediaId, apiKey)
+            val remoteDetails = detailApi.getMovieDetail(type, mediaId, apiKey)
 
 
             emit(
@@ -50,6 +40,7 @@ class DetailRepositoryImpl(
     }
 
     override suspend fun getSimilarMedias(
+        type: String,
         mediaId: Int,
         page: Int,
         apiKey: String
@@ -58,7 +49,7 @@ class DetailRepositoryImpl(
 
             emit(Resource.Loading(true))
 
-            val remoteSimilarMedias = detailApi.getSimilarMedias(mediaId, page, apiKey).medias
+            val remoteSimilarMedias = detailApi.getSimilarMedias(type, mediaId, page, apiKey).medias
 
             if (remoteSimilarMedias == null) {
                 emit(

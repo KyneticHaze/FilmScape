@@ -3,6 +3,7 @@ package com.furkanhrmnc.filmscape.ui.screens.home_screen.detail_screen
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.furkanhrmnc.filmscape.core.ApiTools
+import com.furkanhrmnc.filmscape.core.Constants.MOVIE
 import com.furkanhrmnc.filmscape.core.Resource
 import com.furkanhrmnc.filmscape.domain.repository.DetailRepository
 import com.furkanhrmnc.filmscape.domain.repository.MediaRepository
@@ -34,22 +35,20 @@ class DetailViewModel @Inject constructor(
                     )
                 }
 
-                startLoad(true)
+                startLoad()
             }
             is DetailEvents.SetDataOnLoad -> {
                 startLoad(
-                    isRefresh = false,
                     id = event.id)
             }
         }
     }
 
     private fun startLoad(
-        isRefresh: Boolean,
         id: Int = detailUiState.value.media?.id ?: 0
     ) {
         loadMediaItem(id) {
-            loadMediaDetails(isRefresh = isRefresh)
+            loadMediaDetails()
             loadSimilarMediaList()
         }
     }
@@ -68,12 +67,10 @@ class DetailViewModel @Inject constructor(
         }
     }
 
-    private fun loadMediaDetails(
-        isRefresh: Boolean
-    ) {
+    private fun loadMediaDetails() {
         viewModelScope.launch {
             detailRepository.getMediaDetail(
-                isRefresh = isRefresh,
+                type = MOVIE,
                 mediaId = _detailUiState.value.media?.id ?: 0,
                 apiKey = ApiTools.API_KEY
             )
@@ -111,6 +108,7 @@ class DetailViewModel @Inject constructor(
     private fun loadSimilarMediaList() {
         viewModelScope.launch {
             detailRepository.getSimilarMedias(
+                type = MOVIE,
                 mediaId = detailUiState.value.media?.id ?: 1,
                 page = 1,
                 apiKey = ApiTools.API_KEY

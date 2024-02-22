@@ -11,13 +11,8 @@ interface MediaRepository {
 
     suspend fun insertMedia(media: Media)
 
-    suspend fun updateMedia(media: Media)
-
-
     // Retrofit functions
     suspend fun getMedias(
-        fetchFromRemote: Boolean,
-        isRefresh: Boolean,
         type: String,
         category: String,
         page: Int,
@@ -25,8 +20,6 @@ interface MediaRepository {
     ): Flow<Resource<List<Media>>>
 
     suspend fun getTrendingMedias(
-        fetchFromRemote: Boolean,
-        isRefresh: Boolean,
         type: String,
         time: String,
         page: Int,
@@ -34,7 +27,6 @@ interface MediaRepository {
     ): Flow<Resource<List<Media>>>
 
     suspend fun search(
-        fetchFromRemote: Boolean,
         query: String,
         page: Int,
         apiKey: String
