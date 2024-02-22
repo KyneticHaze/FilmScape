@@ -1,6 +1,6 @@
 package com.furkanhrmnc.filmscape.data.repository
 
-import com.furkanhrmnc.filmscape.core.Resource
+import com.furkanhrmnc.filmscape.common.Resource
 import com.furkanhrmnc.filmscape.data.local.MediaDao
 import com.furkanhrmnc.filmscape.data.mappers.toMedia
 import com.furkanhrmnc.filmscape.data.mappers.toMediaEntity

@@ -26,7 +26,7 @@ import coil.compose.SubcomposeAsyncImage
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import coil.size.Size
-import com.furkanhrmnc.filmscape.core.ApiTools.IMAGE_URL
+import com.furkanhrmnc.filmscape.common.ApiTools.IMAGE_URL
 import com.furkanhrmnc.filmscape.domain.model.Media
 
 @Composable

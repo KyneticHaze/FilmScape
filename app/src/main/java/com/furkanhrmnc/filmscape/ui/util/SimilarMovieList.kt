@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.furkanhrmnc.filmscape.core.Routes
+import com.furkanhrmnc.filmscape.ui.navigation.Routes
 import com.furkanhrmnc.filmscape.domain.model.Media
 import com.furkanhrmnc.filmscape.ui.util.sharedComponents.MediaCard
 

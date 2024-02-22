@@ -8,7 +8,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.furkanhrmnc.filmscape.core.Constants
+import com.furkanhrmnc.filmscape.common.Constants
 import com.furkanhrmnc.filmscape.ui.util.MediaListOrShimmer
 import com.furkanhrmnc.filmscape.ui.util.MovieTopBar
 

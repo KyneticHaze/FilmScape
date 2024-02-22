@@ -15,7 +15,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.furkanhrmnc.filmscape.core.Routes
 import com.furkanhrmnc.filmscape.ui.screens.detail.DetailEvents
 import com.furkanhrmnc.filmscape.ui.screens.detail.DetailScreen
 import com.furkanhrmnc.filmscape.ui.screens.detail.DetailViewModel

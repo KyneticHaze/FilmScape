@@ -21,8 +21,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.furkanhrmnc.filmscape.R
-import com.furkanhrmnc.filmscape.core.Constants
-import com.furkanhrmnc.filmscape.core.Routes
+import com.furkanhrmnc.filmscape.common.Constants
+import com.furkanhrmnc.filmscape.ui.navigation.Routes
 import com.furkanhrmnc.filmscape.ui.screens.main.MainUIState
 import com.furkanhrmnc.filmscape.ui.theme.customFont
 import com.furkanhrmnc.filmscape.ui.util.sharedComponents.MediaCard

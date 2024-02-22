@@ -2,7 +2,7 @@ package com.furkanhrmnc.filmscape.di
 
 import android.content.Context
 import androidx.room.Room
-import com.furkanhrmnc.filmscape.core.Constants.MEDIA_DB
+import com.furkanhrmnc.filmscape.common.Constants.MEDIA_DB
 import com.furkanhrmnc.filmscape.data.local.MediaDB
 import com.furkanhrmnc.filmscape.data.local.MediaDao
 import dagger.Module

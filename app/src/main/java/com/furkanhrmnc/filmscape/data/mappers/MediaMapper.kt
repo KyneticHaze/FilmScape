@@ -1,6 +1,6 @@
 package com.furkanhrmnc.filmscape.data.mappers
 
-import com.furkanhrmnc.filmscape.core.Constants
+import com.furkanhrmnc.filmscape.common.Constants
 import com.furkanhrmnc.filmscape.data.local.MediaEntity
 import com.furkanhrmnc.filmscape.data.remote.dto.media.MediaDTO
 import com.furkanhrmnc.filmscape.domain.model.Media

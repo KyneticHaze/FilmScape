@@ -45,8 +45,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.furkanhrmnc.filmscape.R
-import com.furkanhrmnc.filmscape.core.ApiTools
-import com.furkanhrmnc.filmscape.core.Routes
+import com.furkanhrmnc.filmscape.common.ApiTools
+import com.furkanhrmnc.filmscape.ui.navigation.Routes
 import com.furkanhrmnc.filmscape.ui.util.PosterList
 import com.furkanhrmnc.filmscape.ui.util.SimilarMovieList
 import com.furkanhrmnc.filmscape.domain.model.Media

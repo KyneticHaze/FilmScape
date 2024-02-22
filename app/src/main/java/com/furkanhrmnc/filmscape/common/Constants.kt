@@ -1,4 +1,4 @@
-package com.furkanhrmnc.filmscape.core
+package com.furkanhrmnc.filmscape.common
 
 object Constants {
 

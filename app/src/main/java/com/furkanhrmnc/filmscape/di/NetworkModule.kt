@@ -1,6 +1,6 @@
 package com.furkanhrmnc.filmscape.di
 
-import com.furkanhrmnc.filmscape.core.ApiTools
+import com.furkanhrmnc.filmscape.common.ApiTools
 import com.furkanhrmnc.filmscape.data.remote.api.DetailApi
 import com.furkanhrmnc.filmscape.data.remote.api.GenreApi
 import com.furkanhrmnc.filmscape.data.remote.api.MediaApi

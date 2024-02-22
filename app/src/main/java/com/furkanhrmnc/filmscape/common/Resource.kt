@@ -1,4 +1,4 @@
-package com.furkanhrmnc.filmscape.core
+package com.furkanhrmnc.filmscape.common
 
 sealed class Resource<out T> {
     data class Success<out T>(val data: T) : Resource<T>()

@@ -2,9 +2,9 @@ package com.furkanhrmnc.filmscape.ui.screens.detail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.furkanhrmnc.filmscape.core.ApiTools
-import com.furkanhrmnc.filmscape.core.Constants.MOVIE
-import com.furkanhrmnc.filmscape.core.Resource
+import com.furkanhrmnc.filmscape.common.ApiTools
+import com.furkanhrmnc.filmscape.common.Constants.MOVIE
+import com.furkanhrmnc.filmscape.common.Resource
 import com.furkanhrmnc.filmscape.domain.repository.DetailRepository
 import com.furkanhrmnc.filmscape.domain.repository.MediaRepository
 import dagger.hilt.android.lifecycle.HiltViewModel

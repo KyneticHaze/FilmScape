@@ -2,16 +2,16 @@ package com.furkanhrmnc.filmscape.ui.screens.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.furkanhrmnc.filmscape.core.ApiTools.API_KEY
-import com.furkanhrmnc.filmscape.core.Constants
-import com.furkanhrmnc.filmscape.core.Constants.ALL
-import com.furkanhrmnc.filmscape.core.Constants.DAY
-import com.furkanhrmnc.filmscape.core.Constants.MOVIE
-import com.furkanhrmnc.filmscape.core.Constants.NOW_PLAYING
-import com.furkanhrmnc.filmscape.core.Constants.POPULAR
-import com.furkanhrmnc.filmscape.core.Constants.TOP_RATED
-import com.furkanhrmnc.filmscape.core.Constants.TV
-import com.furkanhrmnc.filmscape.core.Resource
+import com.furkanhrmnc.filmscape.common.ApiTools.API_KEY
+import com.furkanhrmnc.filmscape.common.Constants
+import com.furkanhrmnc.filmscape.common.Constants.ALL
+import com.furkanhrmnc.filmscape.common.Constants.DAY
+import com.furkanhrmnc.filmscape.common.Constants.MOVIE
+import com.furkanhrmnc.filmscape.common.Constants.NOW_PLAYING
+import com.furkanhrmnc.filmscape.common.Constants.POPULAR
+import com.furkanhrmnc.filmscape.common.Constants.TOP_RATED
+import com.furkanhrmnc.filmscape.common.Constants.TV
+import com.furkanhrmnc.filmscape.common.Resource
 import com.furkanhrmnc.filmscape.domain.repository.MediaRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

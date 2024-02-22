@@ -1,6 +1,6 @@
 package com.furkanhrmnc.filmscape.domain.repository
 
-import com.furkanhrmnc.filmscape.core.Resource
+import com.furkanhrmnc.filmscape.common.Resource
 import com.furkanhrmnc.filmscape.data.remote.dto.images.Poster
 import com.furkanhrmnc.filmscape.domain.model.Media
 import kotlinx.coroutines.flow.Flow
