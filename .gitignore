@@ -15,4 +15,5 @@
 local.properties
 app/google-services.json
 app/src/main/java/com/furkanhrmnc/filmscape/core/ApiTools.kt
+app/src/main/java/com/furkanhrmnc/filmscape/ui/util/assets
 gradle.properties
