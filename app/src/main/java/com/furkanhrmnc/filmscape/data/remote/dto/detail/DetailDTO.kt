@@ -4,7 +4,7 @@ package com.furkanhrmnc.filmscape.data.remote.dto.detail
 import com.furkanhrmnc.filmscape.data.remote.dto.genre.Genre
 import com.google.gson.annotations.SerializedName
 
-data class DetailResponse(
+data class DetailDTO(
     @SerializedName("adult")
     val adult: Boolean?,
     @SerializedName("backdrop_path")
@@ -47,14 +47,8 @@ data class DetailResponse(
     val popularity: Double?,
     @SerializedName("poster_path")
     val posterPath: String?,
-    @SerializedName("production_companies")
-    val productionCompanies: List<ProductionCompany>?,
-    @SerializedName("production_countries")
-    val productionCountries: List<ProductionCountry>?,
     @SerializedName("seasons")
-    val seasons: List<Season?>?,
-    @SerializedName("spoken_languages")
-    val spokenLanguages: List<SpokenLanguage>?,
+    val seasons: List<Season>?,
     @SerializedName("status")
     val status: String?,
     @SerializedName("tagline")
