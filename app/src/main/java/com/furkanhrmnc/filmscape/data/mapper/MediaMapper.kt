@@ -1,8 +1,10 @@
-package com.furkanhrmnc.filmscape.data.mappers
+package com.furkanhrmnc.filmscape.data.mapper
 
 import com.furkanhrmnc.filmscape.common.Constants
-import com.furkanhrmnc.filmscape.data.local.MediaEntity
+import com.furkanhrmnc.filmscape.data.local.media.MediaEntity
+import com.furkanhrmnc.filmscape.data.remote.dto.credit.Cast
 import com.furkanhrmnc.filmscape.data.remote.dto.media.MediaDTO
+import com.furkanhrmnc.filmscape.domain.model.CastModel
 import com.furkanhrmnc.filmscape.domain.model.Media
 
 fun MediaDTO.toMedia(
@@ -16,7 +18,8 @@ fun MediaDTO.toMedia(
     overview = overview ?: Constants.unavailable,
     popularity = popularity ?: 0.0,
     posterPath = posterPath ?: Constants.unavailable,
-    releaseDate = movieDate ?: Constants.unavailable,
+    movieDate = movieDate ?: Constants.unavailable,
+    tvDate = tvDate ?: Constants.unavailable,
     title = title ?: Constants.unavailable,
     voteAverage = voteAverage ?: 0.0,
     voteCount = voteCount ?: 0,
@@ -29,7 +32,8 @@ fun MediaEntity.toMedia(): Media = Media(
     originalLanguage = originalLanguage,
     overview = overview,
     posterPath = posterPath,
-    releaseDate = releaseDate,
+    movieDate = movieDate,
+    tvDate = tvDate,
     title = title,
     voteAverage = voteAverage,
     popularity = popularity,
@@ -48,12 +52,12 @@ fun MediaDTO.toMediaEntity(): MediaEntity = MediaEntity(
     originalLanguage = originalLanguage ?: Constants.unavailable,
     originalTitle = originalTitle ?: Constants.unavailable,
     title = title ?: Constants.unavailable,
-    releaseDate = movieDate ?: Constants.unavailable,
+    movieDate = movieDate ?: Constants.unavailable,
+    tvDate = tvDate ?: Constants.unavailable,
     posterPath = posterPath ?: Constants.unavailable,
     video = video ?: false,
     voteAverage = voteAverage ?: 0.0,
     voteCount = voteCount ?: 0,
-    firstAirDate = movieDate ?: Constants.unavailable,
     popularity = popularity ?: 0.0,
     genreIds = genreIds?.joinToString(",") ?: "-1,-2"
 )
@@ -63,15 +67,21 @@ fun Media.toMediaEntity(): MediaEntity = MediaEntity(
     adult = adult,
     originalTitle = originalTitle,
     originalLanguage = originalLanguage,
-    releaseDate = releaseDate,
+    movieDate = movieDate,
     title = title,
     voteCount = voteCount,
     voteAverage = voteAverage,
     id = id,
-    firstAirDate = releaseDate,
+    tvDate = tvDate,
     genreIds = genreIds.joinToString(","),
     overview = overview,
     posterPath = posterPath,
     popularity = popularity,
     video = video
+)
+
+fun Cast.toCastModel(): CastModel = CastModel(
+    originalName = originalName ?: Constants.unavailable,
+    characterName = character ?: Constants.unavailable,
+    image = profilePath ?: Constants.unavailable
 )

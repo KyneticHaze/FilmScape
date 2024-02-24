@@ -1,9 +1,12 @@
-package com.furkanhrmnc.filmscape.data.local
+package com.furkanhrmnc.filmscape.data.local.media
 
+import androidx.paging.PagingSource
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 
 /**
  * @author Furkan Harmancı
@@ -11,16 +14,19 @@ import androidx.room.Query
 @Dao
 interface MediaDao {
 
+    @Query("SELECT * FROM media_table")
+    fun getAllMedia(): PagingSource<Int, MediaEntity>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertMedias(medias: List<MediaEntity>)
 
-    /**
-     * Tek media ekleme
-     */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertMedia(media: MediaEntity)
 
+    @Update
+    suspend fun updateMedia(media: MediaEntity)
 
-    @Query("SELECT * FROM mediaentity WHERE id = :id")
-    suspend fun getMediaById(id: Int): MediaEntity
+    @Delete
+    suspend fun deleteMedia(media: MediaEntity)
+
 }
