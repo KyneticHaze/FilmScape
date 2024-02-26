@@ -4,5 +4,23 @@
     <string name="trending_now">Trending Now</string>
     <string name="tv_series">Tv Series</string>
     <string name="movies">Movies</string>
+    
+    <string name="popular">Popular</string>
     <string name="top_rated">Top Rated</string>
+    <string name="now_playing">Now Playing</string>
+    <string name="up_coming">Upcoming</string>
+
+    <string name="airing_today">Airing Today</string>
+    <string name="on_the_air">On the Air</string>
+
+    <string name="search">Search All</string>
+
+    <string name="actors">Actors</string>
+    <string name="images">Images</string>
+
+    <string name="created">Created By</string>
+    <string name="last_episode">Last Episode</string>
+    <string name="next_episode">Next Episode</string>
+    <string name="tv_info">Tv Info</string>
+    <string name="seasons">Seasons</string>
 </resources>
