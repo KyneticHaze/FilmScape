@@ -39,7 +39,7 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideMediaApi(
+    fun provideRetrofit(
         client: OkHttpClient
     ) : Retrofit {
         return Retrofit.Builder()
