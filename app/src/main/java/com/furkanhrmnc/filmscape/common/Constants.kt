@@ -10,6 +10,8 @@ object Constants {
     const val SEASON_TABLE = "season_table"
     const val FILM_SCAPE_DB = "film_scape_db"
 
+    const val PER_ITEM_PAGE = 20
+
     // Media types
     const val MOVIE = "movie"
     const val TV = "tv"
