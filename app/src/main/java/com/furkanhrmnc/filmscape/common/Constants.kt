@@ -12,18 +12,14 @@ object Constants {
 
     // Trending types
     const val TRENDING = "trending"
+    const val ALL = "all"
     const val DAY = "day"
-    const val WEEK = "week"
 
-    // Movie types
+    // Media types
     const val NOW_PLAYING = "now_playing"
     const val TOP_RATED = "top_rated"
     const val POPULAR = "popular"
     const val UPCOMING = "upcoming"
-
-    // Tv types
-    const val ON_THE_AIR = "on_the_air"
-    const val AIRING_TODAY = "airing_today"
 
     // Empty string
     const val unavailable = "Unavailable"
