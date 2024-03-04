@@ -17,7 +17,7 @@
         android:theme="@style/Theme.MovieLand"
         tools:targetApi="31">
         <activity
-            android:name="com.furkanhrmnc.filmscape.ui.MainActivity"
+            android:name="com.furkanhrmnc.filmscape.ui.screen.main.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.MovieLand">
