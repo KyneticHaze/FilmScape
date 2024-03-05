@@ -12,7 +12,11 @@
 
     <string name="special">Special</string>
 
-    <string name="search">Search All</string>
+    <string name="search">Search</string>
+
+    <string name="account">Account</string>
+
+    <string name="search_all">Search All</string>
 
     <string name="see_all">See All</string>
 </resources>
