@@ -67,6 +67,8 @@ dependencies {
     implementation(libs.coil.compose)
     implementation(libs.androidx.material.icons.extended)
 
+    implementation(libs.youtube.player.view)
+
     implementation(libs.material.android)
     implementation(libs.core.ktx)
     implementation(libs.lifecycle.runtime.ktx)
