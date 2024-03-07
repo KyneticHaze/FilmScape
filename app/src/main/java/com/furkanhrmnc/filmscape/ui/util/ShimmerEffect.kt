@@ -1,4 +1,4 @@
-package com.furkanhrmnc.filmscape.ui.util.sharedComponents
+package com.furkanhrmnc.filmscape.ui.util
 
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable
