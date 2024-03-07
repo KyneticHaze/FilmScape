@@ -7,7 +7,6 @@
     <application
         android:name="com.furkanhrmnc.filmscape.di.MovieApplication"
         android:allowBackup="true"
-        android:windowSoftInputMode="adjustResize"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/app_logo"
