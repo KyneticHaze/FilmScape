@@ -19,4 +19,7 @@
     <string name="search_all">Search All</string>
 
     <string name="see_all">See All</string>
+
+    <string name="not_found_video">Not Available Video!</string>
+    <string name="media_video">Media Video</string>
 </resources>
