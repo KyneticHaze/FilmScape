@@ -67,6 +67,24 @@ fun HomeSection(
                     mainUIState = mainUIState
                 )
             }
+            
+            Spacer(modifier = Modifier.height(8.dp))
+            
+            MediaSectionOrShimmer(
+                type = Constants.MOVIES_SCREEN,
+                showShimmer = mainUIState.moviesList.isEmpty(),
+                navController = navController,
+                mainUIState = mainUIState
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            MediaSectionOrShimmer(
+                type = Constants.TV_SCREEN,
+                showShimmer = mainUIState.tvSeriesList.isEmpty(),
+                navController = navController,
+                mainUIState = mainUIState
+            )
         }
     }
 }
