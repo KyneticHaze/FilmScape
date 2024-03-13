@@ -1,4 +1,4 @@
-package com.furkanhrmnc.filmscape.ui.util
+package com.furkanhrmnc.filmscape.ui.screen.home.components
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -10,8 +10,6 @@ import androidx.navigation.NavController
 import com.furkanhrmnc.filmscape.R
 import com.furkanhrmnc.filmscape.common.Constants
 import com.furkanhrmnc.filmscape.ui.screen.main.MainUIState
-import com.furkanhrmnc.filmscape.ui.util.sharedComponents.MediaSection
-import com.furkanhrmnc.filmscape.ui.util.sharedComponents.ShimmerSection
 
 @Composable
 fun MediaSectionOrShimmer(

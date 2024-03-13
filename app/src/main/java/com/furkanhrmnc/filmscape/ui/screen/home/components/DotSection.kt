@@ -1,4 +1,4 @@
-package com.furkanhrmnc.filmscape.ui.util
+package com.furkanhrmnc.filmscape.ui.screen.home.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box

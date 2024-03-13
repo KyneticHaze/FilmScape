@@ -1,4 +1,4 @@
-package com.furkanhrmnc.filmscape.ui.util
+package com.furkanhrmnc.filmscape.ui.screen.home.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Spacer
@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.furkanhrmnc.filmscape.ui.screen.home.components.DotSection
 
 @Composable
 fun IndicatorSection(

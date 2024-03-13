@@ -1,17 +1,15 @@
-package com.furkanhrmnc.filmscape.ui.util
+package com.furkanhrmnc.filmscape.ui.screen.home.components
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -42,7 +40,7 @@ fun SwipePager(
         rememberPagerState(initialPage = 0, initialPageOffsetFraction = 0f) { mediaList.size }
 
     val scope = rememberCoroutineScope()
-    val swipeMillis = 2000L
+    val swipeMillis = 3500L
 
     Column(
         modifier = Modifier.fillMaxWidth(),
@@ -60,6 +58,7 @@ fun SwipePager(
             ) {
                 Box(
                     modifier = modifier
+                        .height(300.dp)
                         .clip(RoundedCornerShape(16.dp))
                 ) {
                     MediaCard(
@@ -75,14 +74,14 @@ fun SwipePager(
                                 brush = Brush.verticalGradient(
                                     listOf(
                                         Color.Transparent,
-                                        Color.Black
+                                        Color.White
                                     )
                                 )
                             )
                             .padding(16.dp, 22.dp, 16.dp, 12.dp)
                             .align(Alignment.BottomStart)
                     ) {
-                        TitleText(text = mediaList[index].title)
+                        TitleText(text = mediaList[index].originalTitle)
                     }
                 }
             }

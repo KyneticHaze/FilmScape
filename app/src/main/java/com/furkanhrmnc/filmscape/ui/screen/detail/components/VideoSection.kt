@@ -1,4 +1,4 @@
-package com.furkanhrmnc.filmscape.ui.util
+package com.furkanhrmnc.filmscape.ui.screen.detail.components
 
 import android.widget.Toast
 import androidx.compose.foundation.clickable
