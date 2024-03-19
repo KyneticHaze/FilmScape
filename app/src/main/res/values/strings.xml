@@ -22,4 +22,8 @@
 
     <string name="not_found_video">Not Available Video!</string>
     <string name="media_video">Media Video</string>
+
+    <string name="overview">Overview</string>
+
+    <string name="similar_medias">Similar Movie/Tv Series</string>
 </resources>
