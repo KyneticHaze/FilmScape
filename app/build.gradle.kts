@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.hiltAndroid)
     alias(libs.plugins.kspCompiler)
     id("kotlin-parcelize")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -54,6 +55,7 @@ android {
 
 dependencies {
     implementation(libs.hilt.android)
+    implementation(libs.firebase.firestore)
     ksp(libs.hilt.android.compiler)
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
