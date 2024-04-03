@@ -4,7 +4,6 @@ plugins {
     alias(libs.plugins.hiltAndroid)
     alias(libs.plugins.kspCompiler)
     id("kotlin-parcelize")
-    id("com.google.gms.google-services")
 }
 
 android {
@@ -54,18 +53,24 @@ android {
 }
 
 dependencies {
+
     implementation(libs.hilt.android)
-    implementation(libs.firebase.firestore)
     ksp(libs.hilt.android.compiler)
+
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
+
     implementation(libs.room.ktx)
     ksp(libs.room.compiler)
     implementation(libs.room.paging)
+
     implementation(libs.logging.interceptor)
+
     implementation(libs.hilt.navigation.compose)
     implementation(libs.navigation.compose)
+
     implementation(libs.coil.compose)
+
     implementation(libs.androidx.material.icons.extended)
 
     implementation(libs.youtube.player.view)
