@@ -8,17 +8,19 @@ hiltVersion = "2.50"
 junit = "1.1.5"
 junitVersion = "4.13.2"
 lifecycleRuntimeKtxVersion = "2.7.0"
-materialAndroidVersion = "1.6.2"
-materialIconsExtendedVersion = "1.6.2"
+materialAndroidVersion = "1.6.3"
+materialIconsExtendedVersion = "1.6.3"
 navVersion = "2.7.7"
 interceptorVersion = "4.12.0"
 retrofitVersion = "2.9.0"
 roomVersion = "2.6.1"
-compose-bom = "2024.02.01"
+compose-bom = "2024.02.02"
 agp = "8.2.2"
 kotlin = "1.9.0"
 ksp-compiler = "1.9.0-1.0.12"
 youtube-player = "12.1.0"
+googleServicesVersion = "4.4.1"
+firebaseFirestoreVersion = "24.10.3"
 
 [libraries]
 activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activityComposeVersion" }
@@ -50,6 +52,8 @@ androidx-compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-
 androidx-compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 
 youtube-player-view = { module = "com.pierfrancescosoffritti.androidyoutubeplayer:core", version.ref = "youtube-player" }
+google-services = { group = "com.google.gms", name = "google-services", version.ref = "googleServicesVersion" }
+firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore", version.ref = "firebaseFirestoreVersion" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
