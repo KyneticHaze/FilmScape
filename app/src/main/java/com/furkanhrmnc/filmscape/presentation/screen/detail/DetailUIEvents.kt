@@ -1,4 +1,4 @@
-package com.furkanhrmnc.filmscape.ui.screen.detail
+package com.furkanhrmnc.filmscape.presentation.screen.detail
 
 sealed class DetailUIEvents {
 
