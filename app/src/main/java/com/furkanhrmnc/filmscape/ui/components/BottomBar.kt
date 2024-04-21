@@ -1,4 +1,4 @@
-package com.furkanhrmnc.filmscape.ui.screen.main.components
+package com.furkanhrmnc.filmscape.ui.components
 
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar

@@ -23,9 +23,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.furkanhrmnc.filmscape.R
-import com.furkanhrmnc.filmscape.ui.screen.main.components.SwipeSection
-import com.furkanhrmnc.filmscape.ui.screen.main.components.BottomBar
-import com.furkanhrmnc.filmscape.ui.screen.main.components.TopBar
+import com.furkanhrmnc.filmscape.ui.components.SwipeSection
+import com.furkanhrmnc.filmscape.ui.components.BottomBar
+import com.furkanhrmnc.filmscape.ui.components.TopBar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

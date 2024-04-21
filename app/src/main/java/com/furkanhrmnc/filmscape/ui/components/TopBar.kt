@@ -1,4 +1,4 @@
-package com.furkanhrmnc.filmscape.ui.screen.main.components
+package com.furkanhrmnc.filmscape.ui.components
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Search
