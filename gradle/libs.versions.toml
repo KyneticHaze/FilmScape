@@ -2,6 +2,7 @@
 activityComposeVersion = "1.8.2"
 coilVersion = "2.5.0"
 coreKtxVersion = "1.12.0"
+datastorePreferencesVersion = "1.1.0"
 espressoCoreVersion = "3.5.1"
 hiltNavigationComposeVersion = "1.2.0"
 hiltVersion = "2.50"
@@ -12,6 +13,7 @@ materialAndroidVersion = "1.6.3"
 materialIconsExtendedVersion = "1.6.3"
 navVersion = "2.7.7"
 interceptorVersion = "4.12.0"
+pagingComposeVersion = "3.3.0-beta01"
 retrofitVersion = "2.9.0"
 roomVersion = "2.6.1"
 compose-bom = "2024.02.02"
@@ -24,7 +26,9 @@ firebaseFirestoreVersion = "24.10.3"
 
 [libraries]
 activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activityComposeVersion" }
+androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferencesVersion" }
 androidx-material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "materialIconsExtendedVersion" }
+androidx-paging-compose = { module = "androidx.paging:paging-compose", version.ref = "pagingComposeVersion" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilVersion" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofitVersion" }
 core-ktx = { module = "androidx.core:core-ktx", version.ref = "coreKtxVersion" }

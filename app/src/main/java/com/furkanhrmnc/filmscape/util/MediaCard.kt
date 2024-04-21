@@ -26,18 +26,17 @@ import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import coil.size.Size
-import com.furkanhrmnc.filmscape.util.Constants.IMAGE_URL
-import com.furkanhrmnc.filmscape.domain.model.Media
+import com.furkanhrmnc.filmscape.domain.model.Movie
 import com.furkanhrmnc.filmscape.navigation.Routes
 
 @Composable
 fun MediaCard(
     modifier: Modifier = Modifier,
-    media: Media,
+    movie: Movie,
     navController: NavController
 ) {
 
-    val imageUrl = "${IMAGE_URL}${media.posterPath}"
+    val imageUrl = "${ApiConfig.IMAGE_URL}${movie.posterPath}"
     val context = LocalContext.current
 
     val imagePainter = rememberAsyncImagePainter(
@@ -55,7 +54,7 @@ fun MediaCard(
             .padding(6.dp)
             .clip(RoundedCornerShape(16.dp))
             .clickable {
-                navController.navigate("${Routes.Detail.route}?id=${media.id}&type=${media.type}&category=${media.category}")
+                navController.navigate("${Routes.Detail.route}?id=${movie.id}")
             }
             .background(MaterialTheme.colorScheme.onBackground)
     ) {
@@ -63,7 +62,7 @@ fun MediaCard(
         if (imageState is AsyncImagePainter.State.Success) {
             Image(
                 painter = imagePainter,
-                contentDescription = media.title,
+                contentDescription = movie.title,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier.fillMaxSize()
             )
@@ -84,7 +83,7 @@ fun MediaCard(
                     .align(Alignment.Center),
                 imageVector = Icons.Rounded.Warning,
                 tint = MaterialTheme.colorScheme.onBackground,
-                contentDescription = media.title
+                contentDescription = movie.title
             )
         }
     }

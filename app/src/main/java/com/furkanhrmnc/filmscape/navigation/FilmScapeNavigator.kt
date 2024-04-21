@@ -44,33 +44,16 @@ fun FilmScapeNavigator(
             )
         }
         composable(
-            route = "${Routes.Detail.route}?id={id}&type={type}&category={category}",
+            route = "${Routes.Detail.route}?id={id}",
             arguments = listOf(
                 navArgument("id") { NavType.IntType },
-                navArgument("type") { NavType.StringType },
-                navArgument("category") { NavType.StringType }
             )
-        ) { navBackStackEntry ->
+        ) {
 
-            val id = navBackStackEntry.arguments?.getInt("id") ?: 0
-            val type = navBackStackEntry.arguments?.getString("type") ?: ""
-            val category = navBackStackEntry.arguments?.getString("category") ?: ""
-
-            
-            LaunchedEffect(key1 = true) {
-                viewModel.onEvent(
-                    DetailUIEvents.SetDataAndLoad(
-                        id = id,
-                        type = type,
-                        category = category
-                    )
-                )
-            }
-
-            detailUiState.media?.let { media ->
+            detailUiState.movie?.let { media ->
                 DetailScreen(
                     navController = navController,
-                    media = media,
+                    movie = media,
                     detailUiState = detailUiState,
                     onEvent = viewModel::onEvent
                 )

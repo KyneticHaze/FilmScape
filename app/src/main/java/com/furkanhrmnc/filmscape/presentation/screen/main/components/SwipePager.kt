@@ -23,7 +23,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.furkanhrmnc.filmscape.domain.model.Media
+import com.furkanhrmnc.filmscape.domain.model.Movie
 import com.furkanhrmnc.filmscape.util.MediaCard
 import com.furkanhrmnc.filmscape.util.TitleText
 import kotlinx.coroutines.delay
@@ -32,12 +32,12 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun SwipePager(
-    mediaList: List<Media>,
+    movieList: List<Movie>,
     navController: NavController,
     modifier: Modifier = Modifier
 ) {
     val pagerState =
-        rememberPagerState(initialPage = 0, initialPageOffsetFraction = 0f) { mediaList.size }
+        rememberPagerState(initialPage = 0, initialPageOffsetFraction = 0f) { movieList.size }
 
     val scope = rememberCoroutineScope()
     val swipeMillis = 3500L
@@ -50,7 +50,7 @@ fun SwipePager(
             modifier = Modifier.fillMaxWidth(),
             state = pagerState,
             key = {
-                mediaList[it].id ?: 0
+                movieList[it].id ?: 0
             }
         ) { index ->
 
@@ -84,7 +84,7 @@ fun SwipePager(
                 ) {
                     MediaCard(
                         modifier = Modifier.fillMaxSize(),
-                        media = mediaList[index],
+                        movie = movieList[index],
                         navController = navController
                     )
                     Box(
@@ -102,7 +102,7 @@ fun SwipePager(
                             .padding(16.dp, 22.dp, 16.dp, 12.dp)
                             .align(Alignment.BottomStart)
                     ) {
-                        TitleText(text = mediaList[index].originalTitle)
+                        TitleText(text = movieList[index].originalTitle)
                     }
                 }
             }
@@ -112,7 +112,7 @@ fun SwipePager(
             verticalAlignment = Alignment.CenterVertically
         ) {
             IndicatorSection(
-                totalDots = mediaList.size,
+                totalDots = movieList.size,
                 selectedIndex = pagerState.currentPage
             )
         }

@@ -1,28 +1,36 @@
 package com.furkanhrmnc.filmscape.domain.repository
 
-import com.furkanhrmnc.filmscape.common.Resource
-import com.furkanhrmnc.filmscape.data.remote.dto.images.Poster
-import com.furkanhrmnc.filmscape.domain.model.Media
+import com.furkanhrmnc.filmscape.util.Resource
+import com.furkanhrmnc.filmscape.domain.model.Cast
+import com.furkanhrmnc.filmscape.domain.model.Movie
 import kotlinx.coroutines.flow.Flow
 
 interface DetailRepository {
 
-    suspend fun getMediaDetail(
+    suspend fun getDetailFilmOrTvSeries(
         type: String,
-        mediaId: Int,
+        id: Int,
+        isRefresh: Boolean,
         apiKey: String
-    ): Flow<Resource<Media>>
+    ): Flow<Resource<Movie>>
 
     suspend fun getSimilarMedias(
+        isRefresh: Boolean,
         type: String,
-        mediaId: Int,
+        id: Int,
         page: Int,
         apiKey: String
-    ): Flow<Resource<List<Media>>>
+    ): Flow<Resource<List<Movie>>>
 
-    suspend fun getMediaImages(
-        type: String,
-        typeId: Int,
+    suspend fun getDetailCast(
+        isRefresh: Boolean,
+        id: Int,
         apiKey: String
-    ): Flow<Resource<List<Poster>>>
+    ): Flow<Resource<Cast>>
+
+    suspend fun getVideos(
+        isRefresh: Boolean,
+        id: Int,
+        apiKey: String
+    ): Flow<Resource<List<String>>>
 }

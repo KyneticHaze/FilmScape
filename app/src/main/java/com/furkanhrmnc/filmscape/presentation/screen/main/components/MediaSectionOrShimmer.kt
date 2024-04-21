@@ -8,7 +8,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.furkanhrmnc.filmscape.R
-import com.furkanhrmnc.filmscape.util.Constants
+import com.furkanhrmnc.filmscape.util.Screens
 import com.furkanhrmnc.filmscape.presentation.screen.main.MainUIState
 
 @Composable
@@ -19,15 +19,15 @@ fun MediaSectionOrShimmer(
     mainUIState: MainUIState
 ) {
     val title = when (type) {
-        Constants.TRENDING -> {
+        Screens.TRENDING -> {
             stringResource(id = R.string.trending_now)
         }
 
-        Constants.MOVIES_SCREEN -> {
+        Screens.MOVIES_SCREEN -> {
             stringResource(id = R.string.movies)
         }
 
-        Constants.TV_SCREEN -> {
+        Screens.TV_SCREEN -> {
             stringResource(id = R.string.tv_series)
         }
 

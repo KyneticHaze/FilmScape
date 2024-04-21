@@ -2,11 +2,9 @@ package com.furkanhrmnc.filmscape.di
 
 import android.content.Context
 import androidx.room.Room
-import com.furkanhrmnc.filmscape.common.Constants.FILM_SCAPE_DB
-import com.furkanhrmnc.filmscape.data.local.FilmScapeDB
-import com.furkanhrmnc.filmscape.data.local.detail.DetailDao
-import com.furkanhrmnc.filmscape.data.local.media.MediaDao
-import com.furkanhrmnc.filmscape.data.local.remotekeys.MediaRemoteKeysDao
+import com.furkanhrmnc.filmscape.util.Screens.FILM_SCAPE_DB
+import com.furkanhrmnc.filmscape.data.local.database.FilmScapeDB
+import com.furkanhrmnc.filmscape.data.local.database.MediaDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -35,22 +33,6 @@ object DatabaseModule {
     fun provideMediaDao(
         db: FilmScapeDB
     ): MediaDao {
-        return db.mediaDao()
-    }
-
-    @Provides
-    @Singleton
-    fun provideDetailDao(
-        db: FilmScapeDB
-    ): DetailDao {
-        return db.detailDao()
-    }
-
-    @Provides
-    @Singleton
-    fun provideRemoteKeysDao(
-        db: FilmScapeDB
-    ): MediaRemoteKeysDao {
-        return db.remoteKeysDao()
+        return db.mediaDao
     }
 }

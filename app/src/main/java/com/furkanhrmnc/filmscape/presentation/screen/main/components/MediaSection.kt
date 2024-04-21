@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.furkanhrmnc.filmscape.R
-import com.furkanhrmnc.filmscape.util.Constants
+import com.furkanhrmnc.filmscape.util.Screens
 import com.furkanhrmnc.filmscape.presentation.screen.main.MainUIState
 import com.furkanhrmnc.filmscape.presentation.theme.filmScapeFont
 import com.furkanhrmnc.filmscape.util.MediaCard
@@ -33,15 +33,15 @@ fun MediaSection(
     seeAllClick: () -> Unit = {}
 ) {
     val title = when (type) {
-        Constants.TRENDING -> {
+        Screens.TRENDING -> {
             stringResource(id = R.string.trending_now)
         }
 
-        Constants.MOVIES_SCREEN -> {
+        Screens.MOVIES_SCREEN -> {
             stringResource(id = R.string.movies)
         }
 
-        Constants.TV_SCREEN -> {
+        Screens.TV_SCREEN -> {
             stringResource(id = R.string.tv_series)
         }
 
@@ -51,15 +51,15 @@ fun MediaSection(
     }
 
     val mediaList = when (type) {
-        Constants.TRENDING -> {
+        Screens.TRENDING -> {
             mainUIState.trendingAllList.take(10)
         }
 
-        Constants.MOVIES_SCREEN -> {
+        Screens.MOVIES_SCREEN -> {
             mainUIState.moviesList.take(10)
         }
 
-        Constants.TV_SCREEN -> {
+        Screens.TV_SCREEN -> {
             mainUIState.tvSeriesList.take(10)
         }
 
@@ -93,7 +93,7 @@ fun MediaSection(
             content = {
                 items(mediaList) { media ->
                     MediaCard(
-                        media = media,
+                        movie = media,
                         navController = navController,
                         modifier = Modifier.size(200.dp)
                     )

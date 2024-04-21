@@ -2,19 +2,19 @@ package com.furkanhrmnc.filmscape.presentation.screen.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.furkanhrmnc.filmscape.util.Constants
-import com.furkanhrmnc.filmscape.util.Constants.ALL
-import com.furkanhrmnc.filmscape.util.Constants.DAY
-import com.furkanhrmnc.filmscape.util.Constants.MOVIE
-import com.furkanhrmnc.filmscape.util.Constants.NOW_PLAYING
-import com.furkanhrmnc.filmscape.util.Constants.POPULAR
-import com.furkanhrmnc.filmscape.util.Constants.TOP_RATED
-import com.furkanhrmnc.filmscape.util.Constants.TV
-import com.furkanhrmnc.filmscape.util.Constants.UPCOMING
+import com.furkanhrmnc.filmscape.util.Screens
+import com.furkanhrmnc.filmscape.util.Screens.ALL
+import com.furkanhrmnc.filmscape.util.Screens.DAY
+import com.furkanhrmnc.filmscape.util.Screens.MOVIE
+import com.furkanhrmnc.filmscape.util.Screens.NOW_PLAYING
+import com.furkanhrmnc.filmscape.util.Screens.POPULAR
+import com.furkanhrmnc.filmscape.util.Screens.TOP_RATED
+import com.furkanhrmnc.filmscape.util.Screens.TV
+import com.furkanhrmnc.filmscape.util.Screens.UPCOMING
 import com.furkanhrmnc.filmscape.util.Resource
-import com.furkanhrmnc.filmscape.data.remote.api.MediaApi.Companion.API_KEY
-import com.furkanhrmnc.filmscape.domain.model.Media
-import com.furkanhrmnc.filmscape.domain.repository.MediaRepository
+import com.furkanhrmnc.filmscape.data.remote.api.MovieApi.Companion.API_KEY
+import com.furkanhrmnc.filmscape.domain.model.Movie
+import com.furkanhrmnc.filmscape.domain.repository.MovieRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -25,7 +25,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val mediaRepository: MediaRepository
+    private val movieRepository: MovieRepository
 ) : ViewModel() {
 
     private val _mainUiState = MutableStateFlow(MainUIState())
@@ -55,7 +55,7 @@ class MainViewModel @Inject constructor(
             is MainUIEvents.Refresh -> {
                 when (event.type) {
 
-                    Constants.MAIN_SCREEN -> {
+                    Screens.MAIN_SCREEN -> {
                         loadTrendingAll(
                             fetchFromRemote = true,
                             isRefresh = true
@@ -72,14 +72,14 @@ class MainViewModel @Inject constructor(
                         )
                     }
 
-                    Constants.TRENDING_SCREEN -> {
+                    Screens.TRENDING_SCREEN -> {
                         loadTrendingAll(
                             fetchFromRemote = true,
                             isRefresh = true
                         )
                     }
 
-                    Constants.MOVIES_SCREEN -> {
+                    Screens.MOVIES_SCREEN -> {
                         loadPopularMovies(
                             fetchFromRemote = true,
                             isRefresh = true
@@ -98,7 +98,7 @@ class MainViewModel @Inject constructor(
                         )
                     }
 
-                    Constants.TV_SCREEN -> {
+                    Screens.TV_SCREEN -> {
                         loadPopularTvSeries(
                             fetchFromRemote = true,
                             isRefresh = true
@@ -113,18 +113,18 @@ class MainViewModel @Inject constructor(
 
             is MainUIEvents.Paginate -> {
                 when (event.type) {
-                    Constants.TRENDING_SCREEN -> {
+                    Screens.TRENDING_SCREEN -> {
                         loadTrendingAll(true)
                     }
 
-                    Constants.MOVIES_SCREEN -> {
+                    Screens.MOVIES_SCREEN -> {
                         loadPopularMovies(true)
                         loadUpcomingMovies(true)
                         loadTopRatedMovies(true)
                         loadNowPlayingMovies(true)
                     }
 
-                    Constants.TV_SCREEN -> {
+                    Screens.TV_SCREEN -> {
                         loadPopularTvSeries(true)
                         loadTopRatedTvSeries(true)
                     }
@@ -138,7 +138,7 @@ class MainViewModel @Inject constructor(
         isRefresh: Boolean = false
     ) {
         viewModelScope.launch {
-            mediaRepository.getTrending(
+            movieRepository.getTrending(
                 fetchFromRemote,
                 isRefresh,
                 type = ALL,
@@ -185,7 +185,7 @@ class MainViewModel @Inject constructor(
                                     }
                                 }
                                 createRecommendedAllList(
-                                    mediaList = mediaList,
+                                    movieList = mediaList,
                                     isRefresh = isRefresh
                                 )
                             }
@@ -200,7 +200,7 @@ class MainViewModel @Inject constructor(
         isRefresh: Boolean = false
     ) {
         viewModelScope.launch {
-            mediaRepository.getFilmOrTvSeries(
+            movieRepository.getMovies(
                 fetchFromRemote,
                 isRefresh,
                 type = MOVIE,
@@ -248,7 +248,7 @@ class MainViewModel @Inject constructor(
                                 }
 
                                 createMoviesList(
-                                    mediaList = mediaList,
+                                    movieList = mediaList,
                                     isRefresh = isRefresh
                                 )
                             }
@@ -263,7 +263,7 @@ class MainViewModel @Inject constructor(
         isRefresh: Boolean = false
     ) {
         viewModelScope.launch {
-            mediaRepository.getFilmOrTvSeries(
+            movieRepository.getMovies(
                 fetchFromRemote,
                 isRefresh,
                 type = MOVIE,
@@ -313,7 +313,7 @@ class MainViewModel @Inject constructor(
                                 }
 
                                 createMoviesList(
-                                    mediaList = mediaList,
+                                    movieList = mediaList,
                                     isRefresh = isRefresh
                                 )
                             }
@@ -328,7 +328,7 @@ class MainViewModel @Inject constructor(
         isRefresh: Boolean = false
     ) {
         viewModelScope.launch {
-            mediaRepository.getFilmOrTvSeries(
+            movieRepository.getMovies(
                 fetchFromRemote,
                 isRefresh,
                 type = MOVIE,
@@ -378,7 +378,7 @@ class MainViewModel @Inject constructor(
                                 }
 
                                 createMoviesList(
-                                    mediaList = mediaList,
+                                    movieList = mediaList,
                                     isRefresh = isRefresh
                                 )
                             }
@@ -393,7 +393,7 @@ class MainViewModel @Inject constructor(
         isRefresh: Boolean = false
     ) {
         viewModelScope.launch {
-            mediaRepository.getFilmOrTvSeries(
+            movieRepository.getMovies(
                 fetchFromRemote,
                 isRefresh,
                 type = MOVIE,
@@ -442,7 +442,7 @@ class MainViewModel @Inject constructor(
                                 }
 
                                 createMoviesList(
-                                    mediaList = mediaList,
+                                    movieList = mediaList,
                                     isRefresh = isRefresh
                                 )
                             }
@@ -457,7 +457,7 @@ class MainViewModel @Inject constructor(
         isRefresh: Boolean = false
     ) {
         viewModelScope.launch {
-            mediaRepository.getFilmOrTvSeries(
+            movieRepository.getMovies(
                 fetchFromRemote,
                 isRefresh,
                 type = TV,
@@ -508,7 +508,7 @@ class MainViewModel @Inject constructor(
                                 }
 
                                 createTvSeriesList(
-                                    mediaList = mediaList,
+                                    movieList = mediaList,
                                     isRefresh = isRefresh
                                 )
                             }
@@ -524,7 +524,7 @@ class MainViewModel @Inject constructor(
         isRefresh: Boolean = false
     ) {
         viewModelScope.launch {
-            mediaRepository.getFilmOrTvSeries(
+            movieRepository.getMovies(
                 fetchFromRemote,
                 isRefresh,
                 type = TV,
@@ -573,7 +573,7 @@ class MainViewModel @Inject constructor(
                                 }
 
                                 createTvSeriesList(
-                                    mediaList = mediaList,
+                                    movieList = mediaList,
                                     isRefresh = isRefresh
                                 )
                             }
@@ -584,10 +584,10 @@ class MainViewModel @Inject constructor(
     }
 
     private fun createMoviesList(
-        mediaList: List<Media>,
+        movieList: List<Movie>,
         isRefresh: Boolean
     ) {
-        val randomMoviesList = mediaList.toMutableList()
+        val randomMoviesList = movieList.toMutableList()
 
         randomMoviesList.shuffle()
 
@@ -607,10 +607,10 @@ class MainViewModel @Inject constructor(
     }
 
     private fun createTvSeriesList(
-        mediaList: List<Media>,
+        movieList: List<Movie>,
         isRefresh: Boolean
     ) {
-        val randomTvSeriesList = mediaList.toMutableList()
+        val randomTvSeriesList = movieList.toMutableList()
 
         randomTvSeriesList.shuffle()
 
@@ -630,10 +630,10 @@ class MainViewModel @Inject constructor(
     }
 
     private fun createRecommendedAllList(
-        mediaList: List<Media>,
+        movieList: List<Movie>,
         isRefresh: Boolean
     ) {
-        val randomMediaList = mediaList.toMutableList()
+        val randomMediaList = movieList.toMutableList()
         randomMediaList.shuffle()
 
         if (isRefresh) {
@@ -650,13 +650,13 @@ class MainViewModel @Inject constructor(
             }
         }
         createSpecialList(
-            mediaList = mediaList,
+            movieList = movieList,
             isRefresh = isRefresh
         )
     }
 
     private fun createSpecialList(
-        mediaList: List<Media>,
+        movieList: List<Movie>,
         isRefresh: Boolean = false
     ) {
         if (isRefresh) {
@@ -672,7 +672,7 @@ class MainViewModel @Inject constructor(
         }
 
 
-        val specialListTakeSevenItem = mediaList.take(7).toMutableList()
+        val specialListTakeSevenItem = movieList.take(7).toMutableList()
         specialListTakeSevenItem.shuffle()
 
         if (isRefresh) {

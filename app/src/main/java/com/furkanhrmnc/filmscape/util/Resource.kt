@@ -1,7 +1,19 @@
 package com.furkanhrmnc.filmscape.util
 
-sealed class Resource<out T> {
-    data class Success<out T>(val data: T) : Resource<T>()
-    data class Error(val errorMessage: String) : Resource<Nothing>()
-    data class Loading(val isLoading: Boolean) : Resource<Nothing>()
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onStart
+
+sealed interface Resource<out T> {
+    data class Success<out T>(val data: T) : Resource<T>
+    data class Error(val errorMessage: Throwable) : Resource<Nothing>
+    data object Loading : Resource<Nothing>
+}
+
+fun <T> Flow<T>.asResult(): Flow<Resource<T>> {
+    return this
+        .map<T, Resource<T>> { value -> Resource.Success(data = value) }
+        .onStart { emit(Resource.Loading) }
+        .catch { exception -> emit(Resource.Error(errorMessage = exception)) }
 }

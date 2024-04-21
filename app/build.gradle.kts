@@ -54,25 +54,39 @@ android {
 
 dependencies {
 
+    // DataStore
+    implementation(libs.androidx.datastore.preferences)
+
+    // Paging
+    implementation(libs.androidx.paging.compose)
+
+    // Hilt
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
 
+    // Retrofit
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
 
+    // Room
     implementation(libs.room.ktx)
     ksp(libs.room.compiler)
     implementation(libs.room.paging)
 
+    // Interceptor
     implementation(libs.logging.interceptor)
 
+    // Navigation Compose
     implementation(libs.hilt.navigation.compose)
     implementation(libs.navigation.compose)
 
+    // Coil
     implementation(libs.coil.compose)
 
+    // Extended Icon
     implementation(libs.androidx.material.icons.extended)
 
+    // YoutubePlayer
     implementation(libs.youtube.player.view)
 
     implementation(libs.material.android)
