@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
@@ -25,7 +26,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.furkanhrmnc.filmscape.domain.model.Movie
 import com.furkanhrmnc.filmscape.util.MediaCard
-import com.furkanhrmnc.filmscape.util.TitleText
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -102,7 +102,7 @@ fun SwipePager(
                             .padding(16.dp, 22.dp, 16.dp, 12.dp)
                             .align(Alignment.BottomStart)
                     ) {
-                        TitleText(text = movieList[index].originalTitle)
+                        Text(text = movieList[index].originalTitle)
                     }
                 }
             }

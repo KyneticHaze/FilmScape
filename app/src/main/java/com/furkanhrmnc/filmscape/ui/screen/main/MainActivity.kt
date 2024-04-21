@@ -38,10 +38,7 @@ class MainActivity : ComponentActivity() {
                 val viewModel = hiltViewModel<MainViewModel>()
                 val mainUIState by viewModel.mainUiState.collectAsState()
 
-                FilmScapeNavigator(
-                    mainUIState = mainUIState,
-                    onEvent = viewModel::onEvent
-                )
+                FilmScapeNavigator(mainUIState = mainUIState)
             }
         }
     }
