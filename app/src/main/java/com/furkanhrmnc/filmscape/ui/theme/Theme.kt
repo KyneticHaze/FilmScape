@@ -1,4 +1,4 @@
-package com.furkanhrmnc.filmscape.presentation.theme
+package com.furkanhrmnc.filmscape.ui.theme
 
 import android.app.Activity
 import android.os.Build

@@ -1,4 +1,4 @@
-package com.furkanhrmnc.filmscape.presentation.screen.main.components
+package com.furkanhrmnc.filmscape.ui.screen.main.components
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,7 +12,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.furkanhrmnc.filmscape.presentation.theme.filmScapeFont
+import com.furkanhrmnc.filmscape.ui.theme.filmScapeFont
 
 @Composable
 fun ShimmerSection(

@@ -1,4 +1,4 @@
-package com.furkanhrmnc.filmscape.presentation.screen.main
+package com.furkanhrmnc.filmscape.ui.screen.main
 
 import android.graphics.Color
 import android.os.Bundle
@@ -10,7 +10,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.furkanhrmnc.filmscape.navigation.FilmScapeNavigator
-import com.furkanhrmnc.filmscape.presentation.theme.FilmScapeTheme
+import com.furkanhrmnc.filmscape.ui.theme.FilmScapeTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

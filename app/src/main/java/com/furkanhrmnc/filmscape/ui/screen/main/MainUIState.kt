@@ -1,6 +1,5 @@
-package com.furkanhrmnc.filmscape.presentation.screen.main
+package com.furkanhrmnc.filmscape.ui.screen.main
 
-import com.furkanhrmnc.filmscape.data.remote.dto.genre.Genre
 import com.furkanhrmnc.filmscape.domain.model.Movie
 
 data class MainUIState(
@@ -40,7 +39,4 @@ data class MainUIState(
 
     // recommendedAllList + trendingAllList
     val specialList: List<Movie> = emptyList(),
-
-    val moviesGenreList: List<Genre> = emptyList(),
-    val tvGenreList: List<Genre> = emptyList()
 )

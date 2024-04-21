@@ -1,7 +1,7 @@
 package com.furkanhrmnc.filmscape.di
 
-import com.furkanhrmnc.filmscape.data.remote.api.DetailApi
 import com.furkanhrmnc.filmscape.data.remote.api.MovieApi
+import com.furkanhrmnc.filmscape.util.ApiConfig
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -41,7 +41,7 @@ object NetworkModule {
         client: OkHttpClient
     ) : Retrofit {
         return Retrofit.Builder()
-            .baseUrl(MovieApi.BASE_URL)
+            .baseUrl(ApiConfig.BASE_URL)
             .client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
@@ -53,21 +53,5 @@ object NetworkModule {
         retrofit: Retrofit
     ) : MovieApi {
         return retrofit.create(MovieApi::class.java)
-    }
-
-    @Provides
-    @Singleton
-    fun provideDetailApi(
-        retrofit: Retrofit
-    ) : DetailApi {
-        return retrofit.create(DetailApi::class.java)
-    }
-
-    @Provides
-    @Singleton
-    fun provideGenreApi(
-        retrofit: Retrofit
-    ) : GenreApi {
-        return retrofit.create(GenreApi::class.java)
     }
 }

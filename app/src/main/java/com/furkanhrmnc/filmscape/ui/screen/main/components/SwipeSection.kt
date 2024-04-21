@@ -1,4 +1,4 @@
-package com.furkanhrmnc.filmscape.presentation.screen.main.components
+package com.furkanhrmnc.filmscape.ui.screen.main.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -6,7 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.furkanhrmnc.filmscape.presentation.screen.main.MainUIState
+import com.furkanhrmnc.filmscape.ui.screen.main.MainUIState
 import com.furkanhrmnc.filmscape.util.TitleText
 
 @Composable

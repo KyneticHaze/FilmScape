@@ -1,4 +1,4 @@
-package com.furkanhrmnc.filmscape.presentation.theme
+package com.furkanhrmnc.filmscape.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

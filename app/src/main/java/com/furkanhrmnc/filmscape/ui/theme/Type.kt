@@ -1,4 +1,4 @@
-package com.furkanhrmnc.filmscape.presentation.theme
+package com.furkanhrmnc.filmscape.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
