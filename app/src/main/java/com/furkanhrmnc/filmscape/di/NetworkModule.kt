@@ -37,21 +37,14 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideRetrofit(
+    fun provideMediaApi(
         client: OkHttpClient
-    ) : Retrofit {
+    ) : MovieApi {
         return Retrofit.Builder()
             .baseUrl(ApiConfig.BASE_URL)
             .client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-    }
-
-    @Provides
-    @Singleton
-    fun provideMediaApi(
-        retrofit: Retrofit
-    ) : MovieApi {
-        return retrofit.create(MovieApi::class.java)
+            .create(MovieApi::class.java)
     }
 }

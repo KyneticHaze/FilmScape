@@ -6,12 +6,12 @@ import kotlinx.coroutines.flow.Flow
 
 interface MovieRepository {
 
-    suspend fun getMovies(
+    fun getMovies(
         category: String,
         page: Int
     ): Flow<PaginatedData<Movie>>
 
-    suspend fun searchMovie(
+    fun searchMovie(
         query: String,
         page: Int
     ): Flow<PaginatedData<Movie>>

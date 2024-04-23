@@ -14,14 +14,14 @@ import kotlinx.coroutines.flow.map
 class MovieRepositoryImpl(
     private val api: MovieApi,
 ) : MovieRepository {
-    override suspend fun getMovies(category: String, page: Int): Flow<PaginatedData<Movie>> = flow {
+    override fun getMovies(category: String, page: Int): Flow<PaginatedData<Movie>> = flow {
         api.getMovies(
             category = category,
             page = page
         ).also { response -> emit(value = response) }
     }.map(PaginatedDataDTO::toModel)
 
-    override suspend fun searchMovie(query: String, page: Int): Flow<PaginatedData<Movie>> = flow {
+    override fun searchMovie(query: String, page: Int): Flow<PaginatedData<Movie>> = flow {
         api.searchMovie(
             query = query,
             page = page

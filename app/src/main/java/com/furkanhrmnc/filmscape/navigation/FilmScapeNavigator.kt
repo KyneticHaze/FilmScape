@@ -24,5 +24,11 @@ fun FilmScapeNavigator(
                 navController = navController
             )
         }
+        composable(
+            route = "${Routes.Detail.route}?id={id}"
+        ) {backStackEntry ->
+            val id = backStackEntry.arguments?.getInt("id")
+            // Detail
+        }
     }
 }
