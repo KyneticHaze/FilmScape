@@ -46,7 +46,7 @@ fun Movies(
                         val imageUrl = "${ApiConfig.IMAGE_URL}${movie.posterPath}"
                         val painter = rememberAsyncImagePainter(
                             model = ImageRequest.Builder(context)
-                                .crossfade(1000)
+                                .crossfade(durationMillis = 1000)
                                 .size(Size.ORIGINAL)
                                 .data(imageUrl)
                                 .build()

@@ -22,8 +22,6 @@ class MainViewModel @Inject constructor(
 
     private val error = MutableStateFlow<Throwable?>(null)
 
-    private val _mainUiState = MutableStateFlow(MainUIState())
-
     val mainUiState: StateFlow<MainUIState> = combine(
         loadMovieUseCase(param = Param(category = Category.POPULAR)),
         loadMovieUseCase(param = Param(category = Category.TOP_RATED)),

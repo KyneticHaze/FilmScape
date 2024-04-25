@@ -22,17 +22,10 @@ sealed class NavBarItem(
         route = Routes.Home.route
     )
 
-    data object Person : NavBarItem(
-        title = "Person",
+    data object Actors : NavBarItem(
+        title = "Actors",
         selectedIcon = Icons.Outlined.Person3,
         unselectedIcon = Icons.Filled.Person3,
-        route = Routes.Person.route
-    )
-
-    data object Favorite : NavBarItem(
-        title = "Favorite",
-        selectedIcon = Icons.Outlined.Favorite,
-        unselectedIcon = Icons.Filled.Favorite,
-        route = Routes.Favorites.route
+        route = Routes.Actors.route
     )
 }
