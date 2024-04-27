@@ -1,7 +1,18 @@
 package com.furkanhrmnc.filmscape.util
 
+/**
+ * Veri çekmek için gereken verileri toplayan sınıfımız.
+ *
+ * [API_KEY] - Veri çekerken backend kısmının bizden istediği kimlik
+ *
+ * [BASE_URL] - İstek atacağımız api ve path'i
+ *
+ * [IMAGE_URL] - Çekilen verilerin image kısımları bu url'in path'i olarak yazılmış. Bu yüzden image verilerini kullanıcıya gösterirken bu değişkeni önde, image verisini arkada şeklinde yazacağız.
+ */
 object ApiConfig {
-    const val API_KEY = "3fda8f3cc3ee174703991877b9a0ec39"
+    const val API_KEY = "d1c154d38388b545b29257de290d6484"
+    const val BEARER_TOKEN =
+        "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJkMWMxNTRkMzgzODhiNTQ1YjI5MjU3ZGUyOTBkNjQ4NCIsInN1YiI6IjY1NjBhMGJkMmIxMTNkMDEyZDAyNjA3YyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.jBsTieEwcsVzKR1-DRxnhj-e-RYoZAnHknA7W7hCbjc"
     const val BASE_URL = "https://api.themoviedb.org/3/"
     const val IMAGE_URL = "https://image.tmdb.org/t/p/w500/"
 }
