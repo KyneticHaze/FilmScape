@@ -1,6 +1,7 @@
 package com.furkanhrmnc.filmscape.data.remote.api
 
-import com.furkanhrmnc.filmscape.data.remote.dto.media.MovieResponse
+import com.furkanhrmnc.filmscape.data.remote.dto.details.MovieDetailsDTO
+import com.furkanhrmnc.filmscape.data.remote.dto.movie.MovieResponse
 import com.furkanhrmnc.filmscape.util.ApiConfig
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -20,6 +21,12 @@ interface MovieApi {
         @Query("page") page: Int,
         @Query("api_key") apiKey: String = ApiConfig.API_KEY,
     ): MovieResponse
+
+    @GET("movie/{id}")
+    suspend fun getMovieDetails(
+        @Path("id") id: Int,
+        @Query("api_key") apiKey: String = ApiConfig.API_KEY
+    ): MovieDetailsDTO
 
     /**
      * @param query Yapılacak sorguyu bu parametre ile belirleriz.

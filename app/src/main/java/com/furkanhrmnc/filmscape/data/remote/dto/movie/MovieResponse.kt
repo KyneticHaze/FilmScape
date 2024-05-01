@@ -1,4 +1,4 @@
-package com.furkanhrmnc.filmscape.data.remote.dto.media
+package com.furkanhrmnc.filmscape.data.remote.dto.movie
 
 
 import com.furkanhrmnc.filmscape.domain.model.Movie

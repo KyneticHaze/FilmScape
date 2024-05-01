@@ -1,6 +1,7 @@
 package com.furkanhrmnc.filmscape.di
 
 import com.furkanhrmnc.filmscape.domain.repository.MovieRepository
+import com.furkanhrmnc.filmscape.domain.usecase.LoadMovieDetailsUseCase
 import com.furkanhrmnc.filmscape.domain.usecase.LoadMovieUseCase
 import com.furkanhrmnc.filmscape.ui.screen.movies.MoviesPager
 import dagger.Module
@@ -14,7 +15,7 @@ import javax.inject.Singleton
 object UseCaseModule {
     @Provides
     @Singleton
-    fun provideUseCase(
+    fun provideMovieUseCase(
         movieRepository: MovieRepository
     ): LoadMovieUseCase {
         return LoadMovieUseCase(movieRepository)
@@ -25,4 +26,10 @@ object UseCaseModule {
     fun provideMoviePager(
         loadMovieUseCase: LoadMovieUseCase
     ): MoviesPager = MoviesPager(loadMovieUseCase)
+
+    @Provides
+    @Singleton
+    fun provideMovieDetailsUseCase(
+        movieRepository: MovieRepository
+    ): LoadMovieDetailsUseCase = LoadMovieDetailsUseCase(movieRepository)
 }

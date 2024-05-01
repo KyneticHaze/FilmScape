@@ -11,8 +11,6 @@ package com.furkanhrmnc.filmscape.util
  */
 object ApiConfig {
     const val API_KEY = "d1c154d38388b545b29257de290d6484"
-    const val BEARER_TOKEN =
-        "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJkMWMxNTRkMzgzODhiNTQ1YjI5MjU3ZGUyOTBkNjQ4NCIsInN1YiI6IjY1NjBhMGJkMmIxMTNkMDEyZDAyNjA3YyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.jBsTieEwcsVzKR1-DRxnhj-e-RYoZAnHknA7W7hCbjc"
     const val BASE_URL = "https://api.themoviedb.org/3/"
     const val IMAGE_URL = "https://image.tmdb.org/t/p/w500/"
 }

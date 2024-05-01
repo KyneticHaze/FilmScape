@@ -65,7 +65,7 @@ fun FilmScapeNavGraph(
         composable(
             route = "${Routes.DETAILS.route}?id={id}"
         ) { backStackEntry ->
-            val id = backStackEntry.arguments?.getLong("id")
+            val id = backStackEntry.arguments?.getInt("id")
             // Detail
             id?.let { movieId ->
                 DetailsScreen(

@@ -1,10 +1,13 @@
 package com.furkanhrmnc.filmscape.data.remote.repository
 
 import com.furkanhrmnc.filmscape.data.remote.api.MovieApi
-import com.furkanhrmnc.filmscape.data.remote.dto.media.MovieResponse
-import com.furkanhrmnc.filmscape.data.remote.dto.media.toPagingMovie
+import com.furkanhrmnc.filmscape.data.remote.dto.details.MovieDetailsDTO
+import com.furkanhrmnc.filmscape.data.remote.dto.details.toMovieDetails
+import com.furkanhrmnc.filmscape.data.remote.dto.movie.MovieResponse
+import com.furkanhrmnc.filmscape.data.remote.dto.movie.toPagingMovie
 import com.furkanhrmnc.filmscape.domain.model.Movie
 import com.furkanhrmnc.filmscape.domain.model.PagingMovie
+import com.furkanhrmnc.filmscape.domain.model.details.MovieDetails
 import com.furkanhrmnc.filmscape.domain.repository.MovieRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -26,6 +29,10 @@ class MovieRepositoryImpl(
             page = page
         ).also { response -> emit(value = response) }
     }.map(MovieResponse::toPagingMovie)
+
+    override fun getMovieDetails(movieId: Int): Flow<MovieDetails> = flow {
+        api.getMovieDetails(movieId).also { response -> emit(value = response) }
+    }.map(MovieDetailsDTO::toMovieDetails)
 
     override fun searchMovie(query: String, page: Int): Flow<PagingMovie<Movie>> = flow {
         api.searchMovie(

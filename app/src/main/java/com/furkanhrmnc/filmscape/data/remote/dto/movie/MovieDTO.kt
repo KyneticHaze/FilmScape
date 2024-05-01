@@ -1,4 +1,4 @@
-package com.furkanhrmnc.filmscape.data.remote.dto.media
+package com.furkanhrmnc.filmscape.data.remote.dto.movie
 
 
 import com.furkanhrmnc.filmscape.domain.model.Movie
@@ -24,25 +24,25 @@ data class MovieDTO(
     val title: String?,
     val video: Boolean?,
     @SerializedName("vote_average")
-    val vote: Float?,
+    val voteAverage: Float?,
     @SerializedName("vote_count")
-    val rating: Long?,
+    val voteCount: Long?,
 )
 
 fun List<MovieDTO>.toModelList(): List<Movie> = map(MovieDTO::toMovie)
 
 fun MovieDTO.toMovie(): Movie = Movie(
-    adult = adult ?: false,
+    isAdult = adult ?: false,
     backdropPath = backdropPath ?: "",
     genreIds = genreIds ?: emptyList(),
     id = id ?: 1,
     originalLanguage = originalLanguage ?: "",
     originalTitle = originalTitle ?: "",
-    overview = overview ?: "",
+    description = overview ?: "",
     popularity = popularity ?: 0.0,
     posterPath = posterPath ?: "",
     releaseDate = releaseDate ?: "",
     title = title ?: "",
-    rating = rating ?: 0,
-    vote = vote ?: 0f
+    voteCount = voteCount ?: 0,
+    voteAverage = voteAverage ?: 0f
 )

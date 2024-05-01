@@ -15,10 +15,10 @@ import kotlinx.coroutines.flow.Flow
  * Bu fonksiyon, Sayfalanmış film veri listesi listesi tipinde bir [NetworkOperation] arayüzü dönecek.
  */
 class LoadMovieUseCase(
-    private val movieRepository: MovieRepository
+    private val repository: MovieRepository
 ): UseCase<MovieDiff, PagingMovie<Movie>> {
     override fun invoke(input: MovieDiff): Flow<NetworkOperation<PagingMovie<Movie>>> {
-        return movieRepository.getMovies(
+        return repository.getMovies(
             category = input.category.name.lowercase(),
             page = input.page
         ).asResult()

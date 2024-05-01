@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 
 @Composable
 fun DetailsScreen(
-    movieId: Long
+    movieId: Int
 ) {
     Surface(
         modifier = Modifier.fillMaxSize(),
