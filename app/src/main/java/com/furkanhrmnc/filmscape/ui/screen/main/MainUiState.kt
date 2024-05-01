@@ -3,7 +3,10 @@ package com.furkanhrmnc.filmscape.ui.screen.main
 import com.furkanhrmnc.filmscape.domain.model.Movie
 import com.furkanhrmnc.filmscape.domain.usecase.ViewState
 
-data class MainUIState(
+/**
+ * Main Ui kısmında değişmesi muhtemel ui verileri bu sınıf içerisinde toplanır.
+ */
+data class MainUiState(
     val popularViewState: ViewState<List<Movie>> = ViewState.Loading,
     val nowPlayingViewState: ViewState<List<Movie>> = ViewState.Loading,
     val upComingViewState: ViewState<List<Movie>> = ViewState.Loading,

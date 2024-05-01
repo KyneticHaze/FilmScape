@@ -24,12 +24,12 @@ data class MovieDTO(
     val title: String?,
     val video: Boolean?,
     @SerializedName("vote_average")
-    val vote: Int?,
+    val vote: Float?,
     @SerializedName("vote_count")
-    val rating: Double?,
+    val rating: Long?,
 )
 
-fun List<MovieDTO>.toListModel(): List<Movie> = map(MovieDTO::toMovie)
+fun List<MovieDTO>.toModelList(): List<Movie> = map(MovieDTO::toMovie)
 
 fun MovieDTO.toMovie(): Movie = Movie(
     adult = adult ?: false,
@@ -43,6 +43,6 @@ fun MovieDTO.toMovie(): Movie = Movie(
     posterPath = posterPath ?: "",
     releaseDate = releaseDate ?: "",
     title = title ?: "",
-    rating = rating ?: 0.0,
-    vote = vote ?: 0
+    rating = rating ?: 0,
+    vote = vote ?: 0f
 )

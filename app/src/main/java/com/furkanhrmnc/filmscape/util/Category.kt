@@ -1,11 +1,15 @@
 package com.furkanhrmnc.filmscape.util
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
 /**
  * Bu sınıf, kategorilere göre film çekme isteğini daha basit işlemek için yazıldı.
  */
-enum class Category {
+@Parcelize
+enum class Category: Parcelable {
     POPULAR,
     TOP_RATED,
-    UP_COMING,
+    UPCOMING,
     NOW_PLAYING
 }

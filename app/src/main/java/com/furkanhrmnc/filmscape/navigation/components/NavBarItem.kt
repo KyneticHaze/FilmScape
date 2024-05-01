@@ -1,14 +1,22 @@
-package com.furkanhrmnc.filmscape.navigation
+package com.furkanhrmnc.filmscape.navigation.components
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person3
-import androidx.compose.material.icons.outlined.Favorite
+import androidx.compose.material.icons.filled.Tv
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Person3
+import androidx.compose.material.icons.outlined.Tv
 import androidx.compose.ui.graphics.vector.ImageVector
 
+/**
+ * Bottom Navigasyon Bar'ı oluşturan yapının içeriğini bu sınıf oluşturuyor.
+ *
+ * @param title Adı
+ * @param selectedIcon Seçili yerdeki ikonu
+ * @param unselectedIcon Henüz seçilmemişken veya seçim durumu kendinde değilen ikon
+ * @param route Navigasyon için rotası
+ */
 sealed class NavBarItem(
     val title: String,
     val selectedIcon: ImageVector,
@@ -19,13 +27,20 @@ sealed class NavBarItem(
         title = "Home",
         selectedIcon = Icons.Outlined.Home,
         unselectedIcon = Icons.Filled.Home,
-        route = Routes.Home.route
+        route = Routes.HOME.route
     )
 
     data object Actors : NavBarItem(
         title = "Actors",
         selectedIcon = Icons.Outlined.Person3,
         unselectedIcon = Icons.Filled.Person3,
-        route = Routes.Actors.route
+        route = Routes.ACTORS.route
+    )
+
+    data object Tv: NavBarItem(
+        title = "Tv",
+        selectedIcon = Icons.Outlined.Tv,
+        unselectedIcon = Icons.Filled.Tv,
+        route = Routes.TV.route
     )
 }

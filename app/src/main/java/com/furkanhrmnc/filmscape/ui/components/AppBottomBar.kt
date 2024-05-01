@@ -24,6 +24,7 @@ import com.furkanhrmnc.filmscape.navigation.components.NavBarItem
 val navList = listOf(
     NavBarItem.Home,
     NavBarItem.Actors,
+    NavBarItem.Tv
 )
 
 @Composable

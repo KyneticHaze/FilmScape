@@ -8,7 +8,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.text.font.FontWeight
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import coil.size.Size
@@ -17,15 +17,19 @@ import com.furkanhrmnc.filmscape.domain.usecase.ViewState
 import com.furkanhrmnc.filmscape.util.ApiConfig
 
 @Composable
-fun Movies(
+fun MoviesView(
     modifier: Modifier = Modifier,
     moviesState: ViewState<List<Movie>>,
     onMovieClick: (movie: Movie) -> Unit
 ) {
     when (moviesState) {
         is ViewState.Failure -> {
-            moviesState.exception?.message?.run {
-                Text(text = this)
+            moviesState.throwable?.message?.run {
+                Text(
+                    text = this,
+                    color = MaterialTheme.colorScheme.error,
+                    fontWeight = FontWeight.ExtraBold
+                )
             }
         }
 
@@ -53,12 +57,10 @@ fun Movies(
                         )
                         MovieCard(
                             painter = painter,
-                            title = movie.title,
-                            onClick = { onMovieClick(movie) },
-                            background = MaterialTheme.colorScheme.background,
-                            content = MaterialTheme.colorScheme.onBackground,
-                            elevation = 2.dp
-                        )
+                            isFailure = moviesState.data.isEmpty(),
+                        ) {
+                            onMovieClick(movie)
+                        }
                     }
                 }
             }

@@ -2,10 +2,10 @@ package com.furkanhrmnc.filmscape.data.remote.dto.media
 
 
 import com.furkanhrmnc.filmscape.domain.model.Movie
-import com.furkanhrmnc.filmscape.domain.model.PaginatedData
+import com.furkanhrmnc.filmscape.domain.model.PagingMovie
 import com.google.gson.annotations.SerializedName
 
-data class PaginatedDataDTO(
+data class MovieResponse(
     @SerializedName("page")
     val page: Int?,
     @SerializedName("results")
@@ -16,9 +16,9 @@ data class PaginatedDataDTO(
     val totalResults: Int?
 )
 
-fun PaginatedDataDTO.toModel(): PaginatedData<Movie> = PaginatedData(
+fun MovieResponse.toPagingMovie(): PagingMovie<Movie> = PagingMovie(
     page = page ?: 1,
-    results = results?.toListModel() ?: emptyList(),
+    results = results?.toModelList() ?: emptyList(),
     totalPages = totalPages ?: 1,
     totalResults = totalResults ?: 1
 )

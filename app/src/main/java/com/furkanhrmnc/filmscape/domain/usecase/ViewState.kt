@@ -1,22 +1,33 @@
 package com.furkanhrmnc.filmscape.domain.usecase
 
-import com.furkanhrmnc.filmscape.domain.model.PaginatedData
-import com.furkanhrmnc.filmscape.util.Resource
+import com.furkanhrmnc.filmscape.domain.model.PagingMovie
+import com.furkanhrmnc.filmscape.util.NetworkOperation
 
+/**
+ * [NetworkOperation] ile data fetch handle etme işlemini ui kısmında tekrar işleyecek sınıftır.
+ *
+ * [NetworkOperation]'da olan şeylerin aynısı geçerlidir.
+ */
 sealed class ViewState<out T> {
     data object Loading: ViewState<Nothing>()
     data class Success<T>(val data: T): ViewState<T>()
-    data class Failure(val exception: Throwable?): ViewState<Nothing>()
+    data class Failure(val throwable: Throwable?): ViewState<Nothing>()
 }
 
-fun <T> Resource<T>.toViewState(): ViewState<T> = when(this) {
-    is Resource.Error -> ViewState.Failure(exception = this.errorMessage)
-    Resource.Loading -> ViewState.Loading
-    is Resource.Success -> ViewState.Success(data = this.data)
+/**
+ * Tekli veri için [NetworkOperation] işlemlerini mapleyecek fonksiyondur.
+ */
+fun <T> NetworkOperation<T>.toViewState(): ViewState<T> = when(this) {
+    is NetworkOperation.Failure -> ViewState.Failure(throwable = this.throwable)
+    NetworkOperation.Loading -> ViewState.Loading
+    is NetworkOperation.Success -> ViewState.Success(data = this.data)
 }
 
-fun <T> Resource<PaginatedData<T>>.toViewPaginated():ViewState<List<T>> = when(this) {
-    is Resource.Error -> ViewState.Failure(exception = this.errorMessage)
-    Resource.Loading -> ViewState.Loading
-    is Resource.Success -> ViewState.Success(data = this.data.results)
+/**
+ * [NetworkOperation] işlemlerini [ViewState]'e maplerken liste halinde olmasını sağlayan fonksiyondur.
+ */
+fun <T> NetworkOperation<PagingMovie<T>>.toViewPaginated():ViewState<List<T>> = when(this) {
+    is NetworkOperation.Failure -> ViewState.Failure(throwable = this.throwable)
+    NetworkOperation.Loading -> ViewState.Loading
+    is NetworkOperation.Success -> ViewState.Success(data = this.data.results)
 }

@@ -89,6 +89,9 @@ dependencies {
     // YoutubePlayer
     implementation(libs.youtube.player.view)
 
+    // Lifecyle Compose
+    implementation(libs.androidx.lifecycle.runtime.compose)
+
     implementation(libs.material.android)
     implementation(libs.core.ktx)
     implementation(libs.lifecycle.runtime.ktx)
