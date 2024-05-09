@@ -6,7 +6,7 @@ package com.furkanhrmnc.filmscape.navigation.components
  * @param route ile rota yolu belirtilir.
  */
 enum class Routes(val route: String) {
-    HOME("home_screen"),
+    MAIN("main_screen"),
     MOVIES("movies_screen"),
     DETAILS("details_screen"),
     ACTORS("actors_screen"),

@@ -25,7 +25,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
@@ -40,14 +39,15 @@ import com.furkanhrmnc.filmscape.ui.components.SomethingWentWrong
 import com.furkanhrmnc.filmscape.util.ApiConfig
 import com.furkanhrmnc.filmscape.util.Category
 import com.furkanhrmnc.filmscape.util.categoryResId
+import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MoviesScreen(
     category: Category,
-    viewModel: MoviesViewModel = hiltViewModel(),
+    viewModel: MoviesViewModel = koinViewModel(),
     scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(),
-    navController: NavController,
+    navController: NavController
 ) {
 
 

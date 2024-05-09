@@ -34,7 +34,7 @@ import com.furkanhrmnc.filmscape.util.getAllMoviesState
 @Composable
 fun MainScreen(
     mainUiState: MainUiState,
-    navController: NavController,
+    navController: NavController
 ) {
 
     val snackbarHostState = remember { SnackbarHostState() }
@@ -92,7 +92,7 @@ fun MainContent(
                     title = stringResource(id = category.categoryResId()),
                     moviesState = mainUiState.getAllMoviesState(category),
                     onMovieClick = { movie -> navController.navigate("${Routes.DETAILS.route}?id=${movie.id}") },
-                    onMore = { navController.navigate("${Routes.MOVIES.route}?categoryString=${category.name}") }
+                    onMore = { navController.navigate("${Routes.MOVIES.route}?category=${category}") }
                 )
             }
         }

@@ -17,27 +17,27 @@ import androidx.compose.ui.graphics.vector.ImageVector
  * @param unselectedIcon Henüz seçilmemişken veya seçim durumu kendinde değilen ikon
  * @param route Navigasyon için rotası
  */
-sealed class NavBarItem(
+sealed class BottomBarItems(
     val title: String,
     val selectedIcon: ImageVector,
     val unselectedIcon: ImageVector,
     val route: String
 ) {
-    data object Home : NavBarItem(
+    data object Home : BottomBarItems(
         title = "Home",
         selectedIcon = Icons.Outlined.Home,
         unselectedIcon = Icons.Filled.Home,
-        route = Routes.HOME.route
+        route = Routes.MAIN.route
     )
 
-    data object Actors : NavBarItem(
+    data object Actors : BottomBarItems(
         title = "Actors",
         selectedIcon = Icons.Outlined.Person3,
         unselectedIcon = Icons.Filled.Person3,
         route = Routes.ACTORS.route
     )
 
-    data object Tv: NavBarItem(
+    data object Tv: BottomBarItems(
         title = "Tv",
         selectedIcon = Icons.Outlined.Tv,
         unselectedIcon = Icons.Filled.Tv,

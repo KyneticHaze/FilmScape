@@ -12,8 +12,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
-@HiltViewModel
-class DetailsViewModel @Inject constructor(
+class DetailsViewModel(
     movieId: Int,
     loadMovieDetailsUseCase: LoadMovieDetailsUseCase
 ): ViewModel() {

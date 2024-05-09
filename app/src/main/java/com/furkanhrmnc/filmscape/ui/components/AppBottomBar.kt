@@ -1,3 +1,5 @@
+@file:JvmName("FilmScapeTopBArKt")
+
 package com.furkanhrmnc.filmscape.ui.components
 
 import androidx.compose.material3.Icon
@@ -14,17 +16,17 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.furkanhrmnc.filmscape.navigation.components.NavBarItem
+import com.furkanhrmnc.filmscape.navigation.components.BottomBarItems
 
 /**
- * [NavBarItem] sınıfından oluşan bir liste.
+ * [BottomBarItems] sınıfından oluşan bir liste.
  *
  * Bu listeyi daha sonra navigasyon barında for döngüsü ile kullanacağız.
  */
 val navList = listOf(
-    NavBarItem.Home,
-    NavBarItem.Actors,
-    NavBarItem.Tv
+    BottomBarItems.Home,
+    BottomBarItems.Actors,
+    BottomBarItems.Tv
 )
 
 @Composable
