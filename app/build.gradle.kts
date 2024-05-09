@@ -1,7 +1,6 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlin)
-    alias(libs.plugins.hiltAndroid)
     alias(libs.plugins.kspCompiler)
     id("kotlin-parcelize")
 }
@@ -54,24 +53,19 @@ android {
 
 dependencies {
 
-    // DataStore
-    implementation(libs.androidx.datastore.preferences)
-
     // Paging
     implementation(libs.androidx.paging.compose)
 
-    // Hilt
-    implementation(libs.hilt.android)
-    ksp(libs.hilt.android.compiler)
+    // Koin Core
+    implementation (libs.koin.core)
+    // Koin Android
+    implementation (libs.insert.koin.koin.android)
+    // Koin Jetpack Compose
+    implementation(libs.koin.androidx.compose)
 
     // Retrofit
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
-
-    // Room
-    implementation(libs.room.ktx)
-    ksp(libs.room.compiler)
-    implementation(libs.room.paging)
 
     // Interceptor
     implementation(libs.logging.interceptor)
@@ -89,7 +83,7 @@ dependencies {
     // YoutubePlayer
     implementation(libs.youtube.player.view)
 
-    // Lifecyle Compose
+    // Lifecycle Compose
     implementation(libs.androidx.lifecycle.runtime.compose)
 
     implementation(libs.material.android)
