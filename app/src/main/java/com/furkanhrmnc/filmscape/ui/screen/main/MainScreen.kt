@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -34,29 +33,19 @@ import com.furkanhrmnc.filmscape.util.getAllMoviesState
 @Composable
 fun MainScreen(
     mainUiState: MainUiState,
-    navController: NavController
+    navController: NavController,
 ) {
-
     val snackbarHostState = remember { SnackbarHostState() }
-
     Scaffold(
         containerColor = MaterialTheme.colorScheme.background,
         topBar = {
-            AppTopBar(
-                appTitle = stringResource(R.string.app_name),
-                isSearchInAppBar = true
-            )
+            AppTopBar(appTitle = stringResource(R.string.app_name)) {
+                navController.navigate(Routes.SEARCH.route)
+            }
         },
-        bottomBar = {
-            AppBottomBar(
-                navController = navController
-            )
-        },
-        snackbarHost = {
-            SnackbarHost(hostState = snackbarHostState)
-        }
+        bottomBar = { AppBottomBar(navController = navController) },
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
     ) { scaffoldPadding ->
-
         MainContent(
             contentPadding = scaffoldPadding,
             mainUiState = mainUiState,
@@ -72,10 +61,8 @@ fun MainContent(
     contentPadding: PaddingValues = PaddingValues(2.dp),
     mainUiState: MainUiState,
     navController: NavController,
-    onError: @Composable (throwable: Throwable) -> Unit
+    onError: @Composable (throwable: Throwable) -> Unit,
 ) {
-
-
     Box(
         modifier = modifier
             .fillMaxSize()
@@ -88,15 +75,13 @@ fun MainContent(
         ) {
             items(Category.entries) { category ->
                 MoviesSection(
-                    modifier = Modifier.wrapContentSize(),
                     title = stringResource(id = category.categoryResId()),
                     moviesState = mainUiState.getAllMoviesState(category),
                     onMovieClick = { movie -> navController.navigate("${Routes.DETAILS.route}?id=${movie.id}") },
-                    onMore = { navController.navigate("${Routes.MOVIES.route}?category=${category}") }
+                    onMore = { navController.navigate("${Routes.MOVIES.route}?categoryString=${category.name}") }
                 )
             }
         }
-
         /// MainScreen'de bir hata oluştuğunda bu kod bloğu çalışacak ve içindeki composable aktif olacak.
         mainUiState.error?.run {
             onError(this)

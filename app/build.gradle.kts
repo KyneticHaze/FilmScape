@@ -80,6 +80,8 @@ dependencies {
     // Extended Icon
     implementation(libs.androidx.material.icons.extended)
 
+    implementation(libs.kotlinx.datetime)
+
     // YoutubePlayer
     implementation(libs.youtube.player.view)
 

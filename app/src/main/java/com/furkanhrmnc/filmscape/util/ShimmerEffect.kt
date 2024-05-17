@@ -39,14 +39,14 @@ fun Modifier.shimmerEffect(
     val shimmerColors = if (darkMode) {
         listOf(
             MaterialTheme.colorScheme.background,
-            MaterialTheme.colorScheme.secondaryContainer,
+            MaterialTheme.colorScheme.primaryContainer,
             MaterialTheme.colorScheme.background
         )
     } else {
         listOf(
-            MaterialTheme.colorScheme.secondaryContainer,
+            MaterialTheme.colorScheme.primaryContainer,
             MaterialTheme.colorScheme.background,
-            MaterialTheme.colorScheme.secondaryContainer
+            MaterialTheme.colorScheme.primaryContainer
         )
     }
 

@@ -9,6 +9,7 @@ junit = "1.1.5"
 junitVersion = "4.13.2"
 koinAndroidVersion = "3.5.3"
 koinCoreVersion = "3.5.3"
+kotlinxDatetimeVersion = "0.6.0-RC.2"
 lifecycleRuntimeKtxVersion = "2.7.0"
 materialAndroidVersion = "1.6.3"
 materialIconsExtendedVersion = "1.6.3"
@@ -36,6 +37,7 @@ insert-koin-koin-android = { module = "io.insert-koin:koin-android", version.ref
 junit = { module = "junit:junit", version.ref = "junitVersion" }
 koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koinAndroidVersion" }
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koinCoreVersion" }
+kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinxDatetimeVersion" }
 lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtxVersion" }
 material-android = { module = "androidx.compose.material:material-android", version.ref = "materialAndroidVersion" }
 navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navVersion" }

@@ -19,6 +19,8 @@ import kotlinx.coroutines.flow.map
  * Repodaki fonksiyonlar başka yerlerde, api fonksiyonlarını daha rahat işlemek için yaratıldı.
  *
  * Repo fonksiyon parametrelerine gelecek değerleri başka bir fonksiyonda verebiliriz.
+ *
+ * @author Furkan Harmancı
  */
 class MovieRepositoryImpl(
     private val api: MovieApi,
@@ -31,13 +33,21 @@ class MovieRepositoryImpl(
     }.map(MovieResponse::toPagingMovie)
 
     override fun getMovieDetails(movieId: Int): Flow<MovieDetails> = flow {
-        api.getMovieDetails(movieId).also { response -> emit(value = response) }
+        api.getMovieDetails(movieId)
+            .also { response -> emit(value = response) }
     }.map(MovieDetailsDTO::toMovieDetails)
+
+    override fun getMovieRecommendations(movieId: Int, page: Int): Flow<PagingMovie<Movie>> = flow {
+        api.getMovieRecommendations(
+            id = movieId,
+            page = page
+        ).also { response -> emit(value = response) }
+    }.map(MovieResponse::toPagingMovie)
 
     override fun searchMovie(query: String, page: Int): Flow<PagingMovie<Movie>> = flow {
         api.searchMovie(
             query = query,
             page = page
-        ).also { response -> emit(value = response)}
+        ).also { response -> emit(value = response) }
     }.map(MovieResponse::toPagingMovie)
 }

@@ -12,6 +12,17 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
+/**
+ * [Interceptor] Veri çekme işlemlerinin bilgileri loglamak için yazılan bir sınıf.
+ *
+ * [OkHttpClient] Veri çekme zamanlamalarını ve loglarını düzenleyen client.
+ *
+ * [MovieApi] singleton şekilde yaratılırken [Retrofit] kütüphanesi build ediliyor.
+ *
+ * [MovieRepositoryImpl] singleton şekilde yaratılarak bağımlılık azaltılıyor.
+ *
+ * @author Furkan Harmancı
+ */
 val dataModule = module {
 
     single<Interceptor> {
@@ -41,6 +52,11 @@ val dataModule = module {
     }
 }
 
+/**
+ * [OkHttpClient] sınıfının veri işlemleri zamanlamalarını ayarlamayı basitleştiren numaralandırma sınıfı
+ *
+ * @author Furkan Harmancı
+ */
 enum class TIMEOUT(val time: Long) {
     READ_TIMEOUT(60),
     CONNECT_TIMEOUT(60),

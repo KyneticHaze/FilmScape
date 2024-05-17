@@ -5,6 +5,7 @@ import com.furkanhrmnc.filmscape.domain.model.Genre
 data class MovieDetails(
     val id: Int,
     val backdropPath: String,
+    val posterPath: String,
     val isAdult: Boolean,
     val budget: Int,
     val genres: List<Genre>,

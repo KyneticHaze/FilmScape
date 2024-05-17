@@ -12,13 +12,13 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.furkanhrmnc.filmscape.navigation.components.Routes
-import com.furkanhrmnc.filmscape.ui.components.ErrorScreen
 import com.furkanhrmnc.filmscape.ui.screen.actors.ActorsScreen
 import com.furkanhrmnc.filmscape.ui.screen.details.DetailsScreen
 import com.furkanhrmnc.filmscape.ui.screen.main.MainScreen
 import com.furkanhrmnc.filmscape.ui.screen.main.MainViewModel
 import com.furkanhrmnc.filmscape.ui.screen.movies.MoviesScreen
 import com.furkanhrmnc.filmscape.ui.screen.search.SearchScreen
+import com.furkanhrmnc.filmscape.ui.screen.similar.SimilarScreen
 import com.furkanhrmnc.filmscape.ui.screen.tv.TvScreen
 import com.furkanhrmnc.filmscape.util.Category
 import org.koin.androidx.compose.koinViewModel
@@ -41,18 +41,13 @@ fun FilmScapeNavGraph() {
             )
         }
         composable(
-            route = "${Routes.MOVIES.route}?category={category}"
+            route = "${Routes.MOVIES.route}?categoryString={categoryString}"
         ) { navBackStackEntry ->
-            val category = navBackStackEntry.arguments?.getParcelable("category", Category::class.java)
-
-            if (category != null) {
-                MoviesScreen(
-                    category = category,
-                    navController = navController
-                )
-            } else {
-                ErrorScreen(errorMessage = "Screen Not Found")
-            }
+            val categoryString = navBackStackEntry.arguments?.getString("categoryString")
+            MoviesScreen(
+                category = Category.getCategoryTypeName(categoryString),
+                navController = navController
+            )
         }
         composable(Routes.SEARCH.route) {
             SearchScreen()
@@ -63,9 +58,18 @@ fun FilmScapeNavGraph() {
                 navArgument("id") { type = NavType.IntType }
             )
         ) { backStackEntry ->
-            val id = backStackEntry.arguments?.getInt("id")
-            // Detail
-            id?.let { movieId -> DetailsScreen(movieId = movieId) }
+            val movieId = backStackEntry.arguments?.getInt("id") ?: 1
+            DetailsScreen(
+                movieId = movieId,
+                navController = navController
+            )
+        }
+        composable(route = "${Routes.SIMILAR.route}?id={id}") {
+            val movieId = it.arguments?.getInt("id") ?: 1
+            SimilarScreen(
+                movieId = movieId,
+                navController = navController
+            )
         }
         composable(route = Routes.ACTORS.route) {
             ActorsScreen()

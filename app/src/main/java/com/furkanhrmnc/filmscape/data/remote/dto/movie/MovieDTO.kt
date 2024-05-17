@@ -2,6 +2,7 @@ package com.furkanhrmnc.filmscape.data.remote.dto.movie
 
 
 import com.furkanhrmnc.filmscape.domain.model.Movie
+import com.furkanhrmnc.filmscape.util.ApiConfig
 import com.google.gson.annotations.SerializedName
 
 data class MovieDTO(
@@ -33,14 +34,14 @@ fun List<MovieDTO>.toModelList(): List<Movie> = map(MovieDTO::toMovie)
 
 fun MovieDTO.toMovie(): Movie = Movie(
     isAdult = adult ?: false,
-    backdropPath = backdropPath ?: "",
+    backdropPath = "${ApiConfig.IMAGE_URL}$backdropPath" ?: "",
     genreIds = genreIds ?: emptyList(),
     id = id ?: 1,
     originalLanguage = originalLanguage ?: "",
     originalTitle = originalTitle ?: "",
     description = overview ?: "",
     popularity = popularity ?: 0.0,
-    posterPath = posterPath ?: "",
+    posterPath = "${ApiConfig.IMAGE_URL}$posterPath" ?: "",
     releaseDate = releaseDate ?: "",
     title = title ?: "",
     voteCount = voteCount ?: 0,

@@ -5,6 +5,11 @@ import com.furkanhrmnc.filmscape.domain.model.PagingMovie
 import com.furkanhrmnc.filmscape.domain.model.details.MovieDetails
 import kotlinx.coroutines.flow.Flow
 
+/**
+ * Data fonksiyonlarını tanımlayan arayüz.
+ *
+ * @author Furkan Harmancı
+ */
 interface MovieRepository {
 
     fun getMovies(
@@ -13,6 +18,8 @@ interface MovieRepository {
     ): Flow<PagingMovie<Movie>>
 
     fun getMovieDetails(movieId: Int): Flow<MovieDetails>
+
+    fun getMovieRecommendations(movieId: Int, page: Int): Flow<PagingMovie<Movie>>
 
     fun searchMovie(
         query: String,

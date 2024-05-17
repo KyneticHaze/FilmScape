@@ -16,6 +16,8 @@ import kotlinx.coroutines.flow.onStart
  * [Failure] data fetch'de hata varsa bir hata fırlatacak
  *
  * [Loading] aslında bir obje. Ve Data fetch esnasında bulunacak
+ *
+ * @author Furkan Harmancı
  */
 sealed interface NetworkOperation<out T> {
     data class Success<T>(val data: T) : NetworkOperation<T>
@@ -23,7 +25,7 @@ sealed interface NetworkOperation<out T> {
     data object Loading : NetworkOperation<Nothing>
 }
 
-fun <T> Flow<T>.asResult(): Flow<NetworkOperation<T>> {
+fun <T> Flow<T>.asNetworkOperationFlowResult(): Flow<NetworkOperation<T>> {
     return this
         .map<T, NetworkOperation<T>> { value -> NetworkOperation.Success(data = value) }
         .onStart { emit(NetworkOperation.Loading) }

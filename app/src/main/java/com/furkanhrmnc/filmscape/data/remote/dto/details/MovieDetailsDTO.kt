@@ -4,6 +4,7 @@ package com.furkanhrmnc.filmscape.data.remote.dto.details
 import com.furkanhrmnc.filmscape.data.remote.dto.genre.GenreDTO
 import com.furkanhrmnc.filmscape.data.remote.dto.genre.toGenre
 import com.furkanhrmnc.filmscape.domain.model.details.MovieDetails
+import com.furkanhrmnc.filmscape.util.ApiConfig
 import com.google.gson.annotations.SerializedName
 
 data class MovieDetailsDTO(
@@ -50,7 +51,8 @@ data class MovieDetailsDTO(
 
 fun MovieDetailsDTO.toMovieDetails(): MovieDetails = MovieDetails(
     id = id ?: 1,
-    backdropPath = backdropPath ?: "",
+    backdropPath = "${ApiConfig.IMAGE_URL}$backdropPath" ?: "",
+    posterPath = "${ApiConfig.IMAGE_URL}$posterPath" ?: "",
     isAdult = adult ?: false,
     budget = budget ?: 0,
     originalCountry = originCountry ?: emptyList(),

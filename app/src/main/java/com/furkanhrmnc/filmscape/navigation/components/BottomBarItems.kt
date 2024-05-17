@@ -16,6 +16,8 @@ import androidx.compose.ui.graphics.vector.ImageVector
  * @param selectedIcon Seçili yerdeki ikonu
  * @param unselectedIcon Henüz seçilmemişken veya seçim durumu kendinde değilen ikon
  * @param route Navigasyon için rotası
+ *
+ * @author Furkan Harmancı
  */
 sealed class BottomBarItems(
     val title: String,

@@ -2,10 +2,9 @@ package com.furkanhrmnc.filmscape.ui.screen.movies
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -21,7 +20,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -33,24 +31,22 @@ import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.furkanhrmnc.filmscape.domain.model.Movie
 import com.furkanhrmnc.filmscape.navigation.components.Routes
-import com.furkanhrmnc.filmscape.ui.components.AppTopBar
 import com.furkanhrmnc.filmscape.ui.components.MovieCard
+import com.furkanhrmnc.filmscape.ui.components.MoviesTopBar
 import com.furkanhrmnc.filmscape.ui.components.SomethingWentWrong
-import com.furkanhrmnc.filmscape.util.ApiConfig
 import com.furkanhrmnc.filmscape.util.Category
 import com.furkanhrmnc.filmscape.util.categoryResId
-import org.koin.androidx.compose.koinViewModel
+import org.koin.compose.koinInject
+import org.koin.core.parameter.parametersOf
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MoviesScreen(
     category: Category,
-    viewModel: MoviesViewModel = koinViewModel(),
-    scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(),
-    navController: NavController
+    navController: NavController,
+    scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
 ) {
-
-
+    val viewModel: MoviesViewModel = koinInject<MoviesViewModel> { parametersOf(category) }
     val snackbarHostState = remember { SnackbarHostState() }
     val movies = viewModel.movies.collectAsLazyPagingItems()
 
@@ -63,17 +59,11 @@ fun MoviesScreen(
         modifier = Modifier
             .fillMaxSize()
             .nestedScroll(scrollBehavior.nestedScrollConnection),
-        topBar = {
-            AppTopBar(
-                appTitle = stringResource(id = category.categoryResId())
-            )
-        },
-        snackbarHost = {
-            SnackbarHost(hostState = snackbarHostState)
-        }
+        topBar = { MoviesTopBar(appTitle = stringResource(id = category.categoryResId())) },
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
     ) { scaffoldPadding ->
         MoviesContent(
-            contentPadding = scaffoldPadding,
+            modifier = Modifier.padding(scaffoldPadding),
             movies = movies,
             onError = viewModel::onError,
             onMovieClick = { movie -> navController.navigate("${Routes.DETAILS.route}?id=${movie.id}") }
@@ -85,7 +75,6 @@ fun MoviesScreen(
 @Composable
 fun MoviesContent(
     modifier: Modifier = Modifier,
-    contentPadding: PaddingValues,
     movies: LazyPagingItems<Movie>,
     onError: (Throwable) -> Unit,
     onMovieClick: (Movie) -> Unit,
@@ -97,7 +86,6 @@ fun MoviesContent(
         modifier = modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
-            .padding(contentPadding)
     ) {
 
         LaunchedEffect(key1 = movies.loadState) {
@@ -117,20 +105,17 @@ fun MoviesContent(
             if (!refreshState.isRefreshing) {
                 items(count = movies.itemCount) { itemIndex ->
                     movies[itemIndex]?.let { movie ->
-
                         val context = LocalContext.current
-                        val imageUrl = "${ApiConfig.IMAGE_URL}${movie.posterPath}"
                         val painter = rememberAsyncImagePainter(
                             model = ImageRequest.Builder(context)
                                 .crossfade(1000)
-                                .data(imageUrl)
+                                .data(movie.posterPath)
                                 .build()
                         )
                         MovieCard(
-                            modifier = Modifier
-                                .height(180.dp),
+                            modifier = Modifier.size(170.dp),
                             painter = painter,
-                            scale = ContentScale.Crop,
+                            title = movie.title,
                             onClick = { onMovieClick(movie) }
                         )
                     }

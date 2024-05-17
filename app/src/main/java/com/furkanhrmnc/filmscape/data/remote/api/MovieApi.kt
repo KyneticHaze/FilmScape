@@ -12,7 +12,11 @@ import retrofit2.http.Query
  *
  * [getMovies] - Kategorilerine göre 20'li şekilde sayfalanmış liste sunar.
  *
+ * [getMovieDetails] - Film detaylarını sunar.
+ *
  * [searchMovie] - Film aramak için yazdığım fonksiyondur. Bu fonksiyon da 20'li film sunar.
+ *
+ * @author Furkan Harmancı
  */
 interface MovieApi {
     @GET("movie/{category}")
@@ -25,8 +29,15 @@ interface MovieApi {
     @GET("movie/{id}")
     suspend fun getMovieDetails(
         @Path("id") id: Int,
-        @Query("api_key") apiKey: String = ApiConfig.API_KEY
+        @Query("api_key") apiKey: String = ApiConfig.API_KEY,
     ): MovieDetailsDTO
+
+    @GET("movie/{id}/recommendations")
+    suspend fun getMovieRecommendations(
+        @Path("id") id: Int,
+        @Query("page") page: Int,
+        @Query("api_key") apiKey: String = ApiConfig.API_KEY,
+    ): MovieResponse
 
     /**
      * @param query Yapılacak sorguyu bu parametre ile belirleriz.

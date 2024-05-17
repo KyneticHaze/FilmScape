@@ -1,7 +1,7 @@
 package com.furkanhrmnc.filmscape.ui.screen.main
 
 import com.furkanhrmnc.filmscape.domain.model.Movie
-import com.furkanhrmnc.filmscape.domain.usecase.ViewState
+import com.furkanhrmnc.filmscape.util.ViewState
 
 /**
  * Main Ui kısmında değişmesi muhtemel ui verileri bu sınıf içerisinde toplanır.
