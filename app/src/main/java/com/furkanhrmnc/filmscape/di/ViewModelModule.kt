@@ -4,6 +4,8 @@ import com.furkanhrmnc.filmscape.ui.screen.details.DetailsViewModel
 import com.furkanhrmnc.filmscape.ui.screen.main.MainViewModel
 import com.furkanhrmnc.filmscape.ui.screen.movies.MoviesPager
 import com.furkanhrmnc.filmscape.ui.screen.movies.MoviesViewModel
+import com.furkanhrmnc.filmscape.ui.screen.search.SearchMoviesPager
+import com.furkanhrmnc.filmscape.ui.screen.search.SearchMoviesViewModel
 import com.furkanhrmnc.filmscape.ui.screen.similar.SimilarMoviesPager
 import com.furkanhrmnc.filmscape.ui.screen.similar.SimilarMoviesViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -27,7 +29,8 @@ val viewModelModule = module {
         DetailsViewModel(
             movieId = params.get(),
             loadMovieDetailsUseCase = get(),
-            loadRecommendationMoviesUseCase = get()
+            loadRecommendationMoviesUseCase = get(),
+            loadVideosUseCase = get()
         )
     }
 
@@ -36,6 +39,14 @@ val viewModelModule = module {
             pager = SimilarMoviesPager(
                 movieId = params.get(),
                 loadRecommendationMoviesUseCase = get()
+            )
+        )
+    }
+
+    viewModel {
+        SearchMoviesViewModel(
+            pager = SearchMoviesPager(
+                loadSearchMoviesUseCase = get()
             )
         )
     }

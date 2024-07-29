@@ -1,5 +1,3 @@
-@file:JvmName("FilmScapeTopBArKt")
-
 package com.furkanhrmnc.filmscape.ui.components
 
 import androidx.compose.material3.Icon

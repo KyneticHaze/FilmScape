@@ -1,7 +1,9 @@
 package com.furkanhrmnc.filmscape.data.remote.api
 
 import com.furkanhrmnc.filmscape.data.remote.dto.details.MovieDetailsDTO
+import com.furkanhrmnc.filmscape.data.remote.dto.details.credit.CreditResponse
 import com.furkanhrmnc.filmscape.data.remote.dto.movie.MovieResponse
+import com.furkanhrmnc.filmscape.data.remote.dto.videos.VideoResponse
 import com.furkanhrmnc.filmscape.util.ApiConfig
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -48,4 +50,21 @@ interface MovieApi {
         @Query("page") page: Int,
         @Query("api_key") apiKey: String = ApiConfig.API_KEY,
     ): MovieResponse
+
+    /**
+     * id bazlı filmin oyuncularını sunar.
+     *
+     * @param id benzersiz film id'si
+     */
+    @GET("movie/{id}/credits")
+    suspend fun getMovieCredits(
+        @Path("id") id: Int,
+        @Query("api_key") apiKey: String = ApiConfig.API_KEY,
+    ): CreditResponse
+
+    @GET("movie/{id}/videos")
+    suspend fun getMovieVideos(
+        @Path("id") id: Int,
+        @Query("api_key") apiKey: String = ApiConfig.API_KEY,
+    ): VideoResponse
 }

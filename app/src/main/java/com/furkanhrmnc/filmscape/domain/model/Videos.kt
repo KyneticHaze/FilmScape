@@ -1,5 +1,10 @@
 package com.furkanhrmnc.filmscape.domain.model
 
+data class Videos<T>(
+    val id: Int,
+    val videos: List<T>,
+)
+
 data class Video(
     val id: String,
     val iso31661: String,

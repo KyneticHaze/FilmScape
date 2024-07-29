@@ -50,7 +50,7 @@ fun FilmScapeNavGraph() {
             )
         }
         composable(Routes.SEARCH.route) {
-            SearchScreen()
+            SearchScreen(navController = navController)
         }
         composable(
             route = "${Routes.DETAILS.route}?id={id}",

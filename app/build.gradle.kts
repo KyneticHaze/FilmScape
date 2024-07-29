@@ -80,10 +80,16 @@ dependencies {
     // Extended Icon
     implementation(libs.androidx.material.icons.extended)
 
+    // kotlinx.datetime
     implementation(libs.kotlinx.datetime)
 
     // YoutubePlayer
     implementation(libs.youtube.player.view)
+
+    // Jetpack Media3
+    implementation(libs.androidx.media3.exoplayer)
+    implementation(libs.androidx.media3.exoplayer.dash)
+    implementation(libs.androidx.media3.ui)
 
     // Lifecycle Compose
     implementation(libs.androidx.lifecycle.runtime.compose)

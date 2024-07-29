@@ -21,3 +21,8 @@ data class RecommendationMovieParams(
     val id: Int,
     val page : Int = 1
 )
+
+data class SearchParams(
+    val query: String,
+    val page: Int = 1
+)

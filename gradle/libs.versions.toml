@@ -4,7 +4,6 @@ coilVersion = "2.5.0"
 coreKtxVersion = "1.12.0"
 espressoCoreVersion = "3.5.1"
 hiltNavigationComposeVersion = "1.2.0"
-hiltVersion = "2.50"
 junit = "1.1.5"
 junitVersion = "4.13.2"
 koinAndroidVersion = "3.5.3"
@@ -13,6 +12,7 @@ kotlinxDatetimeVersion = "0.6.0-RC.2"
 lifecycleRuntimeKtxVersion = "2.7.0"
 materialAndroidVersion = "1.6.3"
 materialIconsExtendedVersion = "1.6.3"
+media3ExoplayerVersion = "1.3.1"
 navVersion = "2.7.7"
 interceptorVersion = "4.12.0"
 pagingComposeVersion = "3.3.0-beta01"
@@ -27,6 +27,9 @@ youtube-player = "12.1.0"
 activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activityComposeVersion" }
 androidx-lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "lifecycleRuntimeKtxVersion" }
 androidx-material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "materialIconsExtendedVersion" }
+androidx-media3-exoplayer = { module = "androidx.media3:media3-exoplayer", version.ref = "media3ExoplayerVersion" }
+androidx-media3-exoplayer-dash = { module = "androidx.media3:media3-exoplayer-dash", version.ref = "media3ExoplayerVersion" }
+androidx-media3-ui = { module = "androidx.media3:media3-ui", version.ref = "media3ExoplayerVersion" }
 androidx-paging-compose = { module = "androidx.paging:paging-compose", version.ref = "pagingComposeVersion" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilVersion" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofitVersion" }

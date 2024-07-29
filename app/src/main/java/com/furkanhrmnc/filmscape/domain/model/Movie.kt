@@ -1,8 +1,5 @@
 package com.furkanhrmnc.filmscape.domain.model
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
-@Parcelize
 data class Movie(
     val isAdult: Boolean,
     val backdropPath: String,
@@ -17,4 +14,4 @@ data class Movie(
     val title: String,
     val voteCount: Long,
     val voteAverage: Float,
-) : Parcelable
+)
