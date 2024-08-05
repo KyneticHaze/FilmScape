@@ -3,7 +3,6 @@ package com.furkanhrmnc.filmscape.ui.screen.details
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -17,8 +16,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -31,10 +28,8 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -44,12 +39,10 @@ import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.furkanhrmnc.filmscape.R
-import com.furkanhrmnc.filmscape.domain.model.Video
 import com.furkanhrmnc.filmscape.domain.model.details.MovieDetails
 import com.furkanhrmnc.filmscape.navigation.components.Routes
 import com.furkanhrmnc.filmscape.ui.components.MoviesSection
 import com.furkanhrmnc.filmscape.ui.components.RatingBar
-import com.furkanhrmnc.filmscape.ui.components.VideoCard
 import com.furkanhrmnc.filmscape.util.Date
 import com.furkanhrmnc.filmscape.util.ViewState
 import org.koin.compose.koinInject
@@ -71,9 +64,6 @@ fun DetailsScreen(
             detailViewState = detailsUiState.movieDetails,
             onError = viewModel::onError
         )
-        item {
-            VideoSection(detailsUiState = detailsUiState)
-        }
         item {
             MoviesSection(
                 moviesState = detailsUiState.recommendedMovies,
@@ -274,56 +264,5 @@ fun OverviewSection(
             color = MaterialTheme.colorScheme.onSurface,
             style = MaterialTheme.typography.bodyLarge
         )
-    }
-}
-
-@Composable
-fun VideoSection(
-    modifier: Modifier = Modifier,
-    detailsUiState: DetailsUiState,
-) {
-    Column(
-        modifier = modifier.background(Color.Red),
-        horizontalAlignment = Alignment.Start,
-        verticalArrangement = Arrangement.spacedBy(6.dp)
-    ) {
-        Text(
-            text = stringResource(id = R.string.videos),
-            style = MaterialTheme.typography.headlineSmall,
-            fontWeight = FontWeight.SemiBold,
-            color = MaterialTheme.colorScheme.primary
-        )
-        VideoLazyRow(videoViewState = detailsUiState.movieVideos)
-    }
-}
-
-
-@Composable
-fun VideoLazyRow(
-    modifier: Modifier = Modifier,
-    videoViewState: ViewState<List<Video>>,
-) {
-
-    val lifecycleOwner = LocalLifecycleOwner.current
-
-    when (videoViewState) {
-        is ViewState.Failure -> Box(modifier = modifier.fillMaxWidth()) {
-            Text(
-                text = videoViewState.throwable?.message ?: "",
-                modifier = Modifier.align(Alignment.Center)
-            )
-        }
-
-        ViewState.Loading -> CircularProgressIndicator()
-        is ViewState.Success -> {
-            LazyRow {
-                items(
-                    items = videoViewState.data,
-                    key = { it.id }
-                ) { video ->
-                    VideoCard(video = video, lifecycleOwner = lifecycleOwner)
-                }
-            }
-        }
     }
 }

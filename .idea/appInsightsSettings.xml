@@ -9,16 +9,11 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="com.furkanhrmnc.filmscape" />
-                  <option name="mobileSdkAppId" value="1:298643861740:android:a56885edb870b22d84f5c9" />
-                  <option name="projectId" value="filmscape-84378" />
-                  <option name="projectNumber" value="298643861740" />
+                  <option name="appId" value="PLACEHOLDER" />
+                  <option name="mobileSdkAppId" value="" />
+                  <option name="projectId" value="" />
+                  <option name="projectNumber" value="" />
                 </ConnectionSetting>
-              </option>
-              <option name="failureTypes">
-                <list>
-                  <option value="NON_FATAL" />
-                </list>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />
               <option name="timeIntervalDays" value="THIRTY_DAYS" />
