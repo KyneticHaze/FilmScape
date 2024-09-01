@@ -14,7 +14,7 @@ fun SomethingWentWrong(
 ) {
     if (error == null) return
 
-    LaunchedEffect(key1 = snackbarHostState) {
+    LaunchedEffect(snackbarHostState) {
         when(snackbarHostState.showSnackbar(message = error.message ?: "Error occured!")) {
             SnackbarResult.Dismissed -> onDismissed?.invoke()
             SnackbarResult.ActionPerformed -> onActionPerformed?.invoke()

@@ -64,7 +64,6 @@ fun SimilarContent(
     navController: NavController,
     onError: (Throwable) -> Unit,
 ) {
-
     LaunchedEffect(key1 = movies.loadState) {
         when {
             movies.loadState.refresh is LoadState.Error ->
@@ -85,15 +84,8 @@ fun SimilarContent(
     ) {
         items(count = movies.itemCount) { index ->
             movies[index]?.let { movie ->
-                val context = LocalContext.current
-                val painter = rememberAsyncImagePainter(
-                    model = ImageRequest.Builder(context).crossfade(400).data(movie.posterPath)
-                        .error(
-                            R.drawable.error
-                        ).size(Size.ORIGINAL).build()
-                )
                 MovieCard(
-                    painter = painter,
+                    moviesPathString = movie.posterPath,
                     title = movie.title,
                     onClick = { navController.navigate("${Routes.DETAILS.route}?id=${movie.id}") })
             }

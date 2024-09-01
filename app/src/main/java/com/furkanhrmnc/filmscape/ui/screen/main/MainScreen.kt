@@ -12,6 +12,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Tab
+import androidx.compose.material3.TabRow
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -39,9 +42,11 @@ fun MainScreen(
     Scaffold(
         containerColor = MaterialTheme.colorScheme.background,
         topBar = {
-            AppTopBar(appTitle = stringResource(R.string.app_name)) {
+            AppTopBar(appTitle = stringResource(R.string.app_name), onSearch = {
                 navController.navigate(Routes.SEARCH.route)
-            }
+            }, navigateAccount = {
+                navController.navigate((Routes.ACCOUNT.route))
+            })
         },
         bottomBar = { AppBottomBar(navController = navController) },
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) }

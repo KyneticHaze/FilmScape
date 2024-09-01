@@ -58,8 +58,10 @@ dependencies {
 
     // Koin Core
     implementation (libs.koin.core)
+
     // Koin Android
     implementation (libs.insert.koin.koin.android)
+
     // Koin Jetpack Compose
     implementation(libs.koin.androidx.compose)
 

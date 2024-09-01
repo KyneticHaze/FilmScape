@@ -27,7 +27,7 @@ sealed interface NetworkOperation<out T> {
 
 fun <T> Flow<T>.asNetworkOperationFlowResult(): Flow<NetworkOperation<T>> {
     return this
-        .map<T, NetworkOperation<T>> { value -> NetworkOperation.Success(data = value) }
-        .onStart { emit(NetworkOperation.Loading) }
-        .catch { throwable -> emit(NetworkOperation.Failure(throwable = throwable)) }
+        .map<T, NetworkOperation<T>> { value -> Success(data = value) }
+        .onStart { emit(Loading) }
+        .catch { throwable -> emit(Failure(throwable = throwable)) }
 }

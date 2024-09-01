@@ -105,16 +105,9 @@ fun MoviesContent(
             if (!refreshState.isRefreshing) {
                 items(count = movies.itemCount) { itemIndex ->
                     movies[itemIndex]?.let { movie ->
-                        val context = LocalContext.current
-                        val painter = rememberAsyncImagePainter(
-                            model = ImageRequest.Builder(context)
-                                .crossfade(1000)
-                                .data(movie.posterPath)
-                                .build()
-                        )
                         MovieCard(
                             modifier = Modifier.size(170.dp),
-                            painter = painter,
+                            moviesPathString = movie.posterPath,
                             title = movie.title,
                             onClick = { onMovieClick(movie) }
                         )

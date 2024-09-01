@@ -23,9 +23,7 @@ import com.furkanhrmnc.filmscape.navigation.components.BottomBarItems
  */
 val navList = listOf(
     BottomBarItems.Home,
-    BottomBarItems.Actors,
-    BottomBarItems.Tv
-)
+    BottomBarItems.Actors)
 
 @Composable
 fun AppBottomBar(

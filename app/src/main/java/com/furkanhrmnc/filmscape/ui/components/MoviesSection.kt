@@ -101,16 +101,9 @@ fun MoviesSection(
                         items = moviesState.data,
                         key = { movie -> movie.id }
                     ) { movie ->
-                        val context = LocalContext.current
-                        val painter = rememberAsyncImagePainter(
-                            model = ImageRequest.Builder(context)
-                                .crossfade(durationMillis = 400)
-                                .data(movie.posterPath)
-                                .build()
-                        )
                         MovieCard(
                             modifier = Modifier.size(height = 240.dp, width = 170.dp),
-                            painter = painter,
+                            moviesPathString = movie.posterPath,
                             title = movie.title,
                             titleStyle = MaterialTheme.typography.bodyLarge,
                             onClick = { onMovieClick(movie) }

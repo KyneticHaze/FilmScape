@@ -12,8 +12,8 @@ enum class Routes(val route: String) {
     MOVIES("movies_screen"),
     DETAILS("details_screen"),
     SIMILAR("similar_screen"),
-    VIDEOS("videos_screen"),
     ACTORS("actors_screen"),
     TV("tv_screen"),
+    ACCOUNT("account_screen"),
     SEARCH("search_screen")
 }

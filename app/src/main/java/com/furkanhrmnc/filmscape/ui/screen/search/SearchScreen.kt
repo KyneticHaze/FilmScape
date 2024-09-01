@@ -97,18 +97,9 @@ fun SearchScreen(
         ) {
             items(searchMovies.itemCount) { index ->
                 searchMovies[index]?.let { movie ->
-                    val context = LocalContext.current
-                    val painter = rememberAsyncImagePainter(
-                        model = ImageRequest.Builder(context)
-                            .crossfade(500)
-                            .data(movie.posterPath)
-                            .error(R.drawable.error)
-                            .size(Size.ORIGINAL)
-                            .build()
-                    )
                     MovieCard(
                         modifier = Modifier.size(200.dp),
-                        painter = painter,
+                        moviesPathString = movie.posterPath,
                         title = movie.originalTitle,
                         onClick = { navController.navigate("${Routes.DETAILS.route}?id=${movie.id}") }
                     )

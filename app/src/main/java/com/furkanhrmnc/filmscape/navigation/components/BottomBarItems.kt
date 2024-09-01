@@ -38,11 +38,4 @@ sealed class BottomBarItems(
         unselectedIcon = Icons.Filled.Person3,
         route = Routes.ACTORS.route
     )
-
-    data object Tv: BottomBarItems(
-        title = "Tv",
-        selectedIcon = Icons.Outlined.Tv,
-        unselectedIcon = Icons.Filled.Tv,
-        route = Routes.TV.route
-    )
 }

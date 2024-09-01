@@ -15,21 +15,33 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImagePainter
+import coil.compose.rememberAsyncImagePainter
+import coil.request.ImageRequest
 
 @Composable
 fun MovieCard(
     modifier: Modifier = Modifier,
-    painter: AsyncImagePainter,
+    moviesPathString: String,
     title: String,
     titleStyle: TextStyle = MaterialTheme.typography.bodyMedium,
     shape: Shape = RoundedCornerShape(10.dp),
     onClick: () -> Unit,
 ) {
+
+    val context = LocalContext.current
+    val painter = rememberAsyncImagePainter(
+        model = ImageRequest.Builder(context)
+            .crossfade(durationMillis = 400)
+            .data(moviesPathString)
+            .build()
+    )
+
     Box(
         modifier = modifier
             .padding(6.dp)
