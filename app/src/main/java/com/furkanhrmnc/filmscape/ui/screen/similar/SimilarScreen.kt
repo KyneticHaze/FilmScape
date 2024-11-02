@@ -29,7 +29,7 @@ import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.furkanhrmnc.filmscape.domain.model.Media
-import com.furkanhrmnc.filmscape.navigation.components.Screen
+import com.furkanhrmnc.filmscape.navigation.components.Destinations
 import com.furkanhrmnc.filmscape.util.MediaCard
 import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
@@ -89,7 +89,7 @@ fun SimilarScreen(
             similarMedias = similarMovies,
             lazyGridState = lazyGridState,
             onError = viewModel::onError,
-            onClick = { id -> navController.navigate("${Screen.DETAILS.route}?id=${id}") }
+            onClick = { id -> navController.navigate("${Destinations.DETAILS.route}?id=${id}") }
         )
     }
 }

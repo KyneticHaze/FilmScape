@@ -25,7 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.furkanhrmnc.filmscape.navigation.components.Screen
+import com.furkanhrmnc.filmscape.navigation.components.Destinations
 import com.furkanhrmnc.filmscape.util.MediaCard
 import com.furkanhrmnc.filmscape.util.Snack
 import kotlinx.coroutines.launch
@@ -93,7 +93,7 @@ fun PopularScreen(
                     MediaCard(
                         media = popularMedia,
                         clickable = { id ->
-                            navController.navigate("${Screen.DETAILS.route}?id=$id")
+                            navController.navigate("${Destinations.DETAILS.route}?id=$id")
                         }
                     )
                 }

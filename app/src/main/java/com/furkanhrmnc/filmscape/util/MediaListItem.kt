@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.furkanhrmnc.filmscape.domain.model.Media
-import com.furkanhrmnc.filmscape.navigation.components.Screen
+import com.furkanhrmnc.filmscape.navigation.components.Destinations
 
 @Composable
 fun MediaListItem(
@@ -28,7 +28,7 @@ fun MediaListItem(
 ) {
 
     ListItem(
-        modifier = modifier.clickable { navController.navigate("${Screen.DETAILS.route}?id=${media.id}") },
+        modifier = modifier.clickable { navController.navigate("${Destinations.DETAILS.route}?id=${media.id}") },
         leadingContent = {
             Card {
                 AsyncImage(

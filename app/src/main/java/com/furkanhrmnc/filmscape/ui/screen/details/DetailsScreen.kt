@@ -37,7 +37,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.media3.ui.PlayerView
 import coil.compose.AsyncImage
 import com.furkanhrmnc.filmscape.domain.model.Media
-import com.furkanhrmnc.filmscape.navigation.components.Screen
+import com.furkanhrmnc.filmscape.navigation.components.Destinations
 import com.furkanhrmnc.filmscape.util.MediaCard
 import com.furkanhrmnc.filmscape.util.UiEvent
 
@@ -97,8 +97,8 @@ fun DetailsScreen(
 
                     RecommendationSection(
                         medias = detailsUiState.recommendedMedias,
-                        onMore = { viewModel.onEvent(DetailUiEvent.Navigate("${Screen.SIMILAR.route}?id=${viewModel.id}")) },
-                        onClick = { id -> viewModel.onEvent(DetailUiEvent.Navigate("${Screen.DETAILS.route}?id=$id")) }
+                        onMore = { viewModel.onEvent(DetailUiEvent.Navigate("${Destinations.SIMILAR.route}?id=${viewModel.id}")) },
+                        onClick = { id -> viewModel.onEvent(DetailUiEvent.Navigate("${Destinations.DETAILS.route}?id=$id")) }
                     )
                 }
             }

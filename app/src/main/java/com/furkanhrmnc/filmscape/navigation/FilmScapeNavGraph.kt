@@ -8,7 +8,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.furkanhrmnc.filmscape.navigation.components.Screen
+import com.furkanhrmnc.filmscape.navigation.components.Destinations
 import com.furkanhrmnc.filmscape.ui.screen.details.DetailsScreen
 import com.furkanhrmnc.filmscape.ui.screen.details.DetailsViewModel
 import com.furkanhrmnc.filmscape.ui.screen.favorite.FavoriteScreen
@@ -26,13 +26,13 @@ fun FilmScapeNavGraph() {
 
     NavHost(
         navController = navController,
-        startDestination = Screen.MAIN.route
+        startDestination = Destinations.MAIN.route
     ) {
-        composable(Screen.MAIN.route) {
+        composable(Destinations.MAIN.route) {
             MainScreen(navController = navController)
         }
         composable(
-            route = "${Screen.DETAILS.route}?id={id}",
+            route = "${Destinations.DETAILS.route}?id={id}",
             arguments = listOf(
                 navArgument("id") { type = NavType.IntType }
             )
@@ -48,7 +48,7 @@ fun FilmScapeNavGraph() {
             )
         }
         composable(
-            route = "${Screen.SIMILAR.route}?id={id}",
+            route = "${Destinations.SIMILAR.route}?id={id}",
             arguments = listOf(
                 navArgument("id") { type = NavType.IntType }
             )
@@ -60,15 +60,15 @@ fun FilmScapeNavGraph() {
             )
         }
 
-        composable(Screen.SEARCH.route) {
+        composable(Destinations.SEARCH.route) {
             SearchScreen(navController = navController)
         }
 
-        composable(route = Screen.POPULAR.route) {
+        composable(route = Destinations.POPULAR.route) {
             PopularScreen(navController = navController)
         }
 
-        composable(route = Screen.FAVORITE.route) {
+        composable(route = Destinations.FAVORITE.route) {
             FavoriteScreen()
         }
     }

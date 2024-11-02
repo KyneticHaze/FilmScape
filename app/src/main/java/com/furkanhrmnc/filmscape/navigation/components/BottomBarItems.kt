@@ -31,27 +31,27 @@ sealed class BottomBarItems(
         title = "Home",
         selectedIcon = Icons.Outlined.Home,
         unselectedIcon = Icons.Filled.Home,
-        route = Screen.MAIN.route
+        route = Destinations.MAIN.route
     )
 
     data object Search : BottomBarItems(
         title = "Search",
         selectedIcon = Icons.Outlined.Search,
         unselectedIcon = Icons.Filled.Search,
-        route = Screen.SEARCH.route
+        route = Destinations.SEARCH.route
     )
 
     data object POPULAR : BottomBarItems(
         title = "Popular",
         selectedIcon = Icons.Outlined.LocalFireDepartment,
         unselectedIcon = Icons.Filled.LocalFireDepartment,
-        route = Screen.POPULAR.route
+        route = Destinations.POPULAR.route
     )
 
     data object Favorite : BottomBarItems(
         title = "Favorite",
         selectedIcon = Icons.Outlined.Favorite,
         unselectedIcon = Icons.Filled.Favorite,
-        route = Screen.FAVORITE.route
+        route = Destinations.FAVORITE.route
     )
 }

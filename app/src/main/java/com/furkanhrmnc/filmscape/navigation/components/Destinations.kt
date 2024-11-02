@@ -7,12 +7,11 @@ package com.furkanhrmnc.filmscape.navigation.components
  *
  * @author Furkan Harmancı
  */
-enum class Screen(val route: String) {
+enum class Destinations(val route: String) {
     MAIN("main_screen"),
     DETAILS("details_screen"),
     POPULAR("popular_screen"),
     SIMILAR("similar_screen"),
     FAVORITE("favorite_screen"),
-    ACCOUNT("account_screen"),
     SEARCH("search_screen")
 }
