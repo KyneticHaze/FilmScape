@@ -3,7 +3,7 @@ package com.furkanhrmnc.filmscape.ui.screen.main
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
-import com.furkanhrmnc.filmscape.ui.screen.main.movies.MediaPager
+import com.furkanhrmnc.filmscape.ui.screen.main.medias.MediaPager
 import com.furkanhrmnc.filmscape.util.Category
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.catch

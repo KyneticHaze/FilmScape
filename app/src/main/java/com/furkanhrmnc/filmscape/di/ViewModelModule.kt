@@ -2,7 +2,7 @@ package com.furkanhrmnc.filmscape.di
 
 import com.furkanhrmnc.filmscape.ui.screen.details.DetailsViewModel
 import com.furkanhrmnc.filmscape.ui.screen.main.MainViewModel
-import com.furkanhrmnc.filmscape.ui.screen.main.movies.MediaPager
+import com.furkanhrmnc.filmscape.ui.screen.main.medias.MediaPager
 import com.furkanhrmnc.filmscape.ui.screen.popular.PopularPager
 import com.furkanhrmnc.filmscape.ui.screen.popular.PopularViewModel
 import com.furkanhrmnc.filmscape.ui.screen.search.SearchMoviesPager

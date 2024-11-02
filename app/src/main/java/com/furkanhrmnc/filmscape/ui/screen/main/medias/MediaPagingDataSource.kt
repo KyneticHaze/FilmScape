@@ -1,4 +1,4 @@
-package com.furkanhrmnc.filmscape.ui.screen.main.movies
+package com.furkanhrmnc.filmscape.ui.screen.main.medias
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
