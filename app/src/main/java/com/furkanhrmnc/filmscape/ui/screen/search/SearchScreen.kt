@@ -3,9 +3,10 @@ package com.furkanhrmnc.filmscape.ui.screen.search
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
@@ -17,30 +18,31 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SearchBar
 import androidx.compose.material3.SearchBarDefaults
-import androidx.compose.material3.Text
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
-import coil.compose.rememberAsyncImagePainter
-import coil.request.ImageRequest
-import coil.size.Size
-import com.furkanhrmnc.filmscape.R
-import com.furkanhrmnc.filmscape.navigation.components.Routes
-import com.furkanhrmnc.filmscape.ui.components.MovieCard
+import com.furkanhrmnc.filmscape.util.Constants.SNACK_LABEL_OK
+import com.furkanhrmnc.filmscape.util.MediaCard
+import com.furkanhrmnc.filmscape.util.Snack
 import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
+
 
 @Composable
 fun SearchScreen(
@@ -49,28 +51,24 @@ fun SearchScreen(
     navController: NavController,
 ) {
     val lazyGridState = rememberLazyGridState()
-    val scrollToTop by remember {
-        derivedStateOf {
-            lazyGridState.firstVisibleItemIndex > 3
-        }
-    }
+    val scrollToTop by remember { derivedStateOf { lazyGridState.firstVisibleItemIndex > 3 } }
     val scope = rememberCoroutineScope()
-    val searchMovies = viewModel.searchMovies.collectAsLazyPagingItems()
+    val snackbarHostState = remember { SnackbarHostState() }
+    val searchMedias = viewModel.searchMedias.collectAsLazyPagingItems()
     val searchValue by viewModel.search.collectAsState()
+    val error by viewModel.error.collectAsState()
+
+
+    Snack(
+        message = error,
+        onDismissed = viewModel::onErrorConsumed,
+        label = SNACK_LABEL_OK,
+        snackBarHostState = snackbarHostState
+    )
 
     Scaffold(
         modifier = modifier,
-        topBar = {
-            SearchSection(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 12.dp, vertical = 20.dp),
-                value = searchValue,
-                onValueChange = viewModel::onSearch,
-                onBack = navController::navigateUp,
-                onClear = viewModel::onClear
-            )
-        },
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         floatingActionButton = {
             AnimatedVisibility(
                 visible = scrollToTop,
@@ -89,20 +87,38 @@ fun SearchScreen(
             }
         }
     ) { innerPadding ->
-        // Search Section?
-        LazyVerticalGrid(
-            modifier = Modifier.padding(innerPadding),
-            state = lazyGridState,
-            columns = GridCells.Fixed(3)
+        Box(
+            modifier = Modifier.fillMaxSize()
         ) {
-            items(searchMovies.itemCount) { index ->
-                searchMovies[index]?.let { movie ->
-                    MovieCard(
-                        modifier = Modifier.size(200.dp),
-                        moviesPathString = movie.posterPath,
-                        title = movie.originalTitle,
-                        onClick = { navController.navigate("${Routes.DETAILS.route}?id=${movie.id}") }
-                    )
+            SearchSection(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 12.dp),
+                value = searchValue,
+                onValueChange = viewModel::onSearch,
+                onBack = navController::navigateUp,
+                onClear = viewModel::onClear
+            )
+            LazyVerticalGrid(
+                modifier = Modifier.padding(innerPadding),
+                state = lazyGridState,
+                columns = GridCells.Fixed(3)
+            ) {
+
+                when {
+                    (searchMedias.loadState.refresh is LoadState.Error) -> {
+                        viewModel.onError((searchMedias.loadState.refresh as LoadState.Error).error)
+                    }
+
+                    (searchMedias.loadState.append is LoadState.Error) -> {
+                        viewModel.onError((searchMedias.loadState.refresh as LoadState.Error).error)
+                    }
+                }
+
+                items(searchMedias.itemCount) { index ->
+                    searchMedias[index]?.let { media ->
+                        MediaCard(media = media)
+                    }
                 }
             }
         }
@@ -118,34 +134,44 @@ fun SearchSection(
     onBack: () -> Unit,
     onClear: () -> Unit,
 ) {
+
+    var expanded by rememberSaveable {
+        mutableStateOf(false)
+    }
+
     SearchBar(
         modifier = modifier,
-        query = value,
-        onQueryChange = onValueChange,
-        onSearch = {},
-        active = false,
-        onActiveChange = {},
-        placeholder = { Text(text = "Search") },
-        colors = SearchBarDefaults.colors(containerColor = MaterialTheme.colorScheme.primaryContainer),
-        leadingIcon = {
-            IconButton(onClick = onBack) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Default.ArrowBack,
-                    contentDescription = "Go back"
-                )
-            }
-        },
-        trailingIcon = {
-            AnimatedVisibility(
-                visible = value.isNotBlank(),
-                exit = fadeOut(),
-                enter = fadeIn()
-            ) {
-                IconButton(onClick = onClear) {
-                    Icon(imageVector = Icons.Default.Clear, contentDescription = "Clear")
+        inputField = {
+            SearchBarDefaults.InputField(
+                query = value,
+                onQueryChange = onValueChange,
+                onSearch = {},
+                expanded = expanded,
+                placeholder = {},
+                onExpandedChange = { isExpandedChange -> expanded = isExpandedChange },
+                leadingIcon = {
+                    IconButton(onClick = onBack) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Default.ArrowBack,
+                            contentDescription = "Go back"
+                        )
+                    }
+                },
+                trailingIcon = {
+                    AnimatedVisibility(
+                        visible = value.isNotBlank(),
+                        exit = fadeOut(),
+                        enter = fadeIn()
+                    ) {
+                        IconButton(onClick = onClear) {
+                            Icon(imageVector = Icons.Default.Clear, contentDescription = "Clear")
+                        }
+                    }
                 }
-            }
+            )
         },
-        content = {},
-    )
+        expanded = expanded,
+        onExpandedChange = { isExpandedChange -> expanded = isExpandedChange },
+    ) {}
 }
+

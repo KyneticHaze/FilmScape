@@ -1,13 +1,12 @@
 package com.furkanhrmnc.filmscape.ui.screen.details
 
-import com.furkanhrmnc.filmscape.domain.model.Movie
-import com.furkanhrmnc.filmscape.domain.model.Video
-import com.furkanhrmnc.filmscape.domain.model.details.MovieDetails
-import com.furkanhrmnc.filmscape.util.ViewState
+import com.furkanhrmnc.filmscape.domain.model.Media
+import com.furkanhrmnc.filmscape.domain.model.MediaDetail
 
 data class DetailsUiState(
-    val movieDetails: ViewState<MovieDetails> = ViewState.Loading,
-    val recommendedMovies: ViewState<List<Movie>> = ViewState.Loading,
-    val movieVideos: ViewState<List<Video>> = ViewState.Loading,
-    val error: Throwable? = null
+    val mediaDetail: MediaDetail? = null,
+    val recommendedMedias: List<Media> = emptyList(),
+    val videoKey: String? = null,
+    val error: Throwable? = null,
+    val isLoading: Boolean = false,
 )

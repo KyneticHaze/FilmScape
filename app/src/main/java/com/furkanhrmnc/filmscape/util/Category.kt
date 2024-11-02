@@ -12,10 +12,8 @@ enum class Category {
     NOW_PLAYING;
 
     companion object {
-        /**
-         * Category ismine göre o category'i döndürecek fonksiyon.
-         */
-        fun getCategoryTypeName(name: String?): Category {
+
+        fun getCategoryByName(name: String?): Category {
             return entries.firstOrNull { it.name == name } ?: POPULAR
         }
     }

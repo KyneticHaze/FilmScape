@@ -23,10 +23,4 @@ class SimilarMoviesViewModel(pager: SimilarMoviesPager): ViewModel() {
             this@SimilarMoviesViewModel.error = error
         }
     }
-
-    fun onErrorConsumed() {
-        viewModelScope.launch {
-            error = null
-        }
-    }
 }

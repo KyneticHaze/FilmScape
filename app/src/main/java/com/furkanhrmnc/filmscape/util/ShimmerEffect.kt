@@ -18,6 +18,9 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.unit.IntSize
 
+/**
+ * Kullanıcı arayüzünde gösterilecek yapıların henüz hazır olmadığı durumlarda parıldama efektini verecek bir [Modifier] döndürecektir.
+ */
 fun Modifier.shimmerEffect(
     darkMode: Boolean = false,
 ) = composed {

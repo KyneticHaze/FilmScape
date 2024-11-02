@@ -1,12 +1,14 @@
 package com.furkanhrmnc.filmscape.navigation.components
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Person3
-import androidx.compose.material.icons.filled.Tv
+import androidx.compose.material.icons.filled.LocalFireDepartment
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.outlined.Favorite
 import androidx.compose.material.icons.outlined.Home
-import androidx.compose.material.icons.outlined.Person3
-import androidx.compose.material.icons.outlined.Tv
+import androidx.compose.material.icons.outlined.LocalFireDepartment
+import androidx.compose.material.icons.outlined.Search
 import androidx.compose.ui.graphics.vector.ImageVector
 
 /**
@@ -23,19 +25,33 @@ sealed class BottomBarItems(
     val title: String,
     val selectedIcon: ImageVector,
     val unselectedIcon: ImageVector,
-    val route: String
+    val route: String,
 ) {
     data object Home : BottomBarItems(
         title = "Home",
         selectedIcon = Icons.Outlined.Home,
         unselectedIcon = Icons.Filled.Home,
-        route = Routes.MAIN.route
+        route = Screen.MAIN.route
     )
 
-    data object Actors : BottomBarItems(
-        title = "Actors",
-        selectedIcon = Icons.Outlined.Person3,
-        unselectedIcon = Icons.Filled.Person3,
-        route = Routes.ACTORS.route
+    data object Search : BottomBarItems(
+        title = "Search",
+        selectedIcon = Icons.Outlined.Search,
+        unselectedIcon = Icons.Filled.Search,
+        route = Screen.SEARCH.route
+    )
+
+    data object POPULAR : BottomBarItems(
+        title = "Popular",
+        selectedIcon = Icons.Outlined.LocalFireDepartment,
+        unselectedIcon = Icons.Filled.LocalFireDepartment,
+        route = Screen.POPULAR.route
+    )
+
+    data object Favorite : BottomBarItems(
+        title = "Favorite",
+        selectedIcon = Icons.Outlined.Favorite,
+        unselectedIcon = Icons.Filled.Favorite,
+        route = Screen.FAVORITE.route
     )
 }

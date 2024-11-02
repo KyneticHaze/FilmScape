@@ -5,4 +5,4 @@ package com.furkanhrmnc.filmscape.di
  *
  * @author Furkan Harmancı
  */
-val appModules = listOf(dataModule, domainModule, viewModelModule)
+val appModules = listOf(dataModule, viewModelModule)

@@ -2,21 +2,20 @@ package com.furkanhrmnc.filmscape.ui.screen.search
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.furkanhrmnc.filmscape.domain.model.Movie
-import com.furkanhrmnc.filmscape.domain.model.PagingMovie
-import com.furkanhrmnc.filmscape.domain.usecase.LoadSearchMoviesUseCase
-import com.furkanhrmnc.filmscape.domain.usecase.SearchParams
-import com.furkanhrmnc.filmscape.util.NetworkOperation
-import kotlinx.coroutines.flow.filter
+import com.furkanhrmnc.filmscape.domain.model.Media
+import com.furkanhrmnc.filmscape.domain.model.PaginatedData
+import com.furkanhrmnc.filmscape.domain.repository.MediaRepository
+import com.furkanhrmnc.filmscape.util.Result
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 
 class SearchMoviesDataSource(
+    private val type: String,
     private val query: String,
-    private val loadSearchMoviesUseCase: LoadSearchMoviesUseCase,
-) : PagingSource<Int, Movie>() {
-    override fun getRefreshKey(state: PagingState<Int, Movie>): Int? {
+    private val repo: MediaRepository,
+) : PagingSource<Int, Media>() {
+    override fun getRefreshKey(state: PagingState<Int, Media>): Int? {
         return state.anchorPosition?.let { position ->
             state.closestPageToPosition(position)?.run {
                 prevKey?.plus(1) ?: nextKey?.minus(1)
@@ -24,7 +23,7 @@ class SearchMoviesDataSource(
         }
     }
 
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Movie> {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Media> {
         return if (query.isEmpty()) {
             LoadResult.Page(
                 data = emptyList(),
@@ -33,7 +32,7 @@ class SearchMoviesDataSource(
             )
         } else {
             runCatching {
-                loadPage(params.key ?: 1)
+                loadPage(type = type, page = params.key ?: 1)
             }.fold(
                 onSuccess = {
                     LoadResult.Page(
@@ -49,17 +48,20 @@ class SearchMoviesDataSource(
         }
     }
 
-    private fun PagingMovie<Movie>.prevKey(): Int? =
+    private fun PaginatedData<Media>.prevKey(): Int? =
         if (page == 1) null else page.minus(1)
 
-    private fun PagingMovie<Movie>.nextKey(): Int? =
+    private fun PaginatedData<Media>.nextKey(): Int? =
         if (page >= totalPages) null else page.plus(1)
 
-    private suspend fun loadPage(page: Int): PagingMovie<Movie> {
-        return loadSearchMoviesUseCase(param = SearchParams(query = query, page = page))
-            .filter { it !is NetworkOperation.Loading }
-            .onEach { if (it is NetworkOperation.Failure) throw it.throwable }
-            .map { (it as NetworkOperation.Success).data }
+    private suspend fun loadPage(type: String, page: Int): PaginatedData<Media> {
+        return repo.searchMovieOrTv(
+            type = type,
+            query = query,
+            page = page
+        )
+            .onEach { if (it is Result.Failure) throw it.throwable }
+            .map { (it as Result.Success).data }
             .first()
     }
 }

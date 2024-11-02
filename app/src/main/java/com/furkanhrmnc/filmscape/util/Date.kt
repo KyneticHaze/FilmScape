@@ -19,11 +19,11 @@ object Date {
         chars("-")
         dayOfMonth()
     }
-    private val LocalDateFormat: DateTimeFormat<LocalDate> = LocalDate.Format {
+    private val LocalDateFormat = LocalDate.Format {
         dayOfMonth()
-        chars("-")
+        chars("/")
         monthName(names = MonthNames.ENGLISH_ABBREVIATED)
-        chars("-")
+        chars("/")
         year()
     }
 
@@ -36,5 +36,6 @@ object Date {
     fun format(
         date: String,
         format: DateTimeFormat<LocalDate> = LocalDateFormat,
-    ): String = parse(date).format(format)
+    ): String =
+        parse(date).format(format)
 }

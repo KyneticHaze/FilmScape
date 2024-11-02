@@ -68,6 +68,4 @@ val md_theme_dark_scrim = Color(0xFF000000)
 val seed = Color(0xFFFFDB99)
 
 // Custom Color
-val filmScapeGreen = Color(0xFF28E03B)
-val filmScapeRed = Color(0xFFDA1919)
 val filmScapeStarColor = Color(0xF2CDDB0E)

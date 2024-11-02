@@ -2,9 +2,7 @@ package com.furkanhrmnc.filmscape.di
 
 import android.app.Application
 import org.koin.android.ext.koin.androidContext
-import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
-import org.koin.core.logger.Level
 
 /**
  * Uygulamanın ana sınıfı
@@ -18,7 +16,6 @@ class MovieApplication : Application() {
         super.onCreate()
 
         startKoin {
-            androidLogger(level = Level.INFO)
             androidContext(this@MovieApplication)
             modules(appModules)
         }

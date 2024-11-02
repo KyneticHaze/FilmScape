@@ -2,7 +2,8 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlin)
     alias(libs.plugins.kspCompiler)
-    id("kotlin-parcelize")
+    alias(libs.plugins.compose.compiler)
+    kotlin("plugin.serialization") version "2.0.21"
 }
 
 android {
@@ -31,19 +32,24 @@ android {
             )
         }
     }
+
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
+
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
+
+    composeCompiler {
+        reportsDestination = layout.buildDirectory.dir("compose-compiler")
+    }
+
     buildFeatures {
         compose = true
     }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.2"
-    }
+
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -57,41 +63,40 @@ dependencies {
     implementation(libs.androidx.paging.compose)
 
     // Koin Core
-    implementation (libs.koin.core)
-
+    implementation(libs.koin.core)
     // Koin Android
-    implementation (libs.insert.koin.koin.android)
-
+    implementation(libs.insert.koin.koin.android)
     // Koin Jetpack Compose
     implementation(libs.koin.androidx.compose)
 
-    // Retrofit
-    implementation(libs.retrofit)
-    implementation(libs.converter.gson)
+    // Ktor
+    implementation(libs.ktor.client.core)
+    implementation(libs.ktor.client.cio)
+    implementation(libs.ktor.client.content.negotiation)
+    implementation(libs.ktor.client.logging)
+    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.ktor.serialization.kotlinx.json)
 
-    // Interceptor
-    implementation(libs.logging.interceptor)
+    // Room
+    implementation(libs.androidx.room.runtime)
+    ksp(libs.androidx.room.compiler)
+    implementation(libs.androidx.room.paging)
 
     // Navigation Compose
-    implementation(libs.hilt.navigation.compose)
     implementation(libs.navigation.compose)
 
     // Coil
     implementation(libs.coil.compose)
+
+    // Media3
+    implementation(libs.androidx.media3.exoplayer)
+    implementation(libs.androidx.media3.ui)
 
     // Extended Icon
     implementation(libs.androidx.material.icons.extended)
 
     // kotlinx.datetime
     implementation(libs.kotlinx.datetime)
-
-    // YoutubePlayer
-    implementation(libs.youtube.player.view)
-
-    // Jetpack Media3
-    implementation(libs.androidx.media3.exoplayer)
-    implementation(libs.androidx.media3.exoplayer.dash)
-    implementation(libs.androidx.media3.ui)
 
     // Lifecycle Compose
     implementation(libs.androidx.lifecycle.runtime.compose)
@@ -104,8 +109,7 @@ dependencies {
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.ui.tooling.preview)
-    //noinspection UseTomlInstead
-    implementation("androidx.compose.material3:material3")
+    implementation(libs.androidx.material3)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

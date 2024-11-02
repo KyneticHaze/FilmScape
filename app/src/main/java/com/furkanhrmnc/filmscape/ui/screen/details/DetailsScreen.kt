@@ -1,268 +1,179 @@
 package com.furkanhrmnc.filmscape.ui.screen.details
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListScope
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
-import coil.compose.rememberAsyncImagePainter
-import coil.request.ImageRequest
-import com.furkanhrmnc.filmscape.R
-import com.furkanhrmnc.filmscape.domain.model.details.MovieDetails
-import com.furkanhrmnc.filmscape.navigation.components.Routes
-import com.furkanhrmnc.filmscape.ui.components.MoviesSection
-import com.furkanhrmnc.filmscape.ui.components.RatingBar
-import com.furkanhrmnc.filmscape.util.Date
-import com.furkanhrmnc.filmscape.util.ViewState
-import org.koin.compose.koinInject
-import org.koin.core.parameter.parametersOf
+import androidx.compose.ui.viewinterop.AndroidView
+import androidx.media3.ui.PlayerView
+import coil.compose.AsyncImage
+import com.furkanhrmnc.filmscape.domain.model.Media
+import com.furkanhrmnc.filmscape.navigation.components.Screen
+import com.furkanhrmnc.filmscape.util.MediaCard
+import com.furkanhrmnc.filmscape.util.UiEvent
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailsScreen(
-    movieId: Int,
-    navController: NavController,
+    viewModel: DetailsViewModel,
+    onNavigate: (UiEvent.NavigateTo) -> Unit,
 ) {
-    val viewModel: DetailsViewModel = koinInject<DetailsViewModel> { parametersOf(movieId) }
-    val detailsUiState by viewModel.detailsUiState.collectAsState()
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)
-    ) {
-        detailsLazyItem(
-            detailViewState = detailsUiState.movieDetails,
-            onError = viewModel::onError
-        )
-        item {
-            MoviesSection(
-                moviesState = detailsUiState.recommendedMovies,
-                title = stringResource(id = R.string.recommendations),
-                onMovieClick = { movie ->
-                    navController.navigate("${Routes.DETAILS.route}?id=${movie.id}")
-                },
-                onMore = {
-                    navController.navigate("${Routes.SIMILAR.route}?id=$movieId")
-                }
-            )
-        }
-    }
-}
+    val detailsUiState by viewModel.uiState.collectAsState()
+    val snackbarHostState = remember { SnackbarHostState() }
 
-fun LazyListScope.detailsLazyItem(
-    detailViewState: ViewState<MovieDetails>,
-    onError: (Throwable) -> Unit,
-) {
-    when (detailViewState) {
-        is ViewState.Failure -> item {
-            LaunchedEffect(key1 = detailViewState.throwable) {
-                detailViewState.throwable?.run(onError)
+    LaunchedEffect(key1 = true) {
+        viewModel.uiEvent.collect { event ->
+            when (event) {
+                is UiEvent.NavigateTo -> onNavigate(event)
+                is UiEvent.ShowSnackbar -> TODO()
             }
         }
+    }
 
-        ViewState.Loading -> item {
-            CircularProgressIndicator(Modifier.padding(12.dp))
-        }
 
-        is ViewState.Success -> item {
-            Details(details = detailViewState.data)
+    Scaffold(
+        topBar = {
+            TopAppBar(title = {
+                Text(
+                    text = detailsUiState.mediaDetail?.originalTitle ?: ""
+                )
+            })
+        },
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
+    ) { innerPadding ->
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+                .background(MaterialTheme.colorScheme.background)
+        ) {
+            item {
+                if (detailsUiState.isLoading) CircularProgressIndicator()
+
+                detailsUiState.mediaDetail?.let { mediaDetail ->
+
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(12.dp),
+                    ) {
+                        Card(modifier = Modifier.size(width = 150.dp, height = 220.dp)) {
+                            AsyncImage(
+                                model = mediaDetail.posterPath,
+                                contentDescription = mediaDetail.overview,
+                                contentScale = ContentScale.Crop
+                            )
+                        }
+                    }
+
+                    RecommendationSection(
+                        medias = detailsUiState.recommendedMedias,
+                        onMore = { viewModel.onEvent(DetailUiEvent.Navigate("${Screen.SIMILAR.route}?id=${viewModel.id}")) },
+                        onClick = { id -> viewModel.onEvent(DetailUiEvent.Navigate("${Screen.DETAILS.route}?id=$id")) }
+                    )
+                }
+            }
+
+
         }
     }
 }
 
 @Composable
-fun Details(
+fun VideoSection(
     modifier: Modifier = Modifier,
-    details: MovieDetails,
+    viewModel: DetailsViewModel,
 ) {
+
+    val uiState by viewModel.uiState.collectAsState()
+
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .wrapContentHeight()
+            .height(200.dp),
+        contentAlignment = Alignment.Center
     ) {
-        BackdropSection(details = details)
+        AndroidView(
+            modifier = Modifier
+                .fillMaxSize(),
+            factory = { context ->
+                PlayerView(context).apply {
+                    player = viewModel.player
+                    viewModel.onEvent(
+                        DetailUiEvent.PlayVideo(
+                            videoId = uiState.videoKey ?: ""
+                        )
+                    )
+                }
+            }
+        )
+    }
+}
+
+@Composable
+fun RecommendationSection(
+    modifier: Modifier = Modifier,
+    medias: List<Media>,
+    onMore: () -> Unit,
+    onClick: (Int) -> Unit,
+) {
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        verticalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentHeight()
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            PosterSection(details = details)
-            Spacer(modifier = Modifier.width(12.dp))
-            InfoSection(details = details)
-        }
-    }
-    OverviewSection(details = details)
-}
-
-@Composable
-fun BackdropSection(
-    modifier: Modifier = Modifier,
-    details: MovieDetails,
-) = with(details) {
-    val context = LocalContext.current
-    val painter = rememberAsyncImagePainter(
-        model = ImageRequest.Builder(context).crossfade(durationMillis = 400).data(backdropPath)
-            .build()
-    )
-    Card(
-        modifier = modifier
-            .fillMaxWidth()
-            .height(250.dp)
-    ) {
-        Box(
-            modifier = Modifier.fillMaxSize()
-        ) {
-            Image(
-                painter = painter,
-                contentDescription = description,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier.fillMaxSize()
+            Text(
+                modifier = Modifier.padding(horizontal = 16.dp),
+                text = "Recommendations",
+                style = MaterialTheme.typography.titleLarge,
+                color = MaterialTheme.colorScheme.onSurface,
+                fontWeight = FontWeight.SemiBold
             )
+            TextButton(onClick = onMore) {
+                Text(text = "See All")
+            }
         }
-    }
-}
-
-
-@Composable
-fun PosterSection(
-    modifier: Modifier = Modifier,
-    details: MovieDetails,
-) = with(details) {
-    val context = LocalContext.current
-    val painter = rememberAsyncImagePainter(
-        model = ImageRequest.Builder(context).crossfade(durationMillis = 400).data(posterPath)
-            .build()
-    )
-    Column(modifier = modifier) {
-        Spacer(modifier = Modifier.height(200.dp))
-        Card(
-            modifier = Modifier
-                .size(width = 180.dp, height = 250.dp)
-                .padding(start = 16.dp),
-            shape = RoundedCornerShape(16.dp),
-            elevation = CardDefaults.cardElevation(defaultElevation = 5.dp)
-        ) {
-            Box(
-                modifier = Modifier.fillMaxSize()
-            ) {
-                Image(
-                    painter = painter,
-                    contentDescription = description,
-                    modifier = Modifier.fillMaxSize(),
-                    contentScale = ContentScale.Crop
+        LazyRow(modifier = modifier) {
+            items(medias) { media ->
+                MediaCard(
+                    modifier = Modifier.height(240.dp),
+                    media = media,
+                    clickable = { id -> onClick(id) }
                 )
             }
         }
-    }
-}
-
-@Composable
-fun InfoSection(
-    modifier: Modifier = Modifier,
-    details: MovieDetails,
-) = with(details) {
-    Column(modifier = modifier) {
-        Spacer(modifier = Modifier.height(260.dp))
-        Text(
-            modifier = Modifier.padding(horizontal = 2.dp),
-            text = originalTitle,
-            color = MaterialTheme.colorScheme.onSurface,
-            fontWeight = FontWeight.SemiBold,
-            fontSize = 18.sp
-        )
-        Spacer(modifier = Modifier.height(12.dp))
-        Row(
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            RatingBar(starsModifier = Modifier.size(18.dp), rating = voteAverage.toDouble().div(2))
-            Text(
-                modifier = Modifier.padding(horizontal = 4.dp),
-                text = voteAverage.toString().take(3),
-                fontSize = 14.sp,
-                color = MaterialTheme.colorScheme.onSurface
-            )
-        }
-        Spacer(modifier = Modifier.height(6.dp))
-        Row(
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(
-                text = Date.format(releaseDate),
-                fontSize = 14.sp,
-                color = MaterialTheme.colorScheme.onSurface
-            )
-            Spacer(modifier = Modifier.width(8.dp))
-            Text(
-                modifier = Modifier
-                    .border(
-                        width = 1.dp,
-                        color = MaterialTheme.colorScheme.onSurface,
-                        shape = RoundedCornerShape(6.dp)
-                    )
-                    .padding(horizontal = 6.dp),
-                text = if (isAdult) "18+" else "-12",
-                color = MaterialTheme.colorScheme.onSurface,
-                fontSize = 12.sp
-            )
-        }
-    }
-}
-
-@Composable
-fun OverviewSection(
-    modifier: Modifier = Modifier,
-    details: MovieDetails,
-) = with(details) {
-    Column(modifier = modifier) {
-        Text(
-            modifier = Modifier.padding(horizontal = 16.dp, vertical = 20.dp),
-            text = "\"${tagline}\"",
-            style = MaterialTheme.typography.titleMedium,
-            fontStyle = FontStyle.Italic,
-            color = MaterialTheme.colorScheme.onSurface
-        )
-        Text(
-            modifier = Modifier.padding(horizontal = 16.dp, vertical = 6.dp),
-            text = stringResource(id = R.string.overview),
-            fontWeight = FontWeight.SemiBold,
-            style = MaterialTheme.typography.titleLarge,
-            color = MaterialTheme.colorScheme.onSurface
-        )
-        Text(
-            modifier = Modifier.padding(16.dp),
-            text = description,
-            color = MaterialTheme.colorScheme.onSurface,
-            style = MaterialTheme.typography.bodyLarge
-        )
     }
 }
