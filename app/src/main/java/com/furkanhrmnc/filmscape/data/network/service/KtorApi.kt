@@ -1,5 +1,6 @@
 package com.furkanhrmnc.filmscape.data.network.service
 
+import com.furkanhrmnc.filmscape.BuildConfig
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
@@ -18,8 +19,8 @@ import kotlinx.serialization.json.Json
 abstract class KtorApi {
 
     companion object {
-        const val API_KEY = "3c70d93bbd9bad4986f886136e58dca7"
-        const val BASE_URL = "https://api.themoviedb.org/"
+        const val API_KEY = BuildConfig.API_KEY
+        const val BASE_URL = BuildConfig.BASE_URL
     }
 
     val client = HttpClient(CIO) {
