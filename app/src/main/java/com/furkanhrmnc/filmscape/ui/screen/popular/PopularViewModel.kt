@@ -13,7 +13,7 @@ class PopularViewModel(pager: PopularPager) : ViewModel() {
     private val _error = MutableStateFlow<Throwable?>(null)
     val error: StateFlow<Throwable?> = _error
 
-    val popular = pager.pagingDataOnFlow(MediaType.MOVIE.name)
+    val popularMedias = pager.pagingDataOnFlow(MediaType.MOVIE.name)
         .catch { t -> onError(t) }
         .cachedIn(viewModelScope)
 

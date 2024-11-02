@@ -39,15 +39,13 @@ fun PopularScreen(
 ) {
 
     val viewModel = koinViewModel<PopularViewModel>()
-    val popular = viewModel.popular.collectAsLazyPagingItems()
+    val popularMedias = viewModel.popularMedias.collectAsLazyPagingItems()
     val error = viewModel.error.collectAsState()
 
     val snackBarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
     val lazyGridState = rememberLazyGridState()
-    val scrollToTop by remember {
-        derivedStateOf { lazyGridState.firstVisibleItemIndex > 3 }
-    }
+    val scrollToTop by remember { derivedStateOf { lazyGridState.firstVisibleItemIndex > 3 } }
 
     Snack(
         message = error.value,
@@ -80,20 +78,20 @@ fun PopularScreen(
         ) {
 
             when {
-                (popular.loadState.refresh is LoadState.Error) -> {
-                    viewModel.onError((popular.loadState.refresh as LoadState.Error).error)
+                (popularMedias.loadState.refresh is LoadState.Error) -> {
+                    viewModel.onError((popularMedias.loadState.refresh as LoadState.Error).error)
                 }
 
-                (popular.loadState.append is LoadState.Error) -> {
-                    viewModel.onError((popular.loadState.refresh as LoadState.Error).error)
+                (popularMedias.loadState.append is LoadState.Error) -> {
+                    viewModel.onError((popularMedias.loadState.refresh as LoadState.Error).error)
                 }
             }
 
 
-            items(popular.itemCount) { index ->
-                popular[index]?.let { popular ->
+            items(popularMedias.itemCount) { index ->
+                popularMedias[index]?.let { popularMedia ->
                     MediaCard(
-                        movie = popular,
+                        media = popularMedia,
                         clickable = { id ->
                             navController.navigate("${Screen.DETAILS.route}?id=$id")
                         }

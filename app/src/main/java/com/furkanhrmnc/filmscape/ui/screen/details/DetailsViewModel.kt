@@ -44,7 +44,7 @@ class DetailsViewModel(
 
     fun onEvent(event: DetailUiEvent) {
         when (event) {
-            is DetailUiEvent.AddFavorite -> addMovieToFavorites(event.movie)
+            is DetailUiEvent.AddFavorite -> addMovieToFavorites(event.media)
             is DetailUiEvent.PlayVideo -> playVideo(event.videoId)
             is DetailUiEvent.Navigate -> sendUiEvent(UiEvent.NavigateTo(event.route))
         }
