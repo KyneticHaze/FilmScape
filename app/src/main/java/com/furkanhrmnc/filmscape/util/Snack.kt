@@ -5,6 +5,7 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import com.furkanhrmnc.filmscape.util.Constants.SNACK_LABEL_OK
 import com.furkanhrmnc.filmscape.util.Constants.UNKNOWN_ERROR
 
 @Composable
@@ -12,7 +13,7 @@ fun Snack(
     message: Throwable? = null,
     snackBarHostState: SnackbarHostState,
     duration: SnackbarDuration = SnackbarDuration.Short,
-    label: String? = null,
+    label: String = SNACK_LABEL_OK,
     onDismissed: (() -> Unit)? = null,
     onActionPerformed: (() -> Unit)? = null,
 ) {

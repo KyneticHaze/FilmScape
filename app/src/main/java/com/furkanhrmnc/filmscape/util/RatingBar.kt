@@ -9,14 +9,14 @@ import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import com.furkanhrmnc.filmscape.ui.theme.filmScapeStarColor
+import com.furkanhrmnc.filmscape.util.Constants.STAR_COLOR
 
 @Composable
 fun RatingBar(
     modifier: Modifier = Modifier,
     rating: Double = 0.0,
     stars: Int = 5,
-    starsColor: Color = filmScapeStarColor,
+    starsColor: Color = STAR_COLOR,
 ) {
 
     val halfStar = (rating % 1) != 0.0

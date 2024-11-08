@@ -6,7 +6,7 @@ import com.furkanhrmnc.filmscape.domain.model.Media
 import com.furkanhrmnc.filmscape.domain.model.PaginatedData
 import com.furkanhrmnc.filmscape.domain.repository.MediaRepository
 import com.furkanhrmnc.filmscape.util.Category
-import com.furkanhrmnc.filmscape.util.Result
+import com.furkanhrmnc.filmscape.util.Response
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
@@ -56,8 +56,8 @@ class MediaPagingDataSource(
             category = category.name.lowercase(),
             page = page
         )
-            .onEach { result -> if (result is Result.Failure) throw result.throwable }
-            .map { result -> (result as Result.Success).data }
+            .onEach { result -> if (result is Response.Failure) throw result.throwable }
+            .map { result -> (result as Response.Success).data }
             .first()
     }
 }

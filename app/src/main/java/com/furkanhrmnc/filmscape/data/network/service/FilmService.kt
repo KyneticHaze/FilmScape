@@ -1,8 +1,11 @@
 package com.furkanhrmnc.filmscape.data.network.service
 
 import com.furkanhrmnc.filmscape.data.network.dto.BaseResponse
+import com.furkanhrmnc.filmscape.data.network.dto.CreditResponse
 import com.furkanhrmnc.filmscape.data.network.dto.MediaDTO
-import com.furkanhrmnc.filmscape.data.network.dto.detail.MediaDetailDTO
+import com.furkanhrmnc.filmscape.data.network.dto.MediaDetailDTO
+import com.furkanhrmnc.filmscape.data.network.dto.person.PersonDTO
+import com.furkanhrmnc.filmscape.data.network.dto.person.PersonDetailDTO
 import com.furkanhrmnc.filmscape.data.network.dto.video.VideoResponse
 import io.ktor.client.call.body
 import io.ktor.client.request.get
@@ -20,17 +23,17 @@ class FilmService : KtorApi() {
 
     suspend fun getDetailMovieOrTv(
         type: String,
-        movieId: Int,
+        id: Int,
     ) = client.get {
-        pathUrl("$type/$movieId")
+        pathUrl("$type/$id")
     }.body<MediaDetailDTO>()
 
     suspend fun getRecommendationsMovieOrTv(
         type: String,
-        movieId: Int,
+        id: Int,
         page: Int = 1,
     ) = client.get {
-        pathUrl("$type/$movieId/recommendations")
+        pathUrl("$type/$id/recommendations")
         parameter("page", page)
     }.body<BaseResponse<MediaDTO>>()
 
@@ -55,8 +58,24 @@ class FilmService : KtorApi() {
 
     suspend fun getVideosMovieOrTv(
         type: String,
-        movieId: Int,
+        id: Int,
     ) = client.get {
-        pathUrl("$type/$movieId/videos")
+        pathUrl("$type/$id/videos")
     }.body<VideoResponse>()
+
+    suspend fun getCreditsMovieOrTv(
+        type: String,
+        id: Int,
+    ) = client.get {
+        pathUrl("$type/$id/credits")
+    }.body<CreditResponse>()
+
+    suspend fun getPopularPersons(page: Int = 1) = client.get {
+        pathUrl("person/popular")
+        parameter("page", page)
+    }.body<BaseResponse<PersonDTO>>()
+
+    suspend fun getPersonDetails(id: Int) = client.get {
+        pathUrl("person/$id")
+    }.body<PersonDetailDTO>()
 }

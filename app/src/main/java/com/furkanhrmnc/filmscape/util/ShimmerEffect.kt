@@ -17,26 +17,27 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.unit.IntSize
+import com.furkanhrmnc.filmscape.util.Constants.SHIMMER_ANIMATION_LABEL
+import com.furkanhrmnc.filmscape.util.Constants.SHIMMER_DURATION_MS
+import com.furkanhrmnc.filmscape.util.Constants.SHIMMER_INFINITE_LABEL
 
 /**
  * Kullanıcı arayüzünde gösterilecek yapıların henüz hazır olmadığı durumlarda parıldama efektini verecek bir [Modifier] döndürecektir.
  */
-fun Modifier.shimmerEffect(
-    darkMode: Boolean = false,
-) = composed {
+fun Modifier.shimmerEffect(darkMode: Boolean = false) = composed {
 
     var size by remember { mutableStateOf(IntSize.Zero) }
-    val transition = rememberInfiniteTransition(label = "Shimmer Effect Infinite Transition")
+    val transition = rememberInfiniteTransition(label = SHIMMER_INFINITE_LABEL)
     val startOffsetX by transition.animateFloat(
         initialValue = -2 * size.width.toFloat(),
         targetValue = 2 * size.width.toFloat(),
         animationSpec = infiniteRepeatable(
             animation = tween(
-                durationMillis = 1000,
+                durationMillis = SHIMMER_DURATION_MS,
                 easing = LinearEasing
             )
         ),
-        label = "Shimmer Animation"
+        label = SHIMMER_ANIMATION_LABEL
     )
 
     val shimmerColors = if (darkMode) {

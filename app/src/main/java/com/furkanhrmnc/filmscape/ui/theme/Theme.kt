@@ -9,7 +9,11 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
+import com.furkanhrmnc.filmscape.util.ThemeType
+import org.koin.androidx.compose.koinViewModel
 
 private val LightColors = lightColorScheme(
     primary = md_theme_light_primary,
@@ -77,19 +81,24 @@ private val DarkColors = darkColorScheme(
 )
 
 @Composable
-fun FilmScapeTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
-    content: @Composable () -> Unit
-) {
+fun FilmScapeTheme(content: @Composable () -> Unit) {
+
+    val viewmodel = koinViewModel<ThemeViewModel>()
+
+    val isDynamic by viewmodel.isDynamic.collectAsState()
+    val isDarkTheme = when (viewmodel.isDarkTheme.collectAsState().value) {
+        ThemeType.SYSTEM -> isSystemInDarkTheme()
+        ThemeType.LIGHT -> false
+        ThemeType.DARK -> true
+    }
+
     val colorScheme = when {
-        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
+        isDynamic && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
             val context = LocalContext.current
-            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
+            if (isDarkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
         }
 
-        darkTheme -> DarkColors
+        isDarkTheme -> DarkColors
         else -> LightColors
     }
 

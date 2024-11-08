@@ -1,10 +1,13 @@
 package com.furkanhrmnc.filmscape.domain.repository
 
+import com.furkanhrmnc.filmscape.domain.model.Cast
 import com.furkanhrmnc.filmscape.domain.model.Media
 import com.furkanhrmnc.filmscape.domain.model.MediaDetail
 import com.furkanhrmnc.filmscape.domain.model.PaginatedData
+import com.furkanhrmnc.filmscape.domain.model.Person
+import com.furkanhrmnc.filmscape.domain.model.PersonDetail
 import com.furkanhrmnc.filmscape.domain.model.Video
-import com.furkanhrmnc.filmscape.util.Result
+import com.furkanhrmnc.filmscape.util.Response
 import kotlinx.coroutines.flow.Flow
 
 /**
@@ -18,41 +21,44 @@ interface MediaRepository {
         type: String,
         category: String,
         page: Int,
-    ): Flow<Result<PaginatedData<Media>>>
+    ): Flow<Response<PaginatedData<Media>>>
 
     fun getDetailMediaOrTv(
         type: String,
         id: Int,
-    ): Flow<Result<MediaDetail>>
+    ): Flow<Response<MediaDetail>>
 
     fun getRecommendationsMovieOrTv(
         type: String,
         id: Int,
         page: Int,
-    ): Flow<Result<PaginatedData<Media>>>
+    ): Flow<Response<PaginatedData<Media>>>
 
     fun searchMovieOrTv(
         query: String,
         type: String,
         page: Int,
-    ): Flow<Result<PaginatedData<Media>>>
+    ): Flow<Response<PaginatedData<Media>>>
 
     fun getTrendingMovieOrTv(
         type: String,
         timeWindow: String,
         page: Int,
-    ): Flow<Result<PaginatedData<Media>>>
+    ): Flow<Response<PaginatedData<Media>>>
 
     fun getVideosMovieOrTv(
         type: String,
         id: Int,
-    ): Flow<Result<Video>>
+    ): Flow<Response<List<Video>>>
 
-    fun getMediaByIdFromCache(id: Int): Flow<Media>
+    fun getCreditsMovieOrTv(
+        type: String,
+        id: Int,
+    ): Flow<Response<List<Cast>>>
 
-    suspend fun addMediaToCache(media: Media)
+    fun getPopularPersons(
+        page: Int,
+    ): Flow<Response<PaginatedData<Person>>>
 
-    suspend fun updateMediaInCache(media: Media)
-
-    suspend fun deleteMediaInCache(media: Media)
+    fun getPersonDetails(id: Int): Flow<Response<PersonDetail>>
 }

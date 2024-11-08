@@ -2,14 +2,15 @@ package com.furkanhrmnc.filmscape.ui.screen.details
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.media3.common.MediaItem
-import androidx.media3.common.Player
 import com.furkanhrmnc.filmscape.domain.model.Media
 import com.furkanhrmnc.filmscape.domain.repository.MediaRepository
-import com.furkanhrmnc.filmscape.util.Constants.YOUTUBE_BASE_URL
+import com.furkanhrmnc.filmscape.util.Constants.FAVORITES
+import com.furkanhrmnc.filmscape.util.Constants.MEDIA
 import com.furkanhrmnc.filmscape.util.MediaType
-import com.furkanhrmnc.filmscape.util.Result
+import com.furkanhrmnc.filmscape.util.Response
 import com.furkanhrmnc.filmscape.util.UiEvent
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -18,52 +19,60 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class DetailsViewModel(
-    val id: Int,
-    val player: Player,
-    private val repo: MediaRepository,
-) : ViewModel() {
+class DetailsViewModel(private val repo: MediaRepository) : ViewModel() {
 
+    private val firestore = Firebase.firestore
     private val _uiState = MutableStateFlow(DetailsUiState())
     val uiState: StateFlow<DetailsUiState> = _uiState.asStateFlow()
 
     private val _uiEvent = Channel<UiEvent>()
     val uiEvent = _uiEvent.receiveAsFlow()
 
-    init {
-        initData()
-    }
-
-    private fun initData() {
-        viewModelScope.launch {
-            loadMediaDetail(MediaType.MOVIE.name)
-            loadRecommendations(MediaType.MOVIE.name)
-            loadVideoByType(MediaType.MOVIE.name)
-        }
-    }
-
-    fun onEvent(event: DetailUiEvent) {
+    fun onEvent(event: DetailsUiEvents) {
         when (event) {
-            is DetailUiEvent.AddFavorite -> addMovieToFavorites(event.media)
-            is DetailUiEvent.PlayVideo -> playVideo(event.videoId)
-            is DetailUiEvent.Navigate -> sendUiEvent(UiEvent.NavigateTo(event.route))
+            is DetailsUiEvents.Navigate -> sendUiEvent(UiEvent.NavigateTo(event.route))
+            is DetailsUiEvents.SetDataAndLoad -> {
+                startLoad(
+                    id = event.id,
+                    type = event.type
+                )
+            }
+
+            is DetailsUiEvents.AddFavorite -> addMediaToFavorites(event.uid, event.media)
         }
     }
 
-    private fun addMovieToFavorites(media: Media) {
+    private fun startLoad(
+        id: Int,
+        type: MediaType,
+    ) {
         viewModelScope.launch {
-            repo.addMediaToCache(media)
+            loadMediaDetail(id, type.lowerName)
+            loadRecommendations(id, type.lowerName)
+            loadMediaDetailCasts(id, type.lowerName)
+            loadMediaDetailVideos(id, type.lowerName)
         }
     }
 
-    private fun playVideo(videoId: String) {
-        val youtubeUrl = "${YOUTUBE_BASE_URL}${videoId}"
-        player.setMediaItem(MediaItem.fromUri(youtubeUrl))
-        player.prepare()
-        player.play()
+    private fun addMediaToFavorites(uid: String, media: Media) {
+        firestore
+            .collection(FAVORITES)
+            .document(uid)
+            .collection(MEDIA)
+            .document(media.id.toString())
+            .set(media)
+            .addOnSuccessListener {
+                _uiState.update { it.copy(isFavorite = true) }
+            }
+            .addOnFailureListener { e ->
+                _uiState.update { it.copy(isFavorite = false, error = e) }
+            }
     }
 
-    private suspend fun loadMediaDetail(type: String) {
+    private suspend fun loadMediaDetail(
+        id: Int,
+        type: String,
+    ) {
 
         _uiState.update { it.copy(isLoading = true) }
 
@@ -74,12 +83,12 @@ class DetailsViewModel(
             .collect { result ->
                 _uiState.update {
                     when (result) {
-                        is Result.Failure -> it.copy(
+                        is Response.Failure -> it.copy(
                             error = result.throwable,
                             isLoading = false
                         )
 
-                        is Result.Success -> it.copy(
+                        is Response.Success -> it.copy(
                             mediaDetail = result.data,
                             isLoading = false
                         )
@@ -88,7 +97,10 @@ class DetailsViewModel(
             }
     }
 
-    private suspend fun loadRecommendations(type: String) {
+    private suspend fun loadRecommendations(
+        id: Int,
+        type: String,
+    ) {
 
         _uiState.update { it.copy(isLoading = true) }
 
@@ -100,13 +112,13 @@ class DetailsViewModel(
             .collect { result ->
                 _uiState.update {
                     when (result) {
-                        is Result.Failure -> it.copy(
+                        is Response.Failure -> it.copy(
                             error = result.throwable,
                             isLoading = false
                         )
 
-                        is Result.Success -> it.copy(
-                            recommendedMedias = result.data.results,
+                        is Response.Success -> it.copy(
+                            recommendedMovies = result.data.results,
                             isLoading = false
                         )
                     }
@@ -114,21 +126,45 @@ class DetailsViewModel(
             }
     }
 
-    private suspend fun loadVideoByType(type: String) {
+    private suspend fun loadMediaDetailCasts(
+        id: Int,
+        type: String,
+    ) {
+        _uiState.update { it.copy(isLoading = true) }
+        repo.getCreditsMovieOrTv(type = type, id = id).collect { result ->
+            when (result) {
+                is Response.Failure -> _uiState.update {
+                    it.copy(error = result.throwable, isLoading = false)
+                }
+
+                is Response.Success -> _uiState.update {
+                    it.copy(movieCasts = result.data, isLoading = false)
+                }
+            }
+        }
+    }
+
+    private suspend fun loadMediaDetailVideos(
+        id: Int,
+        type: String,
+    ) {
         repo.getVideosMovieOrTv(type = type, id = id)
             .collect { result ->
                 _uiState.update {
                     when (result) {
-                        is Result.Failure -> it.copy(error = result.throwable)
-                        is Result.Success -> it.copy(videoKey = result.data.key)
+                        is Response.Failure -> it.copy(error = result.throwable)
+                        is Response.Success -> it.copy(videoId = result.data.shuffled()[0].key)
                     }
                 }
             }
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        player.release()
+    fun onError(throwable: Throwable) {
+        _uiState.update { it.copy(error = throwable) }
+    }
+
+    fun onErrorConsumed() {
+        _uiState.update { it.copy(error = null) }
     }
 
     private fun sendUiEvent(event: UiEvent) {

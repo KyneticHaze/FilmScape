@@ -1,57 +1,93 @@
 package com.furkanhrmnc.filmscape.di
 
+import com.furkanhrmnc.filmscape.ui.screen.auth.UserSignInViewModel
+import com.furkanhrmnc.filmscape.ui.screen.auth.UserSignUpViewModel
+import com.furkanhrmnc.filmscape.ui.screen.auth.account.AccountViewModel
 import com.furkanhrmnc.filmscape.ui.screen.details.DetailsViewModel
+import com.furkanhrmnc.filmscape.ui.screen.favorite.FavoriteViewModel
 import com.furkanhrmnc.filmscape.ui.screen.main.MainViewModel
 import com.furkanhrmnc.filmscape.ui.screen.main.medias.MediaPager
-import com.furkanhrmnc.filmscape.ui.screen.popular.PopularPager
-import com.furkanhrmnc.filmscape.ui.screen.popular.PopularViewModel
-import com.furkanhrmnc.filmscape.ui.screen.search.SearchMoviesPager
-import com.furkanhrmnc.filmscape.ui.screen.search.SearchMoviesViewModel
-import com.furkanhrmnc.filmscape.ui.screen.similar.SimilarMoviesPager
-import com.furkanhrmnc.filmscape.ui.screen.similar.SimilarMoviesViewModel
-import com.furkanhrmnc.filmscape.util.MediaType
+import com.furkanhrmnc.filmscape.ui.screen.movies.MoviesViewModel
+import com.furkanhrmnc.filmscape.ui.screen.person.PersonViewModel
+import com.furkanhrmnc.filmscape.ui.screen.person.PersonsPager
+import com.furkanhrmnc.filmscape.ui.screen.person.details.PersonDetailsViewModel
+import com.furkanhrmnc.filmscape.ui.screen.search.SearchMediasPager
+import com.furkanhrmnc.filmscape.ui.screen.search.SearchMediasViewModel
+import com.furkanhrmnc.filmscape.ui.screen.settings.SettingsViewModel
+import com.furkanhrmnc.filmscape.ui.screen.similar.SimilarMediasPager
+import com.furkanhrmnc.filmscape.ui.screen.similar.SimilarMediasViewModel
+import com.furkanhrmnc.filmscape.ui.screen.trending.TrendingPager
+import com.furkanhrmnc.filmscape.ui.screen.trending.TrendingViewModel
+import com.furkanhrmnc.filmscape.ui.screen.tv.TvViewModel
+import com.furkanhrmnc.filmscape.ui.theme.ThemeViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 /**
- * ViewModel'i UI kısmında daha rahat başlatmak ve parametreler'i daha rahat kontrol etmek için yazılan modül.
+ * ViewModeli UI kısmında daha rahat başlatmak ve parametreleri daha rahat kontrol etmek için yazılan modül.
  *
  * @author Furkan Harmancı
  */
 val viewModelModule = module {
-    viewModel { params ->
-        MainViewModel(
-            type = params.get(),
-            category = params.get(),
-            pager = MediaPager(repo = get())
-        )
+
+
+    viewModel {
+        MainViewModel(repo = get())
+    }
+
+    viewModel {
+        MoviesViewModel(pager = MediaPager(repo = get()))
+    }
+
+    viewModel {
+        TvViewModel(pager = MediaPager(repo = get()))
+    }
+
+    viewModel {
+        DetailsViewModel(repo = get())
     }
 
     viewModel { params ->
-        DetailsViewModel(
+        SimilarMediasViewModel(
             id = params.get(),
-            repo = get(),
-            player = get()
+            pager = SimilarMediasPager(repo = get())
         )
+    }
+
+    viewModel {
+        SearchMediasViewModel(pager = SearchMediasPager(repo = get()))
+    }
+
+    viewModel {
+        TrendingViewModel(pager = TrendingPager(repo = get()))
     }
 
     viewModel { params ->
-        SimilarMoviesViewModel(
-            pager = SimilarMoviesPager(
-                type = MediaType.MOVIE.name,
-                movieId = params.get(),
-                repo = get()
-            )
+        FavoriteViewModel(uid = params.get())
+    }
+
+    viewModel {
+        PersonViewModel(pager = PersonsPager(repo = get()))
+    }
+
+    viewModel { params ->
+        PersonDetailsViewModel(
+            id = params.get(),
+            repo = get()
         )
     }
 
     viewModel {
-        SearchMoviesViewModel(pager = SearchMoviesPager(repo = get()))
+        UserSignUpViewModel(get())
     }
 
     viewModel {
-        PopularViewModel(
-            pager = PopularPager(repo = get())
-        )
+        UserSignInViewModel(get())
     }
+
+    viewModel { AccountViewModel() }
+
+    viewModel { ThemeViewModel(storeRepository = get()) }
+
+    viewModel { SettingsViewModel(storeRepository = get()) }
 }

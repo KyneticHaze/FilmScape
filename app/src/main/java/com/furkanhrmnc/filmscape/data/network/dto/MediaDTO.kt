@@ -2,6 +2,7 @@ package com.furkanhrmnc.filmscape.data.network.dto
 
 import com.furkanhrmnc.filmscape.domain.model.Media
 import com.furkanhrmnc.filmscape.util.Constants.imageFormatter
+import com.furkanhrmnc.filmscape.util.MediaType
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -38,8 +39,6 @@ data class MediaDTO(
     val voteCount: Long? = null,
 )
 
-fun List<MediaDTO>.toMediaList(): List<Media> = map(MediaDTO::toMedia)
-
 fun MediaDTO.toMedia(): Media = Media(
     id = id ?: 0,
     adult = adult ?: false,
@@ -49,11 +48,18 @@ fun MediaDTO.toMedia(): Media = Media(
     originalLanguage = originalLanguage ?: "",
     title = title ?: "",
     name = name ?: "",
-    description = overview ?: "",
+    overview = overview ?: "",
     popularity = popularity ?: 0.0,
     releaseDate = releaseDate ?: "",
     firstAirDate = firstAirDate ?: "",
     originCountry = originCountry ?: emptyList(),
     voteCount = voteCount ?: 0L,
     voteAverage = (voteAverage ?: 0.0).toFloat(),
+    originalTitle = originalTitle ?: "",
+    originalName = originalName ?: "",
+    type = when {
+        !releaseDate.isNullOrEmpty() -> MediaType.MOVIE
+        !firstAirDate.isNullOrEmpty() -> MediaType.TV
+        else -> MediaType.MOVIE
+    }
 )

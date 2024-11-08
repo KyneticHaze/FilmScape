@@ -1,5 +1,7 @@
 package com.furkanhrmnc.filmscape.domain.model
 
+import com.furkanhrmnc.filmscape.util.MediaType
+
 data class MediaDetail(
     val adult: Boolean,
     val backdropPath: String?,
@@ -40,6 +42,32 @@ data class MediaDetail(
     val voteAverage: Double?,
     val voteCount: Int?,
 )
+
+fun MediaDetail.toMedia(): Media =
+    Media(
+        id = this.id,
+        title = this.title,
+        name = this.name,
+        overview = this.overview ?: "",
+        releaseDate = this.releaseDate,
+        firstAirDate = this.firstAirDate,
+        posterPath = this.posterPath ?: "",
+        backdropPath = this.backdropPath ?: "",
+        voteAverage = (this.voteAverage ?: 0.0).toFloat(),
+        popularity = this.popularity ?: 0.0,
+        adult = this.adult,
+        originalTitle = originalTitle,
+        originalName = originalName,
+        genreIds = emptyList(),
+        originalLanguage = "",
+        voteCount = 0L,
+        originCountry = emptyList(),
+        type = when {
+            !this.releaseDate.isNullOrEmpty() -> MediaType.MOVIE
+            !this.firstAirDate.isNullOrEmpty() -> MediaType.TV
+            else -> MediaType.MOVIE
+        }
+    )
 
 data class CreatedByModel(
     val id: Int,

@@ -3,7 +3,8 @@ plugins {
     alias(libs.plugins.jetbrainsKotlin)
     alias(libs.plugins.kspCompiler)
     alias(libs.plugins.compose.compiler)
-    kotlin("plugin.serialization") version "2.0.21"
+    alias(libs.plugins.googleServices)
+    alias(libs.plugins.kotlinSerialization)
 }
 
 android {
@@ -81,20 +82,14 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.ktor.serialization.kotlinx.json)
 
-    // Room
-    implementation(libs.androidx.room.runtime)
-    ksp(libs.androidx.room.compiler)
-    implementation(libs.androidx.room.paging)
-
     // Navigation Compose
     implementation(libs.navigation.compose)
 
     // Coil
     implementation(libs.coil.compose)
 
-    // Media3
-    implementation(libs.androidx.media3.exoplayer)
-    implementation(libs.androidx.media3.ui)
+    // YoutubePlayerView
+    implementation(libs.core)
 
     // Extended Icon
     implementation(libs.androidx.material.icons.extended)
@@ -102,8 +97,17 @@ dependencies {
     // kotlinx.datetime
     implementation(libs.kotlinx.datetime)
 
+    // Jetpack Preferences DataStore
+    implementation(libs.androidx.datastore.preferences)
+
     // Lifecycle Compose
     implementation(libs.androidx.lifecycle.runtime.compose)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+
+    // Firebase
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.auth.ktx)
+    implementation(libs.firebase.firestore.ktx)
 
     implementation(libs.material.android)
     implementation(libs.core.ktx)

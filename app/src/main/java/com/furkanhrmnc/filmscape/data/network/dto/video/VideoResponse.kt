@@ -6,8 +6,8 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class VideoResponse(
-    val id: Int?,
-    val results: List<VideoDTO>?,
+    val id: Int? = null,
+    val results: List<VideoDTO?>? = null,
 )
 
-fun VideoResponse.toVideoList(): List<Video> = results?.map { it.toVideo() } ?: emptyList()
+fun VideoResponse.toVideoList(): List<Video> = results?.mapNotNull { it?.toVideo() } ?: emptyList()

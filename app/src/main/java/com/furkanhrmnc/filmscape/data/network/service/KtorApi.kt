@@ -40,7 +40,6 @@ abstract class KtorApi {
             level = LogLevel.ALL
             sanitizeHeader { header -> header == HttpHeaders.Authorization }
         }
-
     }
 
     fun HttpRequestBuilder.pathUrl(path: String) {

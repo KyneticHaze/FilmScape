@@ -11,10 +11,11 @@ import org.koin.core.context.startKoin
  *
  * @author Furkan Harmancı
  */
+
+
 class MovieApplication : Application() {
     override fun onCreate() {
         super.onCreate()
-
         startKoin {
             androidContext(this@MovieApplication)
             modules(appModules)

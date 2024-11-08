@@ -16,13 +16,13 @@ class RemoteDataSource(
         filmService.getMovieOrTv(type, category, page)
     }
 
-    suspend fun getDetailMovieOrTv(type: String, movieId: Int) = withContext(dispatcher.IO) {
-        filmService.getDetailMovieOrTv(type, movieId)
+    suspend fun getDetailMovieOrTv(type: String, id: Int) = withContext(dispatcher.IO) {
+        filmService.getDetailMovieOrTv(type, id)
     }
 
-    suspend fun getRecommendationsMovieOrTv(type: String, movieId: Int, page: Int = 1) =
+    suspend fun getRecommendationsMovieOrTv(type: String, id: Int, page: Int = 1) =
         withContext(dispatcher.IO) {
-            filmService.getRecommendationsMovieOrTv(type, movieId, page)
+            filmService.getRecommendationsMovieOrTv(type, id, page)
         }
 
     suspend fun searchMovieOrTv(query: String, type: String, page: Int = 1) =
@@ -38,7 +38,19 @@ class RemoteDataSource(
         filmService.getTrendingMovieOrTv(type, timeWindow, page)
     }
 
-    suspend fun getVideosMovieOrTv(type: String, movieId: Int) = withContext(dispatcher.IO) {
-        filmService.getVideosMovieOrTv(type, movieId)
+    suspend fun getVideosMovieOrTv(type: String, id: Int) = withContext(dispatcher.IO) {
+        filmService.getVideosMovieOrTv(type, id)
+    }
+
+    suspend fun getCreditsMovieOrTv(type: String, id: Int) = withContext(dispatcher.IO) {
+        filmService.getCreditsMovieOrTv(type, id)
+    }
+
+    suspend fun getPopularPersons(page: Int = 1) = withContext(dispatcher.IO) {
+        filmService.getPopularPersons(page)
+    }
+
+    suspend fun getPersonDetails(id: Int) = withContext(dispatcher.IO) {
+        filmService.getPersonDetails(id)
     }
 }

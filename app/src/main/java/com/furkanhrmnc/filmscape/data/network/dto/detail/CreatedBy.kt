@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class CreatedBy(
     @SerialName("credit_id")
-    val creditİd: String?,
+    val creditId: String?,
     @SerialName("gender")
     val gender: Int?,
     @SerialName("id")
