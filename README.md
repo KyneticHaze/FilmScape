@@ -1,3 +1,5 @@
+![FilmScape Picture](https://github.com/KyneticHaze/FilmScape/blob/master/assets/filmscape_logo.png)
+
 # 🎬 FilmScape - Movie Discovery App
 
 FilmScape, kullanıcıların en yeni, popüler, en çok puan alan ve yaklaşan filmleri keşfetmelerine olanak tanıyan modern bir film keşif uygulamasıdır. TMDb (The Movie Database) API'sini kullanarak zengin bir film veri tabanı sunar. Uygulama, Android Jetpack Compose ile tamamen modern ve kullanıcı dostu bir tasarıma sahiptir.
