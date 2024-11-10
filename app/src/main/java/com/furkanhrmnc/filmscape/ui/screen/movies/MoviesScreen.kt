@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -19,6 +20,7 @@ import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -29,7 +31,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.navigation.NavController
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.furkanhrmnc.filmscape.util.MediaLazyColumnPaging
+import com.furkanhrmnc.filmscape.util.MediaListItemOrShimmer
 import com.furkanhrmnc.filmscape.util.MovieTabs
 import kotlinx.coroutines.launch
 
@@ -43,11 +45,12 @@ fun MoviesScreen(
 ) {
 
     val scope = rememberCoroutineScope()
+    val uiState by viewModel.uiState.collectAsState()
 
-    val popularMovies = viewModel.popularMovies.collectAsLazyPagingItems()
-    val topRatedMovies = viewModel.topRatedMovies.collectAsLazyPagingItems()
-    val upcomingMovies = viewModel.upcomingMovies.collectAsLazyPagingItems()
-    val nowPlayingMovies = viewModel.nowPlayingMovies.collectAsLazyPagingItems()
+    val popularMovies = uiState.popularMovies.collectAsLazyPagingItems()
+    val topRatedMovies = uiState.topRatedMovies.collectAsLazyPagingItems()
+    val upcomingMovies = uiState.upcomingMovies.collectAsLazyPagingItems()
+    val nowPlayingMovies = uiState.nowPlayingMovies.collectAsLazyPagingItems()
 
     val pagerState = rememberPagerState(pageCount = { MovieTabs.entries.size })
     val selectedTabIndex by remember { derivedStateOf { pagerState.currentPage } }
@@ -86,9 +89,7 @@ fun MoviesScreen(
                             selectedContentColor = MaterialTheme.colorScheme.primary,
                             unselectedContentColor = MaterialTheme.colorScheme.secondary,
                             onClick = {
-                                scope.launch {
-                                    pagerState.animateScrollToPage(movieTab.ordinal)
-                                }
+                                scope.launch { pagerState.animateScrollToPage(movieTab.ordinal) }
                             },
                             text = {
                                 Text(
@@ -113,16 +114,31 @@ fun MoviesScreen(
                         modifier = Modifier.fillMaxSize(),
                         contentAlignment = Alignment.Center
                     ) {
-                        MediaLazyColumnPaging(
-                            medias = when (pagerState.currentPage) {
+
+                        LazyColumn {
+
+                            val medias = when (pagerState.currentPage) {
                                 0 -> popularMovies
                                 1 -> topRatedMovies
                                 2 -> upcomingMovies
                                 3 -> nowPlayingMovies
                                 else -> popularMovies
-                            },
-                            navController = navController
-                        )
+                            }
+
+                            items(
+                                count = medias.itemCount,
+                                key = { id -> medias[id]?.id ?: id }
+                            ) { index ->
+                                medias[index]?.let { media ->
+                                    MediaListItemOrShimmer(
+                                        media = media,
+                                        isLoading = uiState.isLoading,
+                                        darkMode = false,
+                                        navController = navController
+                                    )
+                                }
+                            }
+                        }
                     }
                 }
             }

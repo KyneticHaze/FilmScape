@@ -22,6 +22,7 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -47,7 +48,7 @@ fun TrendingScreen(
     navController: NavController,
 ) {
 
-    val trendMedia = viewModel.trendMedia.collectAsLazyPagingItems()
+    val trendMedias = viewModel.trendMedia.collectAsLazyPagingItems()
     val uiState by viewModel.uiState.collectAsState()
 
     val snackBarHostState = remember { SnackbarHostState() }
@@ -75,9 +76,7 @@ fun TrendingScreen(
                     )
                 },
                 actions = {
-                    IconButton(
-                        onClick = { viewModel.toggle() }
-                    ) {
+                    IconButton(onClick = viewModel::toggle) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Outlined.Sort,
                             contentDescription = "Day/Week",
@@ -125,7 +124,19 @@ fun TrendingScreen(
             }
         },
         snackbarHost = { SnackbarHost(snackBarHostState) }
-    ) { padding ->
+    ) { scaffoldPadding ->
+
+        LaunchedEffect(trendMedias) {
+            when {
+                (trendMedias.loadState.refresh is LoadState.Error) -> {
+                    viewModel.onError((trendMedias.loadState.refresh as LoadState.Error).error)
+                }
+
+                (trendMedias.loadState.append is LoadState.Error) -> {
+                    viewModel.onError((trendMedias.loadState.refresh as LoadState.Error).error)
+                }
+            }
+        }
 
         LazyVerticalGrid(
             modifier = Modifier
@@ -133,25 +144,13 @@ fun TrendingScreen(
                 .background(MaterialTheme.colorScheme.background),
             columns = GridCells.Fixed(3),
             state = lazyGridState,
-            contentPadding = padding
+            contentPadding = scaffoldPadding
         ) {
-
-            when {
-                (trendMedia.loadState.refresh is LoadState.Error) -> {
-                    viewModel.onError((trendMedia.loadState.refresh as LoadState.Error).error)
-                }
-
-                (trendMedia.loadState.append is LoadState.Error) -> {
-                    viewModel.onError((trendMedia.loadState.refresh as LoadState.Error).error)
-                }
-            }
-
-
             items(
-                count = trendMedia.itemCount,
-                key = { id -> trendMedia[id]?.id ?: id }
+                count = trendMedias.itemCount,
+                key = { id -> trendMedias[id]?.id ?: id }
             ) { index ->
-                trendMedia[index]?.let { media ->
+                trendMedias[index]?.let { media ->
                     MediaCard(
                         media = media,
                         onCLick = { navController.navigate("${Destinations.DETAILS.route}?id=${media.id}&type=${media.type}") }

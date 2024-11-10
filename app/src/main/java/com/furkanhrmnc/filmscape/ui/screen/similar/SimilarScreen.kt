@@ -1,8 +1,8 @@
 package com.furkanhrmnc.filmscape.ui.screen.similar
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
@@ -58,8 +58,6 @@ fun SimilarScreen(
 
 
     Scaffold(
-        modifier = modifier
-            .fillMaxSize(),
         topBar = {
             TopAppBar(title = {
                 Text(
@@ -89,7 +87,8 @@ fun SimilarScreen(
         },
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
     ) { scaffoldPadding ->
-        LaunchedEffect(key1 = similarMedias) {
+
+        LaunchedEffect(similarMedias) {
             when {
                 similarMedias.loadState.refresh is LoadState.Error -> {
                     viewModel.onError((similarMedias.loadState.refresh as LoadState.Error).error)
@@ -102,11 +101,17 @@ fun SimilarScreen(
         }
 
         LazyVerticalGrid(
-            modifier = Modifier.padding(scaffoldPadding),
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colorScheme.background),
             state = lazyGridState,
-            columns = GridCells.Fixed(3)
+            columns = GridCells.Fixed(3),
+            contentPadding = scaffoldPadding
         ) {
-            items(count = similarMedias.itemCount) { index ->
+            items(
+                count = similarMedias.itemCount,
+                key = { index -> similarMedias[index]?.id ?: index }
+            ) { index ->
                 similarMedias[index]?.let { media ->
                     MediaCard(
                         media = media,

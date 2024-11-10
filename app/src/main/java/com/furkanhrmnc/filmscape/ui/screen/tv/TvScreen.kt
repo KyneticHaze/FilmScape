@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -19,6 +20,7 @@ import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -30,7 +32,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.navigation.NavController
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.furkanhrmnc.filmscape.util.Constants.TV_SERIES
-import com.furkanhrmnc.filmscape.util.MediaLazyColumnPaging
+import com.furkanhrmnc.filmscape.util.MediaListItemOrShimmer
 import com.furkanhrmnc.filmscape.util.TvTabs
 import kotlinx.coroutines.launch
 
@@ -43,9 +45,10 @@ fun TvScreen(
     navController: NavController,
 ) {
 
+    val uiState by viewModel.uiState.collectAsState()
+    val popularTvSeries = uiState.popularTvSeries.collectAsLazyPagingItems()
+    val topRatedTvSeries = uiState.topRatedTvSeries.collectAsLazyPagingItems()
 
-    val popularTvSeries = viewModel.popularTvSeries.collectAsLazyPagingItems()
-    val topRatedTvSeries = viewModel.topRatedTvSeries.collectAsLazyPagingItems()
     val scope = rememberCoroutineScope()
     val pagerState = rememberPagerState(pageCount = { TvTabs.entries.size })
     val selectedTabIndex by remember { derivedStateOf { pagerState.currentPage } }
@@ -104,18 +107,29 @@ fun TvScreen(
                         )
                     }
                 }
-
-
-
                 HorizontalPager(state = pagerState) {
                     Box(
                         modifier = Modifier.fillMaxSize(),
                         contentAlignment = Alignment.Center
                     ) {
-                        MediaLazyColumnPaging(
-                            medias = if (pagerState.currentPage == 0) popularTvSeries else topRatedTvSeries,
-                            navController = navController
-                        )
+
+                        LazyColumn {
+                            val medias =
+                                if (pagerState.currentPage == 0) popularTvSeries else topRatedTvSeries
+                            items(
+                                count = medias.itemCount,
+                                key = { id -> medias[id]?.id ?: id }
+                            ) { index ->
+                                medias[index]?.let { media ->
+                                    MediaListItemOrShimmer(
+                                        media = media,
+                                        isLoading = uiState.isLoading,
+                                        darkMode = false,
+                                        navController = navController
+                                    )
+                                }
+                            }
+                        }
                     }
                 }
             }

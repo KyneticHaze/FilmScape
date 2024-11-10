@@ -2,10 +2,14 @@ package com.furkanhrmnc.filmscape.util
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Card
 import androidx.compose.material3.ListItem
@@ -95,5 +99,59 @@ fun MediaListItem(
                 color = MaterialTheme.colorScheme.secondary
             )
         },
+    )
+}
+
+@Composable
+fun ShimmerListItem(
+    modifier: Modifier = Modifier,
+    darkMode: Boolean = false,
+) {
+    ListItem(
+        modifier = modifier.shimmerEffect(darkMode),
+        leadingContent = {
+            Box(
+                modifier = Modifier
+                    .size(64.dp)
+                    .shimmerEffect(darkMode)
+                    .background(
+                        MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f),
+                        shape = MaterialTheme.shapes.medium
+                    )
+            )
+        },
+        headlineContent = {
+            Box(
+                modifier = Modifier
+                    .height(20.dp)
+                    .fillMaxWidth(0.6f)
+                    .shimmerEffect(darkMode)
+                    .background(MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f))
+            )
+        },
+        supportingContent = {
+            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                Box(
+                    modifier = Modifier
+                        .height(16.dp)
+                        .fillMaxWidth(0.4f)
+                        .shimmerEffect(darkMode)
+                        .background(MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f))
+                )
+                Box(
+                    modifier = Modifier
+                        .height(16.dp)
+                        .fillMaxWidth(0.2f)
+                        .background(MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f))
+                )
+                Box(
+                    modifier = Modifier
+                        .height(16.dp)
+                        .fillMaxWidth()
+                        .shimmerEffect(darkMode)
+                        .background(MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f))
+                )
+            }
+        }
     )
 }

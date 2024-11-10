@@ -20,8 +20,7 @@ class SearchMediasPager(
     private val config: PagingConfig = PagingConfig(pageSize = PER_PAGE_COUNT),
 ) {
 
-    var query = MutableStateFlow("")
-        private set
+    private var query = MutableStateFlow("")
 
     fun searchPagingDataFlow(type: String): Flow<PagingData<Media>> = query
         .debounce(timeoutMillis = 400L)

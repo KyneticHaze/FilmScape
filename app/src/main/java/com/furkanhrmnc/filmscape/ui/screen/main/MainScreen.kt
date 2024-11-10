@@ -20,10 +20,10 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PageSize
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.Card
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -176,6 +176,7 @@ fun MainScreen(
                                             .fillMaxWidth()
                                             .height(220.dp)
                                             .padding(8.dp)
+                                            .clip(RoundedCornerShape(12.dp))
                                             .shimmerEffect()
                                     )
                                 }
@@ -236,14 +237,23 @@ fun MainScreen(
             }
 
             item {
-
-                if (uiState.isLoading) CircularProgressIndicator()
-
                 SingleMediaSection(
                     sectionTitle = MOVIES,
                     seeAll = { navController.navigate(Destinations.MOVIES.route) }
                 ) {
                     uiState.movie?.let {
+
+                        if (uiState.isLoading) {
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .height(220.dp)
+                                    .padding(6.dp)
+                                    .clip(RoundedCornerShape(12.dp))
+                                    .shimmerEffect()
+                            )
+                        }
+
                         Card(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -266,6 +276,18 @@ fun MainScreen(
                     seeAll = { navController.navigate(Destinations.TV.route) }
                 ) {
                     uiState.tvSeries?.let {
+
+                        if (uiState.isLoading) {
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .height(220.dp)
+                                    .padding(6.dp)
+                                    .clip(RoundedCornerShape(12.dp))
+                                    .shimmerEffect()
+                            )
+                        }
+
                         Card(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -274,8 +296,7 @@ fun MainScreen(
                         ) {
                             Box(modifier = Modifier.fillMaxSize()) {
                                 AsyncImage(
-                                    modifier = Modifier
-                                        .fillMaxSize(),
+                                    modifier = Modifier.fillMaxSize(),
                                     model = it.backdropPath,
                                     contentDescription = it.overview,
                                     contentScale = ContentScale.Crop

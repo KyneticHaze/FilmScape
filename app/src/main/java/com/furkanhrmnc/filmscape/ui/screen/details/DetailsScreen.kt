@@ -26,7 +26,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material.icons.outlined.Link
 import androidx.compose.material.icons.rounded.PlayArrow
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -172,7 +171,6 @@ fun DetailsScreen(
                 .background(MaterialTheme.colorScheme.background)
         ) {
             item {
-                if (detailsUiState.isLoading) CircularProgressIndicator()
                 detailsUiState.mediaDetail?.let { mediaDetail ->
                     Column {
                         Box(
@@ -278,9 +276,6 @@ fun DetailsScreen(
             }
 
             item {
-
-                if (detailsUiState.isLoading) CircularProgressIndicator()
-
                 Text(
                     modifier = Modifier.padding(horizontal = 16.dp),
                     text = "Cast",
@@ -322,8 +317,6 @@ fun DetailsScreen(
             }
 
             item {
-                if (detailsUiState.isLoading) CircularProgressIndicator()
-
                 detailsUiState.mediaDetail?.let { mediaDetail ->
                     Column(
                         modifier = Modifier.fillMaxWidth(),

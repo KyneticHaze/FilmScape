@@ -26,7 +26,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.furkanhrmnc.filmscape.util.MediaLazyGridPaging
+import com.furkanhrmnc.filmscape.util.MediaGridOrShimmer
 import com.furkanhrmnc.filmscape.util.SearchBox
 import com.furkanhrmnc.filmscape.util.Snack
 import kotlinx.coroutines.launch
@@ -40,20 +40,17 @@ fun SearchScreen(
     navController: NavController,
 ) {
 
+    val uiState by viewModel.uiState.collectAsState()
+
     val searchMedias = viewModel.searchMedias.collectAsLazyPagingItems()
     val search by viewModel.search.collectAsState()
-    val error by viewModel.error.collectAsState()
 
     val lazyGridState = rememberLazyGridState()
     val scrollToTop by remember { derivedStateOf { lazyGridState.firstVisibleItemIndex > 3 } }
     val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
 
-    Snack(
-        message = error,
-        snackBarHostState = snackbarHostState,
-        onDismissed = viewModel::onErrorConsumed
-    )
+
 
     Scaffold(
         modifier = modifier,
@@ -93,11 +90,27 @@ fun SearchScreen(
                 onClear = viewModel::onClear
             )
 
-            MediaLazyGridPaging(
-                searchMedias = searchMedias,
-                lazyGridState = lazyGridState,
-                navController = navController
-            )
+            if (uiState.isLoading) {
+                MediaGridOrShimmer(
+                    mediaItems = searchMedias,
+                    isLoading = true,
+                    lazyGridState = lazyGridState,
+                    navController = navController
+                )
+            } else if (uiState.error != null) {
+                Snack(
+                    message = uiState.error,
+                    snackBarHostState = snackbarHostState,
+                    onDismissed = viewModel::onErrorConsumed
+                )
+            } else {
+                MediaGridOrShimmer(
+                    mediaItems = searchMedias,
+                    isLoading = false,
+                    lazyGridState = lazyGridState,
+                    navController = navController
+                )
+            }
         }
     }
 }
