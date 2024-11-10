@@ -34,8 +34,24 @@ FilmScape, kullanıcıların en yeni, popüler, en çok puan alan ve yaklaşan f
 - **KSP Compiler**: Kode generasyon işlemleri.
 
 ## 🎨 Ekran Görüntüleri
-
-* ?
+<img src="https://github.com/KyneticHaze/FilmScape/blob/master/assets/screenshots/splash.png" alt="Anasayfa Ekranı" width="300">
+<img src="https://github.com/KyneticHaze/FilmScape/blob/master/assets/screenshots/login.png" alt="Anasayfa Ekranı" width="300">
+<img src="https://github.com/KyneticHaze/FilmScape/blob/master/assets/screenshots/loginnig.png" alt="Anasayfa Ekranı" width="300">
+<img src="https://github.com/KyneticHaze/FilmScape/blob/master/assets/screenshots/register.png" alt="Anasayfa Ekranı" width="300">
+<img src="https://github.com/KyneticHaze/FilmScape/blob/master/assets/screenshots/main.png" alt="Anasayfa Ekranı" width="300">
+<img src="https://github.com/KyneticHaze/FilmScape/blob/master/assets/screenshots/trending.png" alt="Anasayfa Ekranı" width="300">
+<img src="https://github.com/KyneticHaze/FilmScape/blob/master/assets/screenshots/movies.png" alt="Anasayfa Ekranı" width="300">
+<img src="https://github.com/KyneticHaze/FilmScape/blob/master/assets/screenshots/tv_series.png" alt="Anasayfa Ekranı" width="300">
+<img src="https://github.com/KyneticHaze/FilmScape/blob/master/assets/screenshots/detail.png" alt="Anasayfa Ekranı" width="300">
+<img src="https://github.com/KyneticHaze/FilmScape/blob/master/assets/screenshots/video.png" alt="Anasayfa Ekranı" width="300">
+<img src="https://github.com/KyneticHaze/FilmScape/blob/master/assets/screenshots/recommendation.png" alt="Anasayfa Ekranı" width="300">
+<img src="https://github.com/KyneticHaze/FilmScape/blob/master/assets/screenshots/search.png" alt="Anasayfa Ekranı" width="300">
+<img src="https://github.com/KyneticHaze/FilmScape/blob/master/assets/screenshots/actors.png" alt="Anasayfa Ekranı" width="300">
+<img src="https://github.com/KyneticHaze/FilmScape/blob/master/assets/screenshots/actor_details.png" alt="Anasayfa Ekranı" width="300">
+<img src="https://github.com/KyneticHaze/FilmScape/blob/master/assets/screenshots/favorites.png" alt="Anasayfa Ekranı" width="300">
+<img src="https://github.com/KyneticHaze/FilmScape/blob/master/assets/screenshots/account.png" alt="Anasayfa Ekranı" width="300">
+<img src="https://github.com/KyneticHaze/FilmScape/blob/master/assets/screenshots/account_two.png" alt="Anasayfa Ekranı" width="300">
+<img src="https://github.com/KyneticHaze/FilmScape/blob/master/assets/screenshots/settings.png" alt="Anasayfa Ekranı" width="300">
 
 ## 🚀 Başlangıç
 
