@@ -1,8 +1,8 @@
 package com.furkanhrmnc.filmscape.di
 
-import com.furkanhrmnc.filmscape.ui.screen.auth.UserSignInViewModel
-import com.furkanhrmnc.filmscape.ui.screen.auth.UserSignUpViewModel
 import com.furkanhrmnc.filmscape.ui.screen.auth.account.AccountViewModel
+import com.furkanhrmnc.filmscape.ui.screen.auth.login.LoginViewModel
+import com.furkanhrmnc.filmscape.ui.screen.auth.register.RegisterViewModel
 import com.furkanhrmnc.filmscape.ui.screen.details.DetailsViewModel
 import com.furkanhrmnc.filmscape.ui.screen.favorite.FavoriteViewModel
 import com.furkanhrmnc.filmscape.ui.screen.main.MainViewModel
@@ -78,11 +78,11 @@ val viewModelModule = module {
     }
 
     viewModel {
-        UserSignUpViewModel(get())
+        RegisterViewModel(get())
     }
 
     viewModel {
-        UserSignInViewModel(get())
+        LoginViewModel(get())
     }
 
     viewModel { AccountViewModel() }

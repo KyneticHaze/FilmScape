@@ -109,6 +109,9 @@ dependencies {
     implementation(libs.firebase.auth.ktx)
     implementation(libs.firebase.firestore.ktx)
 
+    // SplashScreen API
+    implementation(libs.androidx.core.splashscreen)
+
     implementation(libs.material.android)
     implementation(libs.core.ktx)
     implementation(libs.lifecycle.runtime.ktx)

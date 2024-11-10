@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.SplashScreen.FilmScape" parent="Theme.SplashScreen.IconBackground">
+        <item name="windowSplashScreenBackground">#7B5900</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/splash_night</item>
+        <item name="windowSplashScreenIconBackgroundColor">#FFFFFF</item>
+
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+</resources>

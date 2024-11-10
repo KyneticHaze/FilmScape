@@ -1,14 +1,17 @@
 package com.furkanhrmnc.filmscape.ui.screen.main
 
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.furkanhrmnc.filmscape.domain.model.Media
 import com.furkanhrmnc.filmscape.domain.repository.MediaRepository
 import com.furkanhrmnc.filmscape.util.Response
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlin.time.Duration.Companion.seconds
 
 class MainViewModel(
     private val repo: MediaRepository,
@@ -17,9 +20,15 @@ class MainViewModel(
     private val _uiState = MutableStateFlow(MainUiState())
     val uiState = _uiState.asStateFlow()
 
+    var splashScreen = mutableStateOf(true)
+        private set
 
     init {
         loadData()
+        viewModelScope.launch {
+            delay(2.seconds)
+            splashScreen.value = false
+        }
     }
 
     private fun loadData() {

@@ -12,8 +12,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.furkanhrmnc.filmscape.ui.screen.auth.LoginScreen
-import com.furkanhrmnc.filmscape.ui.screen.auth.RegisterScreen
+import com.furkanhrmnc.filmscape.ui.screen.auth.login.LoginScreen
+import com.furkanhrmnc.filmscape.ui.screen.auth.register.RegisterScreen
 import com.furkanhrmnc.filmscape.ui.screen.auth.account.AccountScreen
 import com.furkanhrmnc.filmscape.ui.screen.details.DetailsScreen
 import com.furkanhrmnc.filmscape.ui.screen.details.DetailsUiEvents

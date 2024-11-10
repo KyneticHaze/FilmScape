@@ -6,8 +6,10 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.furkanhrmnc.filmscape.navigation.FilmScapeNavGraph
 import com.furkanhrmnc.filmscape.ui.theme.FilmScapeTheme
+import org.koin.androidx.compose.koinViewModel
 
 /**
  * Ana aktivite.
@@ -23,9 +25,14 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             FilmScapeTheme {
+                val viewModel = koinViewModel<MainViewModel>()
+                installSplashScreen().apply {
+                    setKeepOnScreenCondition {
+                        viewModel.splashScreen.value
+                    }
+                }
                 FilmScapeNavGraph()
             }
         }
     }
 }
-

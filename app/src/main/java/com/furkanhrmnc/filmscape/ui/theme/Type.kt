@@ -30,9 +30,7 @@ val fonts = listOf(
     Font(R.font.poppins_thin_italic, FontWeight.Thin, FontStyle.Italic)
 )
 
-val filmScapeFont = FontFamily(
-    fonts = fonts
-)
+val filmScapeFont = FontFamily(fonts = fonts)
 
 val Typography = Typography(
 
