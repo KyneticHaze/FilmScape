@@ -1,4 +1,4 @@
-![FilmScape Picture](https://github.com/KyneticHaze/FilmScape/blob/master/assets/filmscape_logo.png)
+<img src="https://github.com/KyneticHaze/FilmScape/blob/master/assets/filmscape_logo.png" alt="FilmScape Logo" height="600" width="800">
 
 # 🎬 FilmScape - Movie Discovery App
 
