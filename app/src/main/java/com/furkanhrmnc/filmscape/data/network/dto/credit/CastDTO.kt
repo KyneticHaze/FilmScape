@@ -6,21 +6,21 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class CastDTO(
-    val adult: Boolean?,
+    val adult: Boolean? = null,
     @SerialName("cast_id")
     val castId: Int? = null,
-    val character: String?,
+    val character: String? = null,
     @SerialName("credit_id")
-    val creditId: String?,
-    val gender: Int?,
-    val id: Int?,
+    val creditId: String? = null,
+    val gender: Int? = null,
+    val id: Int? = null,
     @SerialName("known_for_department")
-    val knownForDepartment: String?,
-    val name: String?,
-    val order: Int?,
+    val knownForDepartment: String? = null,
+    val name: String? = null,
+    val order: Int? = null,
     @SerialName("original_name")
-    val originalName: String?,
-    val popularity: Double?,
+    val originalName: String? = null,
+    val popularity: Double? = null,
     @SerialName("profile_path")
-    val profilePath: String?,
+    val profilePath: String? = null,
 )

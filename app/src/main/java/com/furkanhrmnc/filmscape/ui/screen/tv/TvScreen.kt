@@ -27,11 +27,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.navigation.NavController
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.furkanhrmnc.filmscape.util.Constants.TV_SERIES
+import com.furkanhrmnc.filmscape.R
 import com.furkanhrmnc.filmscape.util.MediaListItemOrShimmer
 import com.furkanhrmnc.filmscape.util.TvTabs
 import kotlinx.coroutines.launch
@@ -59,7 +60,7 @@ fun TvScreen(
             TopAppBar(
                 title = {
                     Text(
-                        text = TV_SERIES,
+                        text = stringResource(id = R.string.tv_series),
                         color = MaterialTheme.colorScheme.primary,
                         style = MaterialTheme.typography.headlineMedium,
                         fontWeight = FontWeight.SemiBold
@@ -92,7 +93,7 @@ fun TvScreen(
                             },
                             text = {
                                 Text(
-                                    text = tvTab.category,
+                                    text = stringResource(id = tvTab.categoryResId),
                                     style = MaterialTheme.typography.labelSmall,
                                     textAlign = TextAlign.Center
                                 )
@@ -101,7 +102,7 @@ fun TvScreen(
                                 Icon(
                                     imageVector = if (index == selectedTabIndex)
                                         tvTab.selectedIcon else tvTab.unSelectedIcon,
-                                    contentDescription = "Tab Icon"
+                                    contentDescription = stringResource(id = R.string.tab_icon)
                                 )
                             }
                         )

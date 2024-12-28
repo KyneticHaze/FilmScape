@@ -34,11 +34,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.furkanhrmnc.filmscape.R
 import com.furkanhrmnc.filmscape.navigation.Destinations
 import com.furkanhrmnc.filmscape.ui.screen.auth.AuthTextField
 import org.koin.androidx.compose.koinViewModel
@@ -80,7 +82,7 @@ fun RegisterScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = "Register",
+                text = stringResource(id = R.string.register_text),
                 style = MaterialTheme.typography.displaySmall,
                 color = MaterialTheme.colorScheme.primary,
                 fontWeight = FontWeight.SemiBold
@@ -93,11 +95,11 @@ fun RegisterScreen(
                     keyboardType = KeyboardType.Email,
                     imeAction = ImeAction.Next
                 ),
-                label = { Text(text = "Email Address") },
+                label = { Text(text = stringResource(id = R.string.email_address_text)) },
                 leadingIcon = {
                     Icon(
                         imageVector = Icons.Outlined.Email,
-                        contentDescription = "Email Address"
+                        contentDescription = stringResource(id = R.string.email_address_text)
                     )
                 },
                 passwordVisible = true
@@ -113,11 +115,11 @@ fun RegisterScreen(
                     keyboardType = KeyboardType.Password,
                     imeAction = ImeAction.Next
                 ),
-                label = { Text(text = "Password") },
+                label = { Text(text = stringResource(id = R.string.password_text)) },
                 leadingIcon = {
                     Icon(
                         imageVector = Icons.Outlined.Lock,
-                        contentDescription = "Password"
+                        contentDescription = stringResource(id = R.string.password_text)
                     )
                 },
                 passwordVisible = uiState.isPasswordVisible,
@@ -129,7 +131,9 @@ fun RegisterScreen(
                             Icons.Outlined.VisibilityOff
                         }
                         val description =
-                            if (uiState.isPasswordVisible) "Hide Password" else "Show Password"
+                            if (uiState.isPasswordVisible) stringResource(id = R.string.hide_password) else stringResource(
+                                id = R.string.show_password
+                            )
                         IconButton(onClick = viewModel::togglePasswordVisibility) {
                             Icon(imageVector = icon, contentDescription = description)
                         }
@@ -147,7 +151,7 @@ fun RegisterScreen(
                     horizontalArrangement = Arrangement.spacedBy(6.dp)
                 ) {
                     Text(
-                        text = "Password Strength: ${uiState.passwordStrength}",
+                        text = "${stringResource(id = R.string.password_strength)} ${uiState.passwordStrength}",
                         style = MaterialTheme.typography.labelMedium,
                         color = MaterialTheme.colorScheme.primary
                     )
@@ -177,7 +181,7 @@ fun RegisterScreen(
                     },
                     shape = RoundedCornerShape(12.dp)
                 ) {
-                    Text(text = "Register")
+                    Text(text = stringResource(id = R.string.register_text))
                 }
                 Button(
                     modifier = Modifier
@@ -188,9 +192,9 @@ fun RegisterScreen(
                 ) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Outlined.ArrowBack,
-                        contentDescription = "Get Back"
+                        contentDescription = stringResource(id = R.string.back)
                     )
-                    Text(text = "Get back")
+                    Text(text = stringResource(id = R.string.back))
                 }
             }
         }

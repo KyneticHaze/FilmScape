@@ -1,6 +1,5 @@
 package com.furkanhrmnc.filmscape.ui.screen.trending
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -8,11 +7,9 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.Sort
-import androidx.compose.material.icons.outlined.ArrowUpward
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -27,17 +24,17 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavController
-import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.furkanhrmnc.filmscape.R
 import com.furkanhrmnc.filmscape.navigation.Destinations
 import com.furkanhrmnc.filmscape.util.MediaCard
-import com.furkanhrmnc.filmscape.util.Snack
+import com.furkanhrmnc.filmscape.util.ScrollToUp
 import com.furkanhrmnc.filmscape.util.Time
-import kotlinx.coroutines.launch
+import com.furkanhrmnc.filmscape.util.UiEvent
 import org.koin.compose.koinInject
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -48,20 +45,25 @@ fun TrendingScreen(
     navController: NavController,
 ) {
 
+    val snackBarHostState = remember { SnackbarHostState() }
+    val uiEvent = viewModel.uiEvent.collectAsState(initial = null).value
+
+    LaunchedEffect(uiEvent) {
+        when (uiEvent) {
+            is UiEvent.ShowSnackbar -> snackBarHostState.showSnackbar(
+                message = uiEvent.message,
+                actionLabel = uiEvent.action
+            )
+
+            else -> Unit
+        }
+    }
+
     val trendMedias = viewModel.trendMedia.collectAsLazyPagingItems()
     val uiState by viewModel.uiState.collectAsState()
-
-    val snackBarHostState = remember { SnackbarHostState() }
-    val scope = rememberCoroutineScope()
     val lazyGridState = rememberLazyGridState()
     val scrollToTop by remember { derivedStateOf { lazyGridState.firstVisibleItemIndex > 3 } }
 
-
-    Snack(
-        message = uiState.error,
-        snackBarHostState = snackBarHostState,
-        onDismissed = viewModel::onErrorConsumed
-    )
 
     Scaffold(
         modifier = modifier,
@@ -69,7 +71,7 @@ fun TrendingScreen(
             TopAppBar(
                 title = {
                     Text(
-                        text = "Trending All",
+                        text = stringResource(R.string.trending),
                         color = MaterialTheme.colorScheme.primary,
                         style = MaterialTheme.typography.headlineMedium,
                         fontWeight = FontWeight.SemiBold
@@ -79,7 +81,7 @@ fun TrendingScreen(
                     IconButton(onClick = viewModel::toggle) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Outlined.Sort,
-                            contentDescription = "Day/Week",
+                            contentDescription = stringResource(R.string.period),
                             tint = MaterialTheme.colorScheme.secondary
                         )
                     }
@@ -109,35 +111,13 @@ fun TrendingScreen(
             )
         },
         floatingActionButton = {
-            AnimatedVisibility(visible = scrollToTop) {
-                FloatingActionButton(
-                    onClick = {
-                        scope.launch {
-                            lazyGridState.animateScrollToItem(0)
-                        }
-                    },
-                    containerColor = MaterialTheme.colorScheme.primary,
-                    contentColor = MaterialTheme.colorScheme.onPrimary
-                ) {
-                    Icon(imageVector = Icons.Outlined.ArrowUpward, contentDescription = "Go up")
-                }
-            }
+            ScrollToUp(
+                scrollToTop = scrollToTop,
+                lazyGridState = lazyGridState
+            )
         },
         snackbarHost = { SnackbarHost(snackBarHostState) }
     ) { scaffoldPadding ->
-
-        LaunchedEffect(trendMedias) {
-            when {
-                (trendMedias.loadState.refresh is LoadState.Error) -> {
-                    viewModel.onError((trendMedias.loadState.refresh as LoadState.Error).error)
-                }
-
-                (trendMedias.loadState.append is LoadState.Error) -> {
-                    viewModel.onError((trendMedias.loadState.refresh as LoadState.Error).error)
-                }
-            }
-        }
-
         LazyVerticalGrid(
             modifier = Modifier
                 .fillMaxSize()

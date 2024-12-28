@@ -1,26 +1,49 @@
-# Add project specific ProGuard rules here.
-# You can control the set of applied configuration files using the
-# proguardFiles setting in build.gradle.
-#
-# For more details, see
-#   http://developer.android.com/guide/developing/tools/proguard.html
+# Genel Ayarlar
 
+# Tüm logları kaldır
+-assumenosideeffects class android.util.Log {
+    public static *** d(...);
+    public static *** v(...);
+    public static *** e(...);
+    public static *** i(...);
+    public static *** w(...);
+}
+
+# Genel olarak kullanılan kütüphaneleri koru
+-keep class androidx.** { *; }
+-keep class com.google.** { *; }
+-keep class kotlin.** { *; }
+-keep class kotlinx.** { *; }
+
+# Ktor için ağ isteklerini koru
+-keep class io.ktor.** { *; }
+-dontwarn io.ktor.**
+
+# DataStore için ayarlar
+-keep class androidx.datastore.** { *; }
+-dontwarn androidx.datastore.**
+
+# Kotlinx Datetime için ayarlar
+-keep class kotlinx.datetime.** { *; }
+-dontwarn kotlinx.datetime.**
+
+# SplashScreen API için ayarlar
+-keep class androidx.core.splashscreen.** { *; }
+-dontwarn androidx.core.splashscreen.**
+
+# Koin için ayarlar
+-keep class org.koin.** { *; }
+-dontwarn org.koin.**
+
+# Firebase SDK için gerekli kurallar
+-keep class com.google.firebase.** { *; }
+-dontwarn com.google.firebase.**
+
+# Kullanılmayan kodlar için ayarlar
+-dontnote **.R
+-dontwarn **.R
+-ignorewarnings
 
 -keepclassmembers class com.furkanhrmnc.filmscape.domain.model.Media {
     public <init>(...);
 }
-
-# If your project uses WebView with JS, uncomment the following
-# and specify the fully qualified class name to the JavaScript interface
-# class:
-#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
-#   public *;
-#}
-
-# Uncomment this to preserve the line number information for
-# debugging stack traces.
-#-keepattributes SourceFile,LineNumberTable
-
-# If you keep the line number information, uncomment this to
-# hide the original source file name.
-#-renamesourcefileattribute SourceFile

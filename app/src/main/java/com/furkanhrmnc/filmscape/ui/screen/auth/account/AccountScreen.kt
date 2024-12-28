@@ -33,8 +33,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.furkanhrmnc.filmscape.R
+import com.furkanhrmnc.filmscape.util.Constants
 import com.google.firebase.auth.FirebaseAuth
 import org.koin.androidx.compose.koinViewModel
 
@@ -63,10 +66,18 @@ fun AccountScreen(
             uri?.let { uri2 ->
                 user?.let {
                     viewModel.onImageSelected(context, user.uid, uri2)
-                    Toast.makeText(context, "Fotoğraf Seçildi!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        context,
+                        context.getString(R.string.photo_selected),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             } ?: run {
-                Toast.makeText(context, "Fotoğraf Seçilemedi!", Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    context,
+                    context.getString(R.string.photo_unselected),
+                    Toast.LENGTH_LONG
+                ).show()
             }
         }
 
@@ -88,7 +99,7 @@ fun AccountScreen(
                     .size(200.dp)
                     .clip(CircleShape)
                     .background(MaterialTheme.colorScheme.primary)
-                    .clickable { imagePickerLauncher.launch("image/*") }
+                    .clickable { imagePickerLauncher.launch(Constants.IMAGE_STORAGE_PATH) }
             ) {
                 if (uiState.isLoading) {
                     CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
@@ -96,13 +107,13 @@ fun AccountScreen(
                     Image(
                         modifier = Modifier.fillMaxSize(),
                         bitmap = uiState.profileBitmap.asImageBitmap(),
-                        contentDescription = "Profile Image",
+                        contentDescription = stringResource(R.string.profile_image),
                         contentScale = ContentScale.Crop,
                     )
                 } else {
                     Icon(
                         imageVector = Icons.Outlined.Person,
-                        contentDescription = "Varsayılan Profil Resmi",
+                        contentDescription = stringResource(R.string.default_photo),
                         tint = Color.White,
                         modifier = Modifier.fillMaxSize()
                     )
@@ -110,14 +121,14 @@ fun AccountScreen(
             }
 
             Text(
-                text = "Hesap Bilgileri",
+                text = stringResource(R.string.account_info),
                 style = MaterialTheme.typography.headlineMedium,
                 color = MaterialTheme.colorScheme.primary,
                 fontWeight = FontWeight.SemiBold
             )
             user?.let { user ->
                 Text(
-                    text = "Email: ${user.email}",
+                    text = "${stringResource(id = R.string.email_address_text)}: ${user.email}",
                     style = MaterialTheme.typography.titleMedium,
                     color = MaterialTheme.colorScheme.primary
                 )
@@ -125,7 +136,7 @@ fun AccountScreen(
             Spacer(modifier = Modifier.height(4.dp))
             uiState.error?.let {
                 Text(
-                    text = "Hata: ${it.localizedMessage}",
+                    text = "${stringResource(id = R.string.error_text)}: ${it.localizedMessage}",
                     color = MaterialTheme.colorScheme.error,
                     modifier = Modifier.padding(8.dp)
                 )
@@ -138,17 +149,25 @@ fun AccountScreen(
                     contentColor = MaterialTheme.colorScheme.onPrimary
                 )
             ) {
-                Text(text = "Çıkış Yap")
+                Text(text = stringResource(R.string.exit))
             }
             Button(
                 onClick = {
                     user?.uid?.let {
                         val isDeleted = viewModel.deleteProfileImage(context, it)
                         if (!isDeleted) {
-                            Toast.makeText(context, "Fotoğraf silinemedi!", Toast.LENGTH_SHORT)
+                            Toast.makeText(
+                                context,
+                                context.getString(R.string.photo_undeleted),
+                                Toast.LENGTH_SHORT
+                            )
                                 .show()
                         } else {
-                            Toast.makeText(context, "Fotoğraf silindi!", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                context,
+                                context.getString(R.string.photo_deleted),
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
                     }
                 },
@@ -158,7 +177,7 @@ fun AccountScreen(
                     contentColor = MaterialTheme.colorScheme.error
                 )
             ) {
-                Text(text = "Fotoğrafı Sil")
+                Text(text = stringResource(R.string.photo_delete))
             }
         }
     }

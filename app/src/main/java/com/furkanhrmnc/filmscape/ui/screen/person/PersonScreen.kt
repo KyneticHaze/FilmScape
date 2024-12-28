@@ -37,6 +37,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -44,6 +45,7 @@ import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import coil.compose.AsyncImage
+import com.furkanhrmnc.filmscape.R
 import com.furkanhrmnc.filmscape.domain.model.Person
 import com.furkanhrmnc.filmscape.navigation.Destinations
 import kotlinx.coroutines.launch
@@ -63,14 +65,15 @@ fun PersonScreen(
     Scaffold(
         modifier = modifier,
         topBar = {
-            TopAppBar(title = {
-                Text(
-                    text = "Popular Actors",
-                    style = MaterialTheme.typography.headlineMedium,
-                    color = MaterialTheme.colorScheme.primary,
-                    fontWeight = FontWeight.SemiBold
-                )
-            })
+            TopAppBar(
+                title = {
+                    Text(
+                        text = stringResource(R.string.popular_actors),
+                        style = MaterialTheme.typography.headlineMedium,
+                        color = MaterialTheme.colorScheme.primary,
+                        fontWeight = FontWeight.SemiBold
+                    )
+                })
         },
         floatingActionButton = {
             AnimatedVisibility(visible = scrollToTop) {
@@ -85,7 +88,7 @@ fun PersonScreen(
                 ) {
                     Icon(
                         imageVector = Icons.Outlined.ArrowUpward,
-                        contentDescription = "Scroll To Top"
+                        contentDescription = stringResource(id = R.string.up_to_screen)
                     )
                 }
             }
@@ -166,9 +169,9 @@ fun ErrorItem(
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(text = "Bir hata oluştu: $errorMessage", color = Color.Red)
+        Text(text = "${stringResource(id = R.string.error_text)} $errorMessage", color = Color.Red)
         Spacer(modifier = Modifier.height(8.dp))
-        Button(onClick = onRetry) { Text(text = "Yeniden Dene") }
+        Button(onClick = onRetry) { Text(text = stringResource(R.string.try_again)) }
     }
 }
 

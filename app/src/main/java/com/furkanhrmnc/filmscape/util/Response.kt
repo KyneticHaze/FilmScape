@@ -4,6 +4,7 @@ import com.furkanhrmnc.filmscape.util.Response.Failure
 import com.furkanhrmnc.filmscape.util.Response.Success
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 
 /**
@@ -26,3 +27,6 @@ fun <T> Flow<T>.asResponse(): Flow<Response<T>> {
         .map<T, Response<T>> { value -> Success(data = value) }
         .catch { throwable -> emit(Failure(throwable = throwable)) }
 }
+
+suspend fun <T> Flow<Response<T>>.getDataOrNull(): T? =
+    this.firstOrNull { it is Success }?.let { (it as Success).data }

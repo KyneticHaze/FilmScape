@@ -1,8 +1,8 @@
 package com.furkanhrmnc.filmscape.ui.screen.favorite
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.furkanhrmnc.filmscape.domain.model.Media
+import com.furkanhrmnc.filmscape.util.BaseViewModel
 import com.furkanhrmnc.filmscape.util.Constants.FAVORITES
 import com.furkanhrmnc.filmscape.util.Constants.MEDIA
 import com.google.firebase.firestore.ktx.firestore
@@ -13,12 +13,14 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class FavoriteViewModel(private val uid: String) : ViewModel() {
+class FavoriteViewModel(private val uid: String) : BaseViewModel() {
 
     private val firestore = Firebase.firestore
 
     private val _uiState = MutableStateFlow(FavoriteUiState())
     val uiState: StateFlow<FavoriteUiState> = _uiState.asStateFlow()
+
+    override val uiEvent = super.uiEvent
 
     init {
         viewModelScope.launch {
@@ -34,7 +36,7 @@ class FavoriteViewModel(private val uid: String) : ViewModel() {
             .collection(MEDIA)
             .addSnapshotListener { snapshot, error ->
                 if (error != null) {
-                    _uiState.update { it.copy(error = error, isLoading = false) }
+                    handleError(error)
                     return@addSnapshotListener
                 }
 
@@ -51,31 +53,17 @@ class FavoriteViewModel(private val uid: String) : ViewModel() {
     }
 
 
-    fun deleteMediaFromFavorites(mediaId: String) {
+    fun deleteMediaFromFavorites(mediaId: String, deleteString: String) {
         firestore
             .collection(FAVORITES)
             .document(uid)
             .collection(MEDIA)
             .document(mediaId).delete()
             .addOnSuccessListener {
-                // Delete
+                handleToast(deleteString)
             }
             .addOnFailureListener { e ->
-                _uiState.update { it.copy(error = e) }
+                handleError(e)
             }
     }
-
-    fun onError(error: Throwable) {
-        _uiState.update { it.copy(error = error) }
-    }
-
-    fun onErrorConsumed() {
-        _uiState.update { it.copy(error = null) }
-    }
 }
-
-data class FavoriteUiState(
-    val favorites: List<Media> = emptyList(),
-    val isLoading: Boolean = false,
-    val error: Throwable? = null,
-)

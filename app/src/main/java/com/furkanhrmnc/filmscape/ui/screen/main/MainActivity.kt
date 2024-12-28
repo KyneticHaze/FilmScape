@@ -8,6 +8,9 @@ import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.furkanhrmnc.filmscape.navigation.FilmScapeNavGraph
+import com.furkanhrmnc.filmscape.ui.screen.auth.login.LoginViewModel
+import com.furkanhrmnc.filmscape.ui.screen.settings.LanguageAwareApp
+import com.furkanhrmnc.filmscape.ui.screen.settings.SettingsViewModel
 import com.furkanhrmnc.filmscape.ui.theme.FilmScapeTheme
 import org.koin.androidx.compose.koinViewModel
 
@@ -24,14 +27,15 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            FilmScapeTheme {
-                val viewModel = koinViewModel<MainViewModel>()
-                installSplashScreen().apply {
-                    setKeepOnScreenCondition {
-                        viewModel.splashScreen.value
+            val settingsViewModel = koinViewModel<SettingsViewModel>()
+            LanguageAwareApp(viewModel = settingsViewModel) {
+                FilmScapeTheme {
+                    val loginViewModel = koinViewModel<LoginViewModel>()
+                    installSplashScreen().apply {
+                        setKeepOnScreenCondition { loginViewModel.splashScreen.value }
                     }
+                    FilmScapeNavGraph()
                 }
-                FilmScapeNavGraph()
             }
         }
     }

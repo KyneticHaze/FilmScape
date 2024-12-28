@@ -10,38 +10,39 @@ import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.ui.graphics.vector.ImageVector
+import com.furkanhrmnc.filmscape.R
 
 sealed class BottomNavScreen(
     val route: String,
     val selectedIcon: ImageVector,
     val unselectedIcon: ImageVector,
-    val label: String,
+    val labelResId: Int,
 ) {
     data object Favorites : BottomNavScreen(
         Destinations.FAVORITE.route,
         Icons.Filled.Favorite,
         Icons.Outlined.FavoriteBorder,
-        "Favorites"
+        R.string.favorites_label
     )
 
     data object Search : BottomNavScreen(
         Destinations.SEARCH.route,
         Icons.Filled.Search,
         Icons.Outlined.Search,
-        "Search"
+        R.string.search_label
     )
 
     data object Person : BottomNavScreen(
         Destinations.PERSON.route,
         Icons.Filled.Person,
         Icons.Outlined.Person,
-        "Actors"
+        R.string.person_label
     )
 
     data object Account : BottomNavScreen(
         Destinations.ACCOUNT.route,
         Icons.Filled.AccountCircle,
         Icons.Outlined.AccountCircle,
-        "Account"
+        R.string.account_label
     )
 }

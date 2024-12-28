@@ -27,10 +27,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.navigation.NavController
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.furkanhrmnc.filmscape.R
 import com.furkanhrmnc.filmscape.util.MediaListItemOrShimmer
 import com.furkanhrmnc.filmscape.util.MovieTabs
 import kotlinx.coroutines.launch
@@ -62,7 +64,7 @@ fun MoviesScreen(
             TopAppBar(
                 title = {
                     Text(
-                        text = "Movies",
+                        text = stringResource(R.string.movies),
                         color = MaterialTheme.colorScheme.primary,
                         style = MaterialTheme.typography.headlineMedium,
                         fontWeight = FontWeight.SemiBold
@@ -93,7 +95,7 @@ fun MoviesScreen(
                             },
                             text = {
                                 Text(
-                                    text = movieTab.category,
+                                    text = stringResource(id = movieTab.categoryResId),
                                     style = MaterialTheme.typography.labelSmall,
                                     textAlign = TextAlign.Center
                                 )
@@ -102,7 +104,7 @@ fun MoviesScreen(
                                 Icon(
                                     imageVector = if (index == selectedTabIndex)
                                         movieTab.selectedIcon else movieTab.unSelectedIcon,
-                                    contentDescription = "Tab Icon"
+                                    contentDescription = stringResource(R.string.tab_icon)
                                 )
                             }
                         )

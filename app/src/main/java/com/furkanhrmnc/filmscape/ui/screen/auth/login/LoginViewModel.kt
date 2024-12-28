@@ -1,24 +1,37 @@
 package com.furkanhrmnc.filmscape.ui.screen.auth.login
 
 import android.util.Patterns
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.furkanhrmnc.filmscape.domain.repository.AuthRepository
 import com.furkanhrmnc.filmscape.ui.screen.auth.AuthUiState
 import com.furkanhrmnc.filmscape.util.Response
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlin.time.Duration.Companion.seconds
 
-class LoginViewModel(
+open class LoginViewModel(
     private val authRepository: AuthRepository,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(AuthUiState())
-    val uiState: StateFlow<AuthUiState> = _uiState.asStateFlow()
+    open val uiState: StateFlow<AuthUiState> = _uiState.asStateFlow()
+
+    var splashScreen = mutableStateOf(true)
+        private set
+
+    init {
+        viewModelScope.launch {
+            delay(2.seconds)
+            splashScreen.value = false
+        }
+    }
 
     fun signIn(email: String, password: String) = viewModelScope.launch {
         if (email.isEmpty() || password.isEmpty()) {

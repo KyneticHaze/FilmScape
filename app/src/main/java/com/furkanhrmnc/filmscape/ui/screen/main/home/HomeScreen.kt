@@ -1,11 +1,8 @@
-package com.furkanhrmnc.filmscape.ui.screen.main
+package com.furkanhrmnc.filmscape.ui.screen.main.home
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -29,15 +26,12 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -52,38 +46,26 @@ import com.furkanhrmnc.filmscape.R
 import com.furkanhrmnc.filmscape.navigation.Destinations
 import com.furkanhrmnc.filmscape.util.BottomNavigationBar
 import com.furkanhrmnc.filmscape.util.Constants.CAROUSEL_MS
-import com.furkanhrmnc.filmscape.util.Constants.MOVIES
-import com.furkanhrmnc.filmscape.util.Constants.SEE_ALL
-import com.furkanhrmnc.filmscape.util.Constants.TRENDING
-import com.furkanhrmnc.filmscape.util.Constants.TV_SERIES
 import com.furkanhrmnc.filmscape.util.MediaCard
-import com.furkanhrmnc.filmscape.util.Snack
+import com.furkanhrmnc.filmscape.util.SingleMediaSection
 import com.furkanhrmnc.filmscape.util.shimmerEffect
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen(
+fun HomeScreen(
     modifier: Modifier = Modifier,
-    viewModel: MainViewModel,
+    viewModel: HomeViewModel,
     navController: NavHostController,
 ) {
 
     val uiState by viewModel.uiState.collectAsState()
-    val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
     val pagerState = rememberPagerState(
         initialPage = 0,
         initialPageOffsetFraction = 0f
     ) { uiState.onTheAirCarousel.size }
-
-
-    Snack(
-        message = uiState.error,
-        snackBarHostState = snackbarHostState,
-        onDismissed = viewModel::onErrorConsumed
-    )
 
     LaunchedEffect(key1 = Unit) {
         while (true) {
@@ -114,7 +96,7 @@ fun MainScreen(
                     IconButton(onClick = { navController.navigate(Destinations.SETTINGS.route) }) {
                         Icon(
                             imageVector = Icons.Outlined.Settings,
-                            contentDescription = "Settings",
+                            contentDescription = stringResource(R.string.settings_text),
                             tint = MaterialTheme.colorScheme.secondary
                         )
                     }
@@ -132,7 +114,7 @@ fun MainScreen(
 
             item {
                 SingleMediaSection(
-                    sectionTitle = TRENDING,
+                    sectionTitle = stringResource(id = R.string.trending),
                     seeAll = { navController.navigate(Destinations.TRENDING.route) }
                 ) {
                     LazyRow {
@@ -159,7 +141,7 @@ fun MainScreen(
                                 modifier = Modifier
                                     .align(Alignment.Start)
                                     .padding(horizontal = 12.dp),
-                                text = "On The Air",
+                                text = stringResource(R.string.on_the_air),
                                 style = MaterialTheme.typography.headlineSmall,
                                 color = MaterialTheme.colorScheme.primary
                             )
@@ -238,7 +220,7 @@ fun MainScreen(
 
             item {
                 SingleMediaSection(
-                    sectionTitle = MOVIES,
+                    sectionTitle = stringResource(id = R.string.movies),
                     seeAll = { navController.navigate(Destinations.MOVIES.route) }
                 ) {
                     uiState.movie?.let {
@@ -272,7 +254,7 @@ fun MainScreen(
                 }
 
                 SingleMediaSection(
-                    sectionTitle = TV_SERIES,
+                    sectionTitle = stringResource(id = R.string.tv_series),
                     seeAll = { navController.navigate(Destinations.TV.route) }
                 ) {
                     uiState.tvSeries?.let {
@@ -307,42 +289,5 @@ fun MainScreen(
                 }
             }
         }
-    }
-}
-
-@Composable
-fun SingleMediaSection(
-    modifier: Modifier = Modifier,
-    sectionTitle: String,
-    seeAll: () -> Unit,
-    content: @Composable () -> Unit = {},
-) {
-    Column(
-        modifier = modifier
-            .padding(6.dp)
-            .clickable { seeAll() },
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 8.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Text(
-                text = sectionTitle,
-                style = MaterialTheme.typography.headlineSmall,
-                color = MaterialTheme.colorScheme.primary
-            )
-            TextButton(onClick = seeAll) {
-                Text(
-                    text = SEE_ALL,
-                    style = MaterialTheme.typography.titleSmall,
-                    color = MaterialTheme.colorScheme.secondary
-                )
-            }
-        }
-        content()
     }
 }

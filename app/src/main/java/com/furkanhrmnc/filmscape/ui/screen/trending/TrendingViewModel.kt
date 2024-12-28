@@ -1,10 +1,10 @@
 package com.furkanhrmnc.filmscape.ui.screen.trending
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.furkanhrmnc.filmscape.domain.model.Media
+import com.furkanhrmnc.filmscape.util.BaseViewModel
 import com.furkanhrmnc.filmscape.util.MediaType
 import com.furkanhrmnc.filmscape.util.Time
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.update
 
-class TrendingViewModel(pager: TrendingPager) : ViewModel() {
+class TrendingViewModel(pager: TrendingPager) : BaseViewModel() {
 
     private val _uiState = MutableStateFlow(TrendUiState())
     val uiState = _uiState.asStateFlow()
@@ -28,17 +28,8 @@ class TrendingViewModel(pager: TrendingPager) : ViewModel() {
                 type = MediaType.MOVIE.lowerName,
                 time = uiState.period.name.lowercase(),
             )
-                .catch { throwable -> onError(throwable) }
+                .catch { throwable -> handleError(throwable) }
         }.cachedIn(viewModelScope)
-
-
-    fun onError(throwable: Throwable) {
-        _uiState.update { it.copy(error = throwable) }
-    }
-
-    fun onErrorConsumed() {
-        _uiState.update { it.copy(error = null) }
-    }
 
     fun changePeriod(time: Time) {
         _uiState.update {

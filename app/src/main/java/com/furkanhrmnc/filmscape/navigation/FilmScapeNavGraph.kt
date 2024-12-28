@@ -12,17 +12,18 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import androidx.navigation.navigation
+import com.furkanhrmnc.filmscape.ui.screen.auth.account.AccountScreen
 import com.furkanhrmnc.filmscape.ui.screen.auth.login.LoginScreen
 import com.furkanhrmnc.filmscape.ui.screen.auth.register.RegisterScreen
-import com.furkanhrmnc.filmscape.ui.screen.auth.account.AccountScreen
 import com.furkanhrmnc.filmscape.ui.screen.details.DetailsScreen
 import com.furkanhrmnc.filmscape.ui.screen.details.DetailsUiEvents
 import com.furkanhrmnc.filmscape.ui.screen.details.DetailsViewModel
 import com.furkanhrmnc.filmscape.ui.screen.details.WatchVideoScreen
 import com.furkanhrmnc.filmscape.ui.screen.favorite.FavoriteScreen
 import com.furkanhrmnc.filmscape.ui.screen.favorite.FavoriteViewModel
-import com.furkanhrmnc.filmscape.ui.screen.main.MainScreen
-import com.furkanhrmnc.filmscape.ui.screen.main.MainViewModel
+import com.furkanhrmnc.filmscape.ui.screen.main.home.HomeScreen
+import com.furkanhrmnc.filmscape.ui.screen.main.home.HomeViewModel
 import com.furkanhrmnc.filmscape.ui.screen.movies.MoviesScreen
 import com.furkanhrmnc.filmscape.ui.screen.movies.MoviesViewModel
 import com.furkanhrmnc.filmscape.ui.screen.person.PersonScreen
@@ -49,27 +50,59 @@ fun FilmScapeNavGraph() {
     val auth = FirebaseAuth.getInstance()
     val context = LocalContext.current
 
-    val startDestination = remember {
-        if (auth.currentUser != null) Destinations.MAIN.route else Destinations.LOGIN.route
-    }
+    val startDestination =
+        remember { if (auth.currentUser != null) Destinations.MAIN.route else Destinations.AUTH.route }
 
     NavHost(
         navController = navController,
         startDestination = startDestination
     ) {
-        composable(Destinations.MAIN.route) {
-            val viewModel = koinViewModel<MainViewModel>()
-            MainScreen(viewModel = viewModel, navController = navController)
+
+        navigation(
+            route = Destinations.AUTH.route,
+            startDestination = Destinations.LOGIN.route
+        ) {
+
+            composable(route = Destinations.LOGIN.route) { LoginScreen(navController = navController) }
+
+            composable(route = Destinations.REGISTER.route) { RegisterScreen(navController = navController) }
+
+            composable(route = Destinations.ACCOUNT.route) {
+                AccountScreen(
+                    context = context,
+                    exit = {
+                        auth.signOut()
+                        navController.navigate(Destinations.LOGIN.route) {
+                            popUpTo(Destinations.ACCOUNT.route) { inclusive = true }
+                        }
+                    }
+                )
+            }
         }
 
-        composable(Destinations.MOVIES.route) {
-            val viewModel = koinViewModel<MoviesViewModel>()
-            MoviesScreen(viewModel = viewModel, navController = navController)
-        }
+        navigation(
+            route = Destinations.MAIN.route,
+            startDestination = Destinations.HOME.route
+        ) {
 
-        composable(Destinations.TV.route) {
-            val viewModel = koinViewModel<TvViewModel>()
-            TvScreen(viewModel = viewModel, navController = navController)
+            composable(Destinations.HOME.route) {
+                val viewModel = koinViewModel<HomeViewModel>()
+                HomeScreen(viewModel = viewModel, navController = navController)
+            }
+
+            composable(route = Destinations.TRENDING.route) { TrendingScreen(navController = navController) }
+
+            composable(Destinations.MOVIES.route) {
+                val viewModel = koinViewModel<MoviesViewModel>()
+                MoviesScreen(viewModel = viewModel, navController = navController)
+            }
+
+            composable(Destinations.TV.route) {
+                val viewModel = koinViewModel<TvViewModel>()
+                TvScreen(viewModel = viewModel, navController = navController)
+            }
+
+            composable(route = Destinations.SETTINGS.route) { SettingsScreen() }
         }
 
         composable(
@@ -86,7 +119,7 @@ fun FilmScapeNavGraph() {
             val type = typeString?.let { type -> MediaType.valueOf(type) }
 
             type?.let {
-                LaunchedEffect(key1 = true) {
+                LaunchedEffect(true) {
                     viewModel.onEvent(
                         DetailsUiEvents.SetDataAndLoad(
                             id = id,
@@ -95,7 +128,6 @@ fun FilmScapeNavGraph() {
                     )
                 }
             }
-
 
             DetailsScreen(
                 viewModel = viewModel,
@@ -117,9 +149,16 @@ fun FilmScapeNavGraph() {
             )
         }
 
-        composable(Destinations.SEARCH.route) { SearchScreen(navController = navController) }
-
-        composable(route = Destinations.TRENDING.route) { TrendingScreen(navController = navController) }
+        composable(
+            route = "${Destinations.WATCH_VIDEO.route}?videoId={videoId}",
+            arguments = listOf(
+                navArgument("videoId") { type = NavType.StringType }
+            )
+        ) {
+            val videoId = it.arguments?.getString("videoId") ?: ""
+            Log.w("FilmScapeNavGraph", "WatchVideo composable -> $videoId")
+            WatchVideoScreen(videoId = videoId)
+        }
 
         composable(route = Destinations.FAVORITE.route) {
             auth.currentUser?.uid?.let { uid ->
@@ -128,21 +167,7 @@ fun FilmScapeNavGraph() {
             }
         }
 
-        composable(route = Destinations.REGISTER.route) { RegisterScreen(navController = navController) }
-
-        composable(route = Destinations.LOGIN.route) { LoginScreen(navController = navController) }
-
-        composable(route = Destinations.ACCOUNT.route) {
-            AccountScreen(
-                context = context,
-                exit = {
-                    auth.signOut()
-                    navController.navigate(Destinations.LOGIN.route) {
-                        popUpTo(Destinations.ACCOUNT.route) { inclusive = true }
-                    }
-                }
-            )
-        }
+        composable(Destinations.SEARCH.route) { SearchScreen(navController = navController) }
 
         composable(route = Destinations.PERSON.route) {
             val viewModel = koinViewModel<PersonViewModel>()
@@ -158,21 +183,6 @@ fun FilmScapeNavGraph() {
             val id = it.arguments?.getInt("id")
             val viewModel = koinInject<PersonDetailsViewModel> { parametersOf(id) }
             PersonDetailScreen(viewModel = viewModel)
-        }
-
-        composable(
-            route = "${Destinations.WATCH_VIDEO.route}?videoId={videoId}",
-            arguments = listOf(
-                navArgument("videoId") { type = NavType.StringType }
-            )
-        ) {
-            val videoId = it.arguments?.getString("videoId") ?: ""
-            Log.w("FilmScapeNavGraph", "WatchVideo composable -> $videoId")
-            WatchVideoScreen(videoId = videoId)
-        }
-
-        composable(route = Destinations.SETTINGS.route) {
-            SettingsScreen()
         }
     }
 }

@@ -5,8 +5,8 @@ import com.furkanhrmnc.filmscape.ui.screen.auth.login.LoginViewModel
 import com.furkanhrmnc.filmscape.ui.screen.auth.register.RegisterViewModel
 import com.furkanhrmnc.filmscape.ui.screen.details.DetailsViewModel
 import com.furkanhrmnc.filmscape.ui.screen.favorite.FavoriteViewModel
-import com.furkanhrmnc.filmscape.ui.screen.main.MainViewModel
-import com.furkanhrmnc.filmscape.ui.screen.main.medias.MediaPager
+import com.furkanhrmnc.filmscape.ui.screen.main.MediaPager
+import com.furkanhrmnc.filmscape.ui.screen.main.home.HomeViewModel
 import com.furkanhrmnc.filmscape.ui.screen.movies.MoviesViewModel
 import com.furkanhrmnc.filmscape.ui.screen.person.PersonViewModel
 import com.furkanhrmnc.filmscape.ui.screen.person.PersonsPager
@@ -32,7 +32,7 @@ val viewModelModule = module {
 
 
     viewModel {
-        MainViewModel(repo = get())
+        HomeViewModel(repo = get())
     }
 
     viewModel {
@@ -89,5 +89,5 @@ val viewModelModule = module {
 
     viewModel { ThemeViewModel(storeRepository = get()) }
 
-    viewModel { SettingsViewModel(storeRepository = get()) }
+    viewModel { SettingsViewModel(storeRepository = get(), languagePreferences = get()) }
 }

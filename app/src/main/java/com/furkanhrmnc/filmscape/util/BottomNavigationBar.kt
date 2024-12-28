@@ -8,6 +8,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.furkanhrmnc.filmscape.navigation.BottomNavScreen
@@ -36,7 +37,7 @@ fun BottomNavigationBar(
         navItems.forEach { bottomNavScreen ->
             val isSelected = currentRoute == bottomNavScreen.route
             NavigationBarItem(
-                label = { Text(text = bottomNavScreen.label) },
+                label = { Text(text = stringResource(id = bottomNavScreen.labelResId)) },
                 selected = isSelected,
                 onClick = {
                     if (currentRoute != bottomNavScreen.route) {
@@ -45,12 +46,14 @@ fun BottomNavigationBar(
                             launchSingleTop = true
                             restoreState = true
                         }
+                    } else {
+                        navController.popBackStack()
                     }
                 },
                 icon = {
                     Icon(
                         imageVector = if (isSelected) bottomNavScreen.selectedIcon else bottomNavScreen.unselectedIcon,
-                        contentDescription = bottomNavScreen.label
+                        contentDescription = stringResource(id = bottomNavScreen.labelResId)
                     )
                 }
             )

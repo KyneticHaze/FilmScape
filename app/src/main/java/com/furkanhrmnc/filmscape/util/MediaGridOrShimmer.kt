@@ -42,7 +42,9 @@ fun MediaGridOrShimmer(
                         MediaCard(
                             media = media,
                             isShimmer = false,
-                            onCLick = { navController.navigate("${Destinations.DETAILS.route}?id=${media.id}&type=${media.type}") }
+                            onCLick = {
+                                navController.navigate("${Destinations.DETAILS.route}?id=${media.id}&type=${media.type}")
+                            }
                         )
                     }
                 }

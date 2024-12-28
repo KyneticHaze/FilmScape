@@ -1,7 +1,5 @@
 package com.furkanhrmnc.filmscape.ui.screen.details
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Build
 import android.widget.Toast
 import androidx.annotation.RequiresApi
@@ -53,17 +51,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.furkanhrmnc.filmscape.R
 import com.furkanhrmnc.filmscape.domain.model.toMedia
 import com.furkanhrmnc.filmscape.navigation.Destinations
 import com.furkanhrmnc.filmscape.util.Constants.getDisplayName
 import com.furkanhrmnc.filmscape.util.DateFormatter
 import com.furkanhrmnc.filmscape.util.MediaCard
 import com.furkanhrmnc.filmscape.util.RatingBar
-import com.furkanhrmnc.filmscape.util.Snack
 import com.furkanhrmnc.filmscape.util.UiEvent
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
@@ -80,53 +80,57 @@ fun DetailsScreen(
     val scope = rememberCoroutineScope()
     val user = FirebaseAuth.getInstance().currentUser
     val context = LocalContext.current
+    val uriHandler = LocalUriHandler.current
 
     LaunchedEffect(key1 = true) {
         viewModel.uiEvent.collect { event ->
             when (event) {
                 is UiEvent.NavigateTo -> onNavigate(event)
-                is UiEvent.ShowSnackbar -> TODO()
+                is UiEvent.ShowSnackbar -> snackbarHostState.showSnackbar(
+                    event.message,
+                    event.action
+                )
+
+                is UiEvent.Toast -> Toast.makeText(context, event.toastMessage, Toast.LENGTH_SHORT)
+                    .show()
             }
         }
     }
 
-    Snack(
-        message = detailsUiState.error,
-        snackBarHostState = snackbarHostState,
-        onDismissed = viewModel::onErrorConsumed
-    )
+    val title = detailsUiState.mediaDetail?.let { getDisplayName(it.toMedia()) }
 
     Scaffold(
         topBar = {
             TopAppBar(
                 title = {
-                    Text(
-                        modifier = Modifier.padding(end = 16.dp),
-                        text = detailsUiState.mediaDetail?.originalTitle ?: "",
-                        color = MaterialTheme.colorScheme.primary,
-                        style = MaterialTheme.typography.headlineMedium,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                        fontWeight = FontWeight.SemiBold
-                    )
+                    if (!detailsUiState.isLoading) {
+                        Text(
+                            modifier = Modifier.padding(end = 16.dp),
+                            text = title ?: stringResource(R.string.title_not_found),
+                            color = if (title.isNullOrEmpty()) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.primary,
+                            style = MaterialTheme.typography.headlineMedium,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                            fontWeight = FontWeight.SemiBold
+                        )
+                    }
                 },
                 actions = {
                     IconButton(
                         onClick = {
-                            try {
-                                val intent = Intent(
-                                    Intent.ACTION_VIEW,
-                                    Uri.parse(detailsUiState.mediaDetail?.homepage)
-                                )
-                                context.startActivity(intent)
-                            } catch (e: Exception) {
-                                viewModel.onError(e)
-                            }
+                            detailsUiState.mediaDetail?.homepage
+                                ?.let { link ->
+                                    try {
+                                        uriHandler.openUri(link)
+                                    } catch (e: Exception) {
+                                        viewModel.onError(e)
+                                    }
+                                }
                         }
                     ) {
                         Icon(
                             imageVector = Icons.Outlined.Link,
-                            contentDescription = "Go to Browser",
+                            contentDescription = stringResource(R.string.uri_handler_text),
                             tint = MaterialTheme.colorScheme.secondary
                         )
                     }
@@ -143,8 +147,10 @@ fun DetailsScreen(
                                 }
                                 scope.launch {
                                     val snackbarResult = snackbarHostState.showSnackbar(
-                                        message = "${getDisplayName(mediaDetail.toMedia())} Added to favorites",
-                                        actionLabel = "Go To Favorite"
+                                        message = "${getDisplayName(mediaDetail.toMedia())} ${
+                                            context.getString(R.string.add_favorite)
+                                        }",
+                                        actionLabel = context.getString(R.string.go_to_favorite)
                                     )
                                     if (snackbarResult == SnackbarResult.ActionPerformed && detailsUiState.isFavorite) {
                                         onNavigate(UiEvent.NavigateTo(Destinations.FAVORITE.route))
@@ -155,7 +161,7 @@ fun DetailsScreen(
                     ) {
                         Icon(
                             imageVector = Icons.Outlined.FavoriteBorder,
-                            contentDescription = "Favorite Media",
+                            contentDescription = stringResource(id = R.string.add_favorite),
                             tint = MaterialTheme.colorScheme.secondary
                         )
                     }
@@ -188,7 +194,7 @@ fun DetailsScreen(
                                         Toast
                                             .makeText(
                                                 context,
-                                                "Video is not available!",
+                                                context.getString(R.string.video_not_found),
                                                 Toast.LENGTH_LONG
                                             )
                                             .show()
@@ -218,7 +224,7 @@ fun DetailsScreen(
                                     .size(48.dp)
                                     .align(Alignment.Center),
                                 imageVector = Icons.Rounded.PlayArrow,
-                                contentDescription = "Play Video",
+                                contentDescription = stringResource(R.string.play_video),
                                 tint = MaterialTheme.colorScheme.onBackground
                             )
                         }
@@ -278,7 +284,7 @@ fun DetailsScreen(
             item {
                 Text(
                     modifier = Modifier.padding(horizontal = 16.dp),
-                    text = "Cast",
+                    text = stringResource(R.string.cast),
                     style = MaterialTheme.typography.titleLarge,
                     color = MaterialTheme.colorScheme.primary,
                     fontWeight = FontWeight.SemiBold
@@ -329,7 +335,7 @@ fun DetailsScreen(
                         ) {
                             Text(
                                 modifier = Modifier.padding(horizontal = 16.dp),
-                                text = "Recommendations",
+                                text = stringResource(id = R.string.recommendations),
                                 style = MaterialTheme.typography.titleLarge,
                                 color = MaterialTheme.colorScheme.primary,
                                 fontWeight = FontWeight.SemiBold
@@ -337,13 +343,14 @@ fun DetailsScreen(
                             TextButton(
                                 onClick = {
                                     viewModel.onEvent(
-                                        DetailsUiEvents.Navigate(
-                                            route = "${Destinations.SIMILAR.route}?id=${mediaDetail.id}"
-                                        )
+                                        DetailsUiEvents.Navigate(route = "${Destinations.SIMILAR.route}?id=${mediaDetail.id}")
                                     )
                                 }
                             ) {
-                                Text(text = "See All", style = MaterialTheme.typography.titleSmall)
+                                Text(
+                                    text = stringResource(R.string.see_all),
+                                    style = MaterialTheme.typography.titleSmall
+                                )
                             }
                         }
                         LazyRow {

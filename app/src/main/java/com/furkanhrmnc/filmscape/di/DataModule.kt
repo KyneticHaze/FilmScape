@@ -12,12 +12,11 @@ import com.furkanhrmnc.filmscape.data.repository.StoreRepositoryImpl
 import com.furkanhrmnc.filmscape.domain.repository.AuthRepository
 import com.furkanhrmnc.filmscape.domain.repository.MediaRepository
 import com.furkanhrmnc.filmscape.domain.repository.StoreRepository
+import com.furkanhrmnc.filmscape.ui.screen.settings.LanguagePreferences
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.Dispatchers
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
-
-val Context.dataStore by preferencesDataStore("app_preferences")
 
 /**
  * [MediaRepositoryImpl] singleton şekilde yaratılarak bağımlılık azaltılıyor.
@@ -40,13 +39,15 @@ val dataModule = module {
         AuthRepositoryImpl(auth = get())
     }
 
-    single { provideDataStore(context = get<Context>()) }
+    single<DataStore<Preferences>> { get<Context>().dataStore }
 
     single<StoreRepository> {
         StoreRepositoryImpl(dataStore = get())
     }
+
+    single {
+        LanguagePreferences(context = get())
+    }
 }
 
-fun provideDataStore(context: Context): DataStore<Preferences> {
-    return context.dataStore
-}
+private val Context.dataStore by preferencesDataStore("app_preferences")

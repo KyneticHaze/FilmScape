@@ -6,4 +6,6 @@ sealed class UiEvent {
         val message: String,
         val action: String? = null,
     ) : UiEvent()
+
+    data class Toast(val toastMessage: String) : UiEvent()
 }

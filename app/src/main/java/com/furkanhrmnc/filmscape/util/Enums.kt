@@ -10,6 +10,7 @@ import androidx.compose.material.icons.outlined.PlayCircle
 import androidx.compose.material.icons.outlined.StarBorder
 import androidx.compose.material.icons.outlined.Upcoming
 import androidx.compose.ui.graphics.vector.ImageVector
+import com.furkanhrmnc.filmscape.R
 
 /**
  * Bu sınıf, kategorilere göre film çekme isteğini daha basit işlemek için yazıldı.
@@ -39,27 +40,27 @@ enum class MediaType(val lowerName: String) {
 enum class MovieTabs(
     val selectedIcon: ImageVector,
     val unSelectedIcon: ImageVector,
-    val category: String,
+    val categoryResId: Int,
 ) {
     Popular(
         selectedIcon = Icons.Filled.LocalFireDepartment,
         unSelectedIcon = Icons.Outlined.LocalFireDepartment,
-        category = "Popular",
+        categoryResId = R.string.popular,
     ),
     TopRated(
         selectedIcon = Icons.Filled.Star,
         unSelectedIcon = Icons.Outlined.StarBorder,
-        category = "Top Rated",
+        categoryResId = R.string.top_rated,
     ),
     Upcoming(
         selectedIcon = Icons.Filled.Upcoming,
         unSelectedIcon = Icons.Outlined.Upcoming,
-        category = "Upcoming",
+        categoryResId = R.string.upcoming,
     ),
     NowPlaying(
         selectedIcon = Icons.Filled.PlayCircle,
         unSelectedIcon = Icons.Outlined.PlayCircle,
-        category = "Now Playing",
+        categoryResId = R.string.now_playing,
     )
 }
 
@@ -70,17 +71,17 @@ enum class MovieTabs(
 enum class TvTabs(
     val selectedIcon: ImageVector,
     val unSelectedIcon: ImageVector,
-    val category: String,
+    val categoryResId: Int,
 ) {
     Popular(
         selectedIcon = Icons.Filled.LocalFireDepartment,
         unSelectedIcon = Icons.Outlined.LocalFireDepartment,
-        category = "Popular",
+        categoryResId = R.string.popular,
     ),
     TopRated(
         selectedIcon = Icons.Filled.Star,
         unSelectedIcon = Icons.Outlined.StarBorder,
-        category = "Top Rated",
+        categoryResId = R.string.top_rated,
     ),
 }
 

@@ -100,7 +100,7 @@ class MediaRepositoryImpl(private val remoteDataSource: RemoteDataSource) : Medi
             .also { response -> emit(response) }
     }
         .map(VideoResponse::toVideoList)
-        .map { videos -> videos.filter { it.site == YOUTUBE && it.type == TYPE_FEATURETTE || it.type == TYPE_TRAILER } }
+        .map { videos -> videos.filter { it.site == YOUTUBE && (it.type == TYPE_FEATURETTE || it.type == TYPE_TRAILER) } }
         .asResponse()
 
     override fun getCreditsMovieOrTv(type: String, id: Int): Flow<Response<List<Cast>>> = flow {

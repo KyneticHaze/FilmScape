@@ -32,10 +32,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.furkanhrmnc.filmscape.R
 import com.furkanhrmnc.filmscape.util.DateFormatter
 import com.furkanhrmnc.filmscape.util.RatingBar
 
@@ -56,7 +58,8 @@ fun PersonDetailScreen(
             TopAppBar(
                 title = {
                     Text(
-                        text = uiState.personDetail?.name ?: "Unknown Actor Name",
+                        text = uiState.personDetail?.name
+                            ?: stringResource(R.string.unknown_actor_name),
                         style = MaterialTheme.typography.headlineMedium,
                         fontWeight = FontWeight.SemiBold,
                         color = MaterialTheme.colorScheme.primary
@@ -74,7 +77,7 @@ fun PersonDetailScreen(
                             } else {
                                 Toast.makeText(
                                     context,
-                                    "Link is unavailable",
+                                    context.getString(R.string.link_not_found),
                                     Toast.LENGTH_LONG
                                 ).show()
                             }
@@ -82,7 +85,7 @@ fun PersonDetailScreen(
                     ) {
                         Icon(
                             imageVector = Icons.Outlined.Link,
-                            contentDescription = "Visit Actor Browser",
+                            contentDescription = stringResource(id = R.string.uri_handler_text),
                             tint = MaterialTheme.colorScheme.secondary
                         )
                     }
@@ -113,7 +116,7 @@ fun PersonDetailScreen(
                     }
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
-                        text = "Biography",
+                        text = stringResource(R.string.biography),
                         style = MaterialTheme.typography.titleLarge,
                         color = MaterialTheme.colorScheme.primary,
                         fontWeight = FontWeight.Bold
@@ -141,7 +144,9 @@ fun PersonDetailScreen(
                         )
                     }
                     Text(
-                        text = if (personDetail.deathDay != null) "Alive" else "Died",
+                        text = if (personDetail.deathDay != null) stringResource(R.string.alive) else stringResource(
+                            R.string.died
+                        ),
                         fontWeight = FontWeight.Medium,
                         color = if (personDetail.deathDay != null) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.error
                     )
@@ -152,21 +157,23 @@ fun PersonDetailScreen(
                         fontWeight = FontWeight.Medium
                     )
                     Text(
-                        text = if (personDetail.placeOfBirth == null || personDetail.placeOfBirth == "") "Unknown Place of Birth" else personDetail.placeOfBirth,
+                        text = if (personDetail.placeOfBirth == null || personDetail.placeOfBirth == "") stringResource(
+                            R.string.unknown_place_of_birth
+                        ) else personDetail.placeOfBirth,
                         color = if (personDetail.placeOfBirth == null || personDetail.placeOfBirth == "") MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.secondary,
                         style = MaterialTheme.typography.bodyMedium,
                         fontWeight = FontWeight.Medium
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
-                        text = "Overview",
+                        text = stringResource(id = R.string.overview),
                         style = MaterialTheme.typography.headlineSmall,
                         color = MaterialTheme.colorScheme.primary,
                         fontWeight = FontWeight.SemiBold
                     )
                     Spacer(modifier = Modifier.height(4.dp))
                     Text(
-                        text = personDetail.biography.ifEmpty { "No biography available" },
+                        text = personDetail.biography.ifEmpty { stringResource(R.string.no_biography_available) },
                         maxLines = 12,
                         overflow = TextOverflow.Ellipsis,
                         style = MaterialTheme.typography.bodyMedium,
@@ -176,7 +183,7 @@ fun PersonDetailScreen(
                     Spacer(modifier = Modifier.height(6.dp))
                     if (personDetail.alsoKnownAs.isNotEmpty()) {
                         Text(
-                            text = "Also Known As",
+                            text = stringResource(R.string.also_known_as),
                             style = MaterialTheme.typography.headlineSmall,
                             color = MaterialTheme.colorScheme.primary,
                             fontWeight = FontWeight.SemiBold

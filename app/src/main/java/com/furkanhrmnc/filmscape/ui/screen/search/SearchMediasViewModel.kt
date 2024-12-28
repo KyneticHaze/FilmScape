@@ -1,10 +1,10 @@
 package com.furkanhrmnc.filmscape.ui.screen.search
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.furkanhrmnc.filmscape.domain.model.Media
+import com.furkanhrmnc.filmscape.util.BaseViewModel
 import com.furkanhrmnc.filmscape.util.Constants.SUBSCRIBED_MS
 import com.furkanhrmnc.filmscape.util.MediaType
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,7 +17,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class SearchMediasViewModel(pager: SearchMediasPager) : ViewModel() {
+class SearchMediasViewModel(pager: SearchMediasPager) : BaseViewModel() {
 
     private val _uiState = MutableStateFlow(SearchUiState())
     val uiState: StateFlow<SearchUiState> = _uiState.asStateFlow()
@@ -32,7 +32,7 @@ class SearchMediasViewModel(pager: SearchMediasPager) : ViewModel() {
         )
 
     val searchMedias = pager.searchPagingDataFlow(MediaType.MOVIE.name.lowercase())
-        .catch { throwable -> onError(throwable) }
+        .catch { throwable -> handleError(throwable) }
         .cachedIn(viewModelScope)
 
 
@@ -53,7 +53,6 @@ class SearchMediasViewModel(pager: SearchMediasPager) : ViewModel() {
         }
     }
 
-
     fun onSearch(query: String) {
         _search.value = query
         _uiState.update {
@@ -73,21 +72,4 @@ class SearchMediasViewModel(pager: SearchMediasPager) : ViewModel() {
             )
         }
     }
-
-
-    fun onError(throwable: Throwable) {
-        _uiState.update { it.copy(error = throwable, isLoading = false) }
-    }
-
-    fun onErrorConsumed() {
-        _uiState.update { it.copy(error = null) }
-    }
 }
-
-
-data class SearchUiState(
-    val query: String = "",
-    val searchMedias: PagingData<Media> = PagingData.empty(),
-    val isLoading: Boolean = false,
-    val error: Throwable? = null,
-)

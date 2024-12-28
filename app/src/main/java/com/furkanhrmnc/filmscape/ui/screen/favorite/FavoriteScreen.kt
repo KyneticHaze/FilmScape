@@ -1,5 +1,6 @@
 package com.furkanhrmnc.filmscape.ui.screen.favorite
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -17,18 +18,22 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.furkanhrmnc.filmscape.R
 import com.furkanhrmnc.filmscape.util.Constants.getDisplayName
-import com.furkanhrmnc.filmscape.util.Snack
 import com.furkanhrmnc.filmscape.util.SwipeCard
+import com.furkanhrmnc.filmscape.util.UiEvent
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -39,12 +44,19 @@ fun FavoriteScreen(
 
     val uiState by viewModel.uiState.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
+    val context = LocalContext.current
 
-    Snack(
-        message = uiState.error,
-        snackBarHostState = snackbarHostState,
-        onDismissed = viewModel::onErrorConsumed
-    )
+    LaunchedEffect(viewModel.uiEvent) {
+        viewModel.uiEvent.collect { event ->
+            when (event) {
+                is UiEvent.ShowSnackbar -> snackbarHostState.showSnackbar(event.message)
+                is UiEvent.Toast -> Toast.makeText(context, event.toastMessage, Toast.LENGTH_SHORT)
+                    .show()
+
+                else -> Unit
+            }
+        }
+    }
 
     Scaffold(
         modifier = modifier,
@@ -52,7 +64,7 @@ fun FavoriteScreen(
             TopAppBar(
                 title = {
                     Text(
-                        text = "Favorite Medias",
+                        text = stringResource(R.string.favorite_medias_text),
                         color = MaterialTheme.colorScheme.primary,
                         style = MaterialTheme.typography.headlineMedium,
                         fontWeight = FontWeight.SemiBold
@@ -75,7 +87,12 @@ fun FavoriteScreen(
                 val favoriteMedia = uiState.favorites[index]
                 SwipeCard(
                     modifier = Modifier.animateItem(),
-                    onDelete = { viewModel.deleteMediaFromFavorites(mediaId = favoriteMedia.id.toString()) }
+                    onDelete = {
+                        viewModel.deleteMediaFromFavorites(
+                            mediaId = favoriteMedia.id.toString(),
+                            deleteString = context.getString(R.string.delete_favorite)
+                        )
+                    }
                 ) {
                     OutlinedCard(
                         modifier = Modifier.padding(6.dp),

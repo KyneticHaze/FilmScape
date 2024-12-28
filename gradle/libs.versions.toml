@@ -1,33 +1,42 @@
 [versions]
 activityComposeVersion = "1.9.3"
 coilVersion = "2.7.0"
-coreKtxVersion = "1.13.1"
+coreKtxVersion = "1.15.0"
 coreSplashscreenVersion = "1.0.1"
+coreTestingVersion = "2.2.0"
 coreVersion = "12.1.1"
 datastorePreferencesVersion = "1.1.1"
 espressoCoreVersion = "3.6.1"
-firebaseBomVersion = "33.5.1"
+firebaseBomVersion = "33.7.0"
 junit = "1.2.1"
 junitVersion = "4.13.2"
 koinAndroidVersion = "4.0.0"
 koinCoreVersion = "4.0.0"
+kotlinxCoroutinesTestVersion = "1.10.0"
 kotlinxDatetimeVersion = "0.6.1"
 kotlinxSerializationJsonVersion = "1.7.3"
-ktorVersion = "3.0.0"
+ktorVersion = "3.0.3"
 lifecycleRuntimeKtxVersion = "2.8.7"
-materialVersion = "1.7.5"
-navVersion = "2.8.3"
-pagingComposeVersion = "3.3.2"
-compose-bom = "2024.10.01"
+materialVersion = "1.7.6"
+mockitoAndroidVersion = "5.14.2"
+mockitoCoreVersion = "5.14.2"
+mockitoInlineVersion = "5.2.0"
+mockitoKotlinVersion = "5.4.0"
+navVersion = "2.8.5"
+pagingComposeVersion = "3.3.5"
+compose-bom = "2024.12.01"
 agp = "8.2.2"
 kotlin = "2.0.0"
 ksp-compiler = "2.0.0-1.0.23"
 google-services = "4.4.2"
+truth = "1.4.4"
+uiTestJunit4AndroidVersion = "1.7.6"
 
 
 [libraries]
 activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activityComposeVersion" }
 androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreenVersion" }
+androidx-core-testing = { module = "androidx.arch.core:core-testing", version.ref = "coreTestingVersion" }
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferencesVersion" }
 androidx-lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "lifecycleRuntimeKtxVersion" }
 androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycleRuntimeKtxVersion" }
@@ -42,10 +51,12 @@ ext-junit = { module = "androidx.test.ext:junit", version.ref = "junit" }
 firebase-auth-ktx = { module = "com.google.firebase:firebase-auth-ktx" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBomVersion" }
 firebase-firestore-ktx = { module = "com.google.firebase:firebase-firestore-ktx" }
+google-truth = { module = "com.google.truth:truth", version.ref = "truth" }
 insert-koin-koin-android = { module = "io.insert-koin:koin-android", version.ref = "koinAndroidVersion" }
 junit = { module = "junit:junit", version.ref = "junitVersion" }
 koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koinAndroidVersion" }
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koinCoreVersion" }
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutinesTestVersion" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinxDatetimeVersion" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJsonVersion" }
 ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktorVersion" }
@@ -55,6 +66,10 @@ ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "k
 ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktorVersion" }
 lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtxVersion" }
 material-android = { module = "androidx.compose.material:material-android", version.ref = "materialVersion" }
+mockito-android = { module = "org.mockito:mockito-android", version.ref = "mockitoAndroidVersion" }
+mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockitoCoreVersion" }
+mockito-inline = { module = "org.mockito:mockito-inline", version.ref = "mockitoInlineVersion" }
+mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version.ref = "mockitoKotlinVersion" }
 navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navVersion" }
 androidx-compose-bom = { module = "androidx.compose:compose-bom", version.ref = "compose-bom" }
 androidx-compose-ui = { group = "androidx.compose.ui", name = "ui" }
@@ -63,6 +78,7 @@ androidx-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "u
 androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 androidx-compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 androidx-compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
+androidx-ui-test-junit4-android = { group = "androidx.compose.ui", name = "ui-test-junit4-android", version.ref = "uiTestJunit4AndroidVersion" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

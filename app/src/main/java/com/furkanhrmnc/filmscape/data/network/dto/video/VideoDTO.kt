@@ -8,25 +8,25 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class VideoDTO(
     @SerialName("id")
-    val id: String?,
+    val id: String? = null,
     @SerialName("iso_3166_1")
-    val iso31661: String?,
+    val iso31661: String? = null,
     @SerialName("iso_639_1")
-    val iso6391: String?,
+    val iso6391: String? = null,
     @SerialName("key")
-    val key: String?,
+    val key: String? = null,
     @SerialName("name")
-    val name: String?,
+    val name: String? = null,
     @SerialName("official")
-    val official: Boolean?,
+    val official: Boolean? = null,
     @SerialName("published_at")
-    val publishedAt: String?,
+    val publishedAt: String? = null,
     @SerialName("site")
-    val site: String?,
+    val site: String? = null,
     @SerialName("size")
-    val size: Int?,
+    val size: Int? = null,
     @SerialName("type")
-    val type: String?,
+    val type: String? = null,
 )
 
 

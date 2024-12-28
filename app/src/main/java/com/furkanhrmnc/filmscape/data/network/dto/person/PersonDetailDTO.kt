@@ -9,33 +9,33 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class PersonDetailDTO(
     @SerialName("adult")
-    val adult: Boolean?,
+    val adult: Boolean? = null,
     @SerialName("also_known_as")
-    val alsoKnownAs: List<String?>?,
+    val alsoKnownAs: List<String?>? = null,
     @SerialName("biography")
-    val biography: String?,
+    val biography: String? = null,
     @SerialName("birthday")
-    val birthday: String?,
+    val birthday: String? = null,
     @SerialName("deathday")
     val deathDay: String? = null,
     @SerialName("gender")
-    val gender: Int?,
+    val gender: Int? = null,
     @SerialName("homepage")
     val homepage: String? = null,
     @SerialName("id")
-    val id: Int?,
+    val id: Int? = null,
     @SerialName("imdb_id")
-    val imdbId: String?,
+    val imdbId: String? = null,
     @SerialName("known_for_department")
-    val knownForDepartment: String?,
+    val knownForDepartment: String? = null,
     @SerialName("name")
-    val name: String?,
+    val name: String? = null,
     @SerialName("place_of_birth")
-    val placeOfBirth: String?,
+    val placeOfBirth: String? = null,
     @SerialName("popularity")
-    val popularity: Double?,
+    val popularity: Double? = null,
     @SerialName("profile_path")
-    val profilePath: String?,
+    val profilePath: String? = null,
 )
 
 fun PersonDetailDTO.toPersonDetail(): PersonDetail = PersonDetail(
