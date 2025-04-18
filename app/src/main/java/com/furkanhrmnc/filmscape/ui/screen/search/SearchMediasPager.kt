@@ -22,7 +22,7 @@ class SearchMediasPager(
 
     private var query = MutableStateFlow("")
 
-    fun searchPagingDataFlow(type: String): Flow<PagingData<Media>> = query
+    fun getPagingDataMediaStream(type: String): Flow<PagingData<Media>> = query
         .debounce(timeoutMillis = 300L) // 300 ms bekle
         .distinctUntilChanged() // Sadece değişen sorguları kullan
         .flatMapLatest { query ->

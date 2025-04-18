@@ -1,7 +1,5 @@
 package com.furkanhrmnc.filmscape.ui.screen.person.details
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Build
 import android.widget.Toast
 import androidx.annotation.RequiresApi
@@ -32,6 +30,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -51,7 +50,7 @@ fun PersonDetailScreen(
 
     val uiState by viewModel.uiState.collectAsState()
     val context = LocalContext.current
-
+    val uri = LocalUriHandler.current
 
     Scaffold(
         topBar = {
@@ -68,18 +67,16 @@ fun PersonDetailScreen(
                 actions = {
                     IconButton(
                         onClick = {
-                            if (uiState.personDetail?.homepage?.isNotEmpty() == true) {
-                                val intent = Intent(
-                                    Intent.ACTION_VIEW,
-                                    Uri.parse(uiState.personDetail?.homepage)
-                                )
-                                context.startActivity(intent)
-                            } else {
-                                Toast.makeText(
-                                    context,
-                                    context.getString(R.string.link_not_found),
-                                    Toast.LENGTH_LONG
-                                ).show()
+                            uiState.personDetail?.let { detail ->
+                                if (detail.homepage.isNotEmpty()) {
+                                    uri.openUri(detail.homepage)
+                                } else {
+                                    Toast.makeText(
+                                        context,
+                                        context.getString(R.string.link_not_found),
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
                             }
                         }
                     ) {

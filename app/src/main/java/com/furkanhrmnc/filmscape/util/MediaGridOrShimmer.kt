@@ -43,7 +43,9 @@ fun MediaGridOrShimmer(
                             media = media,
                             isShimmer = false,
                             onCLick = {
-                                navController.navigate("${Destinations.DETAILS.route}?id=${media.id}&type=${media.type}")
+                                navController.navigate("${Destinations.DETAILS.route}?id=${media.id}&type=${media.type}") {
+                                    restoreState = true
+                                }
                             }
                         )
                     }

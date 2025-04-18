@@ -1,4 +1,4 @@
-package com.furkanhrmnc.filmscape.ui.screen.settings
+package com.furkanhrmnc.filmscape.util
 
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
@@ -7,6 +7,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.furkanhrmnc.filmscape.R
+import com.furkanhrmnc.filmscape.ui.screen.settings.SettingsUiState
+import com.furkanhrmnc.filmscape.ui.screen.settings.SettingsViewModel
 
 @Composable
 fun ThemeDialog(

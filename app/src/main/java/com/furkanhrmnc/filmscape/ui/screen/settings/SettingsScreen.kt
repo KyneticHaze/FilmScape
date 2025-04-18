@@ -25,6 +25,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.furkanhrmnc.filmscape.R
 import com.furkanhrmnc.filmscape.util.Constants
+import com.furkanhrmnc.filmscape.util.ThemeDialog
 import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -61,7 +62,7 @@ fun SettingsScreen(
                 .padding(padding),
 
             ) {
-            ThemeAndDynamicTile(model = viewModel, isDynamic = isDynamic)
+            SettingsTile(model = viewModel, isDynamic = isDynamic)
             LanguageSettingsDialog(
                 viewModel = viewModel,
                 isVisible = languageDialogVisibly,

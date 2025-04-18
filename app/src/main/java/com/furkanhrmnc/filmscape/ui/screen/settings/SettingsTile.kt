@@ -18,7 +18,7 @@ import androidx.compose.ui.text.font.FontWeight
 import com.furkanhrmnc.filmscape.R
 
 @Composable
-fun ThemeAndDynamicTile(model: SettingsViewModel, isDynamic: Boolean) {
+fun SettingsTile(model: SettingsViewModel, isDynamic: Boolean) {
     Column {
         ListItem(
             headlineContent = {
@@ -35,8 +35,7 @@ fun ThemeAndDynamicTile(model: SettingsViewModel, isDynamic: Boolean) {
                     contentDescription = stringResource(R.string.change_app_theme_text)
                 )
             },
-            modifier = Modifier
-                .clickable { model.setThemeDialogVisibility(true) }
+            modifier = Modifier.clickable { model.setThemeDialogVisibility(true) }
         )
         HorizontalDivider()
         ListItem(
@@ -54,8 +53,7 @@ fun ThemeAndDynamicTile(model: SettingsViewModel, isDynamic: Boolean) {
                     contentDescription = stringResource(id = R.string.change_language)
                 )
             },
-            modifier = Modifier
-                .clickable { model.setLanguageDialogVisibility(true) }
+            modifier = Modifier.clickable { model.setLanguageDialogVisibility(true) }
         )
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
             ListItem(
@@ -73,8 +71,7 @@ fun ThemeAndDynamicTile(model: SettingsViewModel, isDynamic: Boolean) {
                         onCheckedChange = { model.updateIsDynamicTheme() }
                     )
                 },
-                modifier = Modifier
-                    .clickable { model.updateIsDynamicTheme() }
+                modifier = Modifier.clickable { model.updateIsDynamicTheme() }
             )
     }
 }

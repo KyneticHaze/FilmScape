@@ -1,9 +1,7 @@
 package com.furkanhrmnc.filmscape.ui.screen.search
 
 import androidx.lifecycle.viewModelScope
-import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.furkanhrmnc.filmscape.domain.model.Media
 import com.furkanhrmnc.filmscape.util.BaseViewModel
 import com.furkanhrmnc.filmscape.util.Constants.SUBSCRIBED_MS
 import com.furkanhrmnc.filmscape.util.MediaType
@@ -31,7 +29,7 @@ class SearchMediasViewModel(pager: SearchMediasPager) : BaseViewModel() {
             _search.value
         )
 
-    val searchMedias = pager.searchPagingDataFlow(MediaType.MOVIE.name.lowercase())
+    val searchMedias = pager.getPagingDataMediaStream(MediaType.MOVIE.name.lowercase())
         .catch { throwable -> handleError(throwable) }
         .cachedIn(viewModelScope)
 
